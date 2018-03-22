@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projekt_koncowy2',
-        'USER': 'root',
+        'NAME': 'dawidb.mysql.pythonanywhere-services.com',
+        'USER': 'dawidb',
         'PASSWORD': 'coderslab',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        # 'PORT': '3306',
     }
 }
 
