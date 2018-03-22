@@ -1,0 +1,231 @@
+body {
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    background-image: url("/static/img/wall.jpg");
+}
+.buttons_and_login {
+    width: 100%;
+}
+.header {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.sidebar{
+    float:left;
+}
+.login {
+    padding: 30px;
+    padding-left: 70px;
+}
+.buttons {
+    width: 30%;
+    padding: 30px;
+    padding-left: 70px;
+}
+.content {
+    float: right;
+    width: 80%;
+    padding-right: 100px;
+}
+.imgContainer {
+    float: left;
+    margin: auto;
+    padding: 100px;
+    padding-left: 150px;
+}
+img {
+    margin: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+p, ul, ol, li, a {
+    color: whitesmoke;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: whitesmoke;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+    width: 50px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.checkboxmultiple {
+    background-color: rgba(169, 169, 199, 0.68);
+    border-radius: 15px;
+    padding: 20px 100px 20px 100px;
+    list-style-type: none;
+}
+
+.btn-primary {
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-secondary {
+    background-color: lightslategray;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-success {
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-light {
+    background-color: dimgrey;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+input[type=text] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type=password] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type=email] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+select {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+textarea {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+}
+
+input[type=number] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type=file] {
+    padding: 5px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type=number]:focus {
+    border-color: #333;
+}
+
+input[type=text]:focus {
+    border-color: #333;
+}
+
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+

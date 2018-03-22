@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <td colspan="3">
+                <h1>USER LIST</h1>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    <thead>
+    <tr>
+        <td colspan="3">
+            <a href="{% url 'add-user' %}" class="btn btn-dark btn-lg btn-block">Add user</a>
+        </td>
+    </tr>
+    </thead>
+    {% for user in all_users %}
+        <table class="table table-striped table-dark">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="2">
+                    <h1>{{ user.user.username }}</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Full name</h4>
+                </td>
+                <td colspan="2">
+                    <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Email</h4>
+                </td>
+                <td colspan="2">
+                    <h4>{{ user.user.email }}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <h4>
+                       Favorite tags
+                   </h4>
+                </td>
+                <td>
+                    {% for tag in user.favorite_tags.all %}
+                        <a href="" class="btn btn-dark">{{ tag.name }}</a>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <h4>
+                       Favorite genre
+                   </h4>
+                </td>
+                <td>
+                    {% for genre in user.favorite_genre.all %}
+                        <a href="" class="btn btn-dark">{{ genre.name }}</a>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <h4>
+                       Favorite developer
+                   </h4>
+                </td>
+                <td>
+                    <h4>
+                        {{ user.favorite_developer }}
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <a href="{% url 'delete-user' user.id %}" class="btn btn-dark btn-lg btn-block">Delete user</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
+
+

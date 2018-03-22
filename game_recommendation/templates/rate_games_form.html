@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="{% url 'recommend-by-rating' %}" method="post">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <td colspan="3">
+                    <h1>Rate games</h1>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in games_top_20 %}
+                <tr>
+                    <td><img src="{{ game.image.url }}" style=width:150px;height:150px;></td>
+                    <td><h1>{{ game.title }}</h1></td>
+                    {% csrf_token %}
+                    <td>
+                        <label class="container">LIKE
+                            <input type="radio" checked="checked" name={{ game.title|cut:' ' }} value='like'>
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">DISLIKE
+                            <input type="radio" name={{ game.title|cut:' ' }} value='dislike'>
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value='Send' class="tn btn-dark btn-lg btn-block">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+{% endblock %}

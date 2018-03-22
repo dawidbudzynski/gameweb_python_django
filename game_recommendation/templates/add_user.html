@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <td colspan="3">
+                <h1>ADD USER</h1>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    <table class="table table-striped table-dark">
+        <tr>
+            <td>
+                <form action="{% url 'add-user' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+                </form>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

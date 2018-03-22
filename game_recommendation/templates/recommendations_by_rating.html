@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <td colspan="3">
+                <h1>According to your answers:</h1>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <h4>YOUR FAVORITE GENRE</h4>
+            </th>
+            <th>
+                <h4>YOUR FAVORITE DEVELOPER</h4>
+            </th>
+            <th>
+                <h4>YOUR FAVORITE TAGS</h4>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <h4>{{ user_favorites.favorite_genre }}</h4>
+            </td>
+            <td>
+
+                <h4>{{ user_favorites.favorite_developer }}</h4>
+            </td>
+            <td>
+                {% for tag in user_favorites.favorite_tags_top_6 %}
+                    <a href="" class="btn btn-success">{{ tag.name }}</a><br>
+                {% endfor %}
+            </td>
+        </tr>
+        </thead>
+    </table>
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <td colspan="3">
+                <h1>Games you may like:</h1>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    {% for single_game_info in sorted_all_game_information %}
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <td colspan="4">
+                    <h1>{{ single_game_info.game.title }}</h1>
+                </td>
+            </tr>
+            </thead>
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"><h4>GAME INFO</h4></th>
+                <th scope="col">
+                    <div>
+                        <h3>SCORE: {{ single_game_info.match_score }}%
+                            {% if single_game_info.match_score >= 70 %}
+                                <i class="material-icons md-48">thumb_up</i>
+                            {% elif single_game_info.match_score > 50 %}
+                                <i class="material-icons md-48">thumbs_up_down</i>
+                            {% else %}
+                                <i class="material-icons md-48">thumb_down</i>
+                            {% endif %}
+                        </h3>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><h4>GENRE</h4></td>
+                <td>
+                    {% for genre in single_game_info.game.genre.all %}
+                        <p>{{ genre.name }}</p>
+                    {% endfor %}
+                    {% if single_game_info.genre_match == True %}
+                        <a href="" class="btn btn-success">
+                            MATCH
+                            <i class="material-icons">sentiment_very_satisfied</i>
+                        </a><br>
+                    {% else %}
+                        <a href="" class="btn btn-secondary">
+                            NO MATCH
+                            <i class="material-icons">sentiment_very_dissatisfied</i>
+                        </a><br>
+                    {% endif %}
+                </td>
+                <td rowspan="5">
+                    <img src="{{ single_game_info.game.image.url }}" style=width:400px;height:400px;>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>DEVELOPER</h4></td>
+                <td>
+                    <p>{{ single_game_info.game.developer }}</p>
+                    {% if single_game_info.developer_match == True %}
+                        <a href="" class="btn btn-success">
+                            MATCH
+                            <i class="material-icons">sentiment_very_satisfied</i>
+                        </a><br>
+                    {% else %}
+                        <a href="" class="btn btn-secondary">
+                            NO MATCH
+                            <i class="material-icons">sentiment_very_dissatisfied</i>
+                        </a><br>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>MATCHING TAGS</h4></td>
+                <td>
+                    {% for game_tag in single_game_info.matched_tags %}
+                        <a href="" class="btn btn-success">{{ game_tag.name }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>OTHER TAGS</h4></td>
+                <td>
+                    {% for game_tag in single_game_info.unmatched_tags %}
+                        <a href="" class="btn btn-secondary">{{ game_tag.name }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>YEAR</h4></td>
+                <td>
+                    <h4>{{ single_game_info.game.year }}</h4>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
