@@ -455,13 +455,8 @@ class RecommendByRating(LoginRequiredMixin, View):
     def post(self, request):
         games_top_20 = Game.objects.filter(top_20=True)
         all_games = Game.objects.all()
-        games_not_rated = []
-        for game_1 in all_games:
-            for game_2 in games_top_20:
-                if game_1.title != game_2.title:
-                    games_not_rated.append(game_1)
 
-        set(games_not_rated)
+        games_not_rated= list(set(all_games) - set(games_top_20))
 
         all_games_all_information = []
         sorted_all_game_information = []
@@ -556,7 +551,7 @@ class RecommendByRating(LoginRequiredMixin, View):
             sorted_all_game_information.reverse()
         user_favorites.update({'favorite_tags_top_6': favorite_tags_top_6, 'favorite_genre': favorite_genre,
                                'favorite_developer': favorite_developer})
-
+        print(games_not_rated)
         ctx = {
             'sorted_all_game_information': sorted_all_game_information,
             'user_favorites': user_favorites

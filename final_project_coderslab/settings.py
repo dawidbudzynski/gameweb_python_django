@@ -25,7 +25,9 @@ SECRET_KEY = 'c9d1p7vo@y%r!4_9#b!5au9ye)_p$77slzsz%8$(4!(=4yhgyw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
+
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -80,10 +82,14 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 #         'NAME': 'projekt_koncowy2',
 #         'USER': 'root',
 #         'PASSWORD': 'coderslab',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'HOST': 'localhost',
 #         'PORT': '3306',
 #     }
 # }
+
+
+# DATABASE FOR PYTHONANYWHERE
+
 
 DATABASES = {
     'default': {
