@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dawidb.mysql.pythonanywhere-services.com',
+        # 'NAME': 'dawidb.mysql.pythonanywhere-services.com',
         'USER': 'dawidb',
         'PASSWORD': 'coderslab',
         'HOST': 'dawidb.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
