@@ -454,11 +454,19 @@ class RecommendByRating(LoginRequiredMixin, View):
 
     def post(self, request):
         games_top_20 = Game.objects.filter(top_20=True)
+        all_games = Game.objects.all()
+        games_not_rated = []
+        for game_1 in all_games:
+            for game_2 in games_top_20:
+                if game_1.title != game_2.title:
+                    games_not_rated.append(game_1)
+
+        set(games_not_rated)
 
         all_games_all_information = []
         sorted_all_game_information = []
         liked_games = []
-        disliked_gamed = []
+        disliked_games = []
         liked_tags = []
         favorite_tags_top_6 = []
         liked_genres = []
@@ -473,7 +481,7 @@ class RecommendByRating(LoginRequiredMixin, View):
             if like_or_dislike == 'like':
                 liked_games.append(game)
             elif like_or_dislike == 'dislike':
-                disliked_gamed.append(game)
+                disliked_games.append(game)
 
         for game in liked_games:
             for tag in game.tags.all():
@@ -506,7 +514,7 @@ class RecommendByRating(LoginRequiredMixin, View):
         for element in sorted_developers:
             favorite_developer = element[0]
 
-        for game in games_top_20:
+        for game in games_not_rated:
             single_game_all_information = {}
             matched_tags = []
             unmatched_tags = []

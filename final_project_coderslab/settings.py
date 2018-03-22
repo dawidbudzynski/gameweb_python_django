@@ -76,11 +76,12 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'HOST': '127.0.0.1',
-#         'NAME': 'projekt_koncowy',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'USER': 'postgres',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'projekt_koncowy2',
+#         'USER': 'root',
 #         'PASSWORD': 'coderslab',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
 #     }
 # }
 
