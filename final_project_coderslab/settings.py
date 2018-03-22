@@ -90,8 +90,8 @@ DATABASES = {
         'NAME': 'dawidb.mysql.pythonanywhere-services.com',
         'USER': 'dawidb',
         'PASSWORD': 'coderslab',
-        # 'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        # 'PORT': '3306',
+        'HOST': 'mysql.server',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 
