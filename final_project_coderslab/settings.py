@@ -25,9 +25,9 @@ SECRET_KEY = 'c9d1p7vo@y%r!4_9#b!5au9ye)_p$77slzsz%8$(4!(=4yhgyw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
+ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -76,30 +76,30 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projekt_koncowy2',
-        'USER': 'root',
-        'PASSWORD': 'coderslab',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'projekt_koncowy2',
+#         'USER': 'root',
+#         'PASSWORD': 'coderslab',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # DATABASE FOR PYTHONANYWHERE
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'dawidb$default',
-#         'USER': 'dawidb',
-#         'PASSWORD': 'coderslab',
-#         'HOST': 'dawidb.mysql.pythonanywhere-services.com',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dawidb$default',
+        'USER': 'dawidb',
+        'PASSWORD': 'coderslab',
+        'HOST': 'dawidb.mysql.pythonanywhere-services.com',
+    }
+}
 
 
 # Password validation
