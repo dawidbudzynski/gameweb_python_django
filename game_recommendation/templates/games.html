@@ -33,7 +33,7 @@
                         <h5>{{ genre.name }}</h5>
                     {% endfor %}
                 </td>
-                <td rowspan="4">
+                <td rowspan="4" style="text-align: center">
                     <img src="{{ game.image.url }}" style=width:400px;height:400px;>
                 </td>
             </tr>
@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <th scope="row">TAGS</th>
-                <td>
+                <td style="text-align:center">
                     {% for tag in game.tags.all %}
                         <a href="" class="btn btn-secondary">{{ tag.name }}</a><br>
                     {% endfor %}

@@ -1,5 +1,6 @@
 from collections import Counter
 from operator import itemgetter
+import requests
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -561,3 +562,20 @@ class RecommendByRating(LoginRequiredMixin, View):
         return render(request,
                       template_name='recommendations_by_rating.html',
                       context=ctx)
+
+# APU IGN NEWS
+
+class APINewsView(View):
+    def get(self, request):
+
+        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey=f4d06fc35da34539bb7220eb90d70504')
+
+        response = requests.get(url)
+
+        ctx = {
+            'response': response.json()['articles']
+        }
+        return render(request,
+                      template_name='base.html',
+                      context=ctx)
+

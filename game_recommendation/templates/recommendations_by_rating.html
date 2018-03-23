@@ -26,7 +26,7 @@
 
                 <h4>{{ user_favorites.favorite_developer }}</h4>
             </td>
-            <td>
+            <td style="text-align:center">
                 {% for tag in user_favorites.favorite_tags_top_6 %}
                     <a href="" class="btn btn-success">{{ tag.name }}</a><br>
                 {% endfor %}
@@ -75,7 +75,7 @@
             <tbody>
             <tr>
                 <td><h4>GENRE</h4></td>
-                <td>
+                <td style="text-align:center">
                     {% for genre in single_game_info.game.genre.all %}
                         <p>{{ genre.name }}</p>
                     {% endfor %}
@@ -91,13 +91,13 @@
                         </a><br>
                     {% endif %}
                 </td>
-                <td rowspan="5">
-                    <img src="{{ single_game_info.game.image.url }}" style=width:400px;height:400px;>
+                <td rowspan="5" style="text-align:center">
+                    <img src="{{ single_game_info.game.image.url }}" style=width:500px;height:500px;>
                 </td>
             </tr>
             <tr>
                 <td><h4>DEVELOPER</h4></td>
-                <td>
+                <td style="text-align:center">
                     <p>{{ single_game_info.game.developer }}</p>
                     {% if single_game_info.developer_match == True %}
                         <a href="" class="btn btn-success">
@@ -114,7 +114,7 @@
             </tr>
             <tr>
                 <td><h4>MATCHING TAGS</h4></td>
-                <td>
+                <td style="text-align:center">
                     {% for game_tag in single_game_info.matched_tags %}
                         <a href="" class="btn btn-success">{{ game_tag.name }}</a><br>
                     {% endfor %}
@@ -122,7 +122,7 @@
             </tr>
             <tr>
                 <td><h4>OTHER TAGS</h4></td>
-                <td>
+                <td style="text-align:center">
                     {% for game_tag in single_game_info.unmatched_tags %}
                         <a href="" class="btn btn-secondary">{{ game_tag.name }}</a><br>
                     {% endfor %}
