@@ -17,11 +17,11 @@
                     {% csrf_token %}
                     <td>
                         <label class="container">LIKE
-                            <input type="radio" checked="checked" name={{ game.title|cut:' ' }} value='like'>
+                            <input type="radio" checked="checked" name="game_{{ game.id }}" value='like'>
                             <span class="checkmark"></span>
                         </label>
                         <label class="container">DISLIKE
-                            <input type="radio" name={{ game.title|cut:' ' }} value='dislike'>
+                            <input type="radio" name="game_{{ game.id }}" value='dislike'>
                             <span class="checkmark"></span>
                         </label>
                     </td>

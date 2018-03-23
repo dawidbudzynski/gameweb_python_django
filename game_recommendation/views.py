@@ -471,8 +471,9 @@ class RecommendByRating(LoginRequiredMixin, View):
         user_favorites = {}
 
         # sorting games: liked or disliked
+
         for game in games_top_20:
-            like_or_dislike = request.POST[game.title]
+            like_or_dislike = request.POST["game_{}".format(game.id)]
             if like_or_dislike == 'like':
                 liked_games.append(game)
             elif like_or_dislike == 'dislike':
