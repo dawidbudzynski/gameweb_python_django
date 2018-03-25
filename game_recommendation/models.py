@@ -41,7 +41,7 @@ class Game(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField(null=True)
     year = models.IntegerField(choices=YEARS)
-    developer = models.ForeignKey(Developer, on_delete=None)
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     genre = models.ManyToManyField(Genre)
     image = models.ImageField(upload_to='images/', null=True)

@@ -69,7 +69,7 @@ urlpatterns = [
          name='delete-tag'),
     path('delete_genre/<genre_id>', DeleteGenreView.as_view(),
          name='delete-genre'),
-    path('delete_developer/<developer_id>', DeleteDeveloperView.as_view(),
+    path('delete_developer/<developer_pk>', DeleteDeveloperView.as_view(),
          name='delete-developer'),
     path('recommend_game_by_rating', RecommendByRating.as_view(),
          name='recommend-by-rating'),

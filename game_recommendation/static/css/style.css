@@ -40,7 +40,7 @@ img {
     border-radius: 8px;
 }
 
-p, ul, ol, li, a {
+p, ul, ol, li, a, th {
     color: mintcream;
 }
 a:hover {
@@ -89,6 +89,9 @@ input[type="checkbox"] {
     margin-left: auto;
     margin-right: auto;
 }
+.btn-secondary:hover {
+    background-color: #535f6b;
+}
 
 .btn-success {
     align-self: center;
@@ -102,8 +105,15 @@ input[type="checkbox"] {
     background-color: lightslategray;
     border: none;
 }
+.btn-dark:hover {
+    background-color: #535f6b;
+}
 .btn-group-justified > .btn-group:nth-of-type(odd) {
   width: .25%;
+}
+.btn-danger {
+    width: 200px;
+    border: none;
 }
 
 

@@ -218,8 +218,9 @@ class DeleteDeveloperView(PermissionRequiredMixin, View):
     permission_required = 'game_recommendation.delete_developer'
     raise_exception = True
 
-    def get(self, request, developer_id):
-        developer = Developer.objects.get(pk=developer_id)
+    def get(self, request, developer_pk):
+        developer = Developer.objects.get(pk=developer_pk)
+        print(developer)
         developer.delete()
 
         return HttpResponseRedirect('/developers')
