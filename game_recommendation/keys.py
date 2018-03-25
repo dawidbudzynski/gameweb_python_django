@@ -1,3 +1,3 @@
-api_key = 'f52e64d1958f4d01995cc109f44685d0'
+api_key = '0000'
 #local db
 db_pass = 'coderslab'
