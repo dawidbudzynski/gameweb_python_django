@@ -44,7 +44,7 @@ class Game(models.Model):
     developer = models.ForeignKey(Developer, on_delete=None)
     tags = models.ManyToManyField(Tag)
     genre = models.ManyToManyField(Genre)
-    image = models.ImageField(upload_to = 'images/', null=True)
+    image = models.ImageField(upload_to='images/', null=True)
     top_20 = models.NullBooleanField(null=True)
 
 

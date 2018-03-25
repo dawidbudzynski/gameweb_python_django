@@ -1,14 +1,13 @@
 from collections import Counter
 from operator import itemgetter
-import requests
 
+import requests
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.models import User as DjangoUser
-from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
-from django.contrib.auth.decorators import login_required
 
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
 from .models import (User, Tag, Game, Genre, Developer)
@@ -457,7 +456,7 @@ class RecommendByRating(LoginRequiredMixin, View):
         games_top_20 = Game.objects.filter(top_20=True)
         all_games = Game.objects.all()
 
-        games_not_rated= list(set(all_games) - set(games_top_20))
+        games_not_rated = list(set(all_games) - set(games_top_20))
 
         all_games_all_information = []
         sorted_all_game_information = []
@@ -563,12 +562,12 @@ class RecommendByRating(LoginRequiredMixin, View):
                       template_name='recommendations_by_rating.html',
                       context=ctx)
 
+
 # APU IGN NEWS
 
 class APINewsView(View):
     def get(self, request):
-
-        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey=f4d06fc35da34539bb7220eb90d70504')
+        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey=ec1037eb7ba1406abdcc975d02076196')
 
         response = requests.get(url)
 
@@ -578,4 +577,3 @@ class APINewsView(View):
         return render(request,
                       template_name='base.html',
                       context=ctx)
-
