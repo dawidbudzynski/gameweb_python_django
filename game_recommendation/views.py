@@ -8,6 +8,7 @@ from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
+from .keys import api_key
 
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
 from .models import (User, Tag, Game, Genre, Developer)
@@ -567,7 +568,7 @@ class RecommendByRating(LoginRequiredMixin, View):
 
 class APINewsView(View):
     def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey=ec1037eb7ba1406abdcc975d02076196')
+        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey={}'.format(api_key))
 
         response = requests.get(url)
 

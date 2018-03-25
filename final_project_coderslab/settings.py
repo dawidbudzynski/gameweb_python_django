@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from game_recommendation.keys import db_pass
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -96,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dawidb$default',
         'USER': 'dawidb',
-        'PASSWORD': 'coderslab',
+        'PASSWORD': '{}'.format(db_pass),
         'HOST': 'dawidb.mysql.pythonanywhere-services.com',
     }
 }
