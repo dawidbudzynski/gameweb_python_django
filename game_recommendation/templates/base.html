@@ -52,7 +52,7 @@
 
     <div class="content">
         <div class="header">
-            <table class="table table-striped table-dark">
+            <table class="table">
                 <thead>
                 <tr>
                     <td>
@@ -64,7 +64,7 @@
         </div>
         <p></p>
         {% block content %}
-            <table class="table table-striped table-dark">
+            <table class="table">
                 <thead>
                 <tr>
                     <td colspan="3">
@@ -74,23 +74,23 @@
                 </thead>
             </table>
             {% for item in response %}
-                <table class="table table-striped table-dark">
+                <table class="table">
                     <tr>
                         <td>
                             <h1>{{ item.title }}</h1>
                         </td>
-                        <td rowspan="3">
-                            <img src="{{ item.urlToImage }}" alt="'No image" style=width:400px;height:400px;float:right>
+                        <td rowspan="2">
+                            <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:300px;float:right>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td rowspan="2">
                             <h3>{{ item.description }}</h3>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="{{ item.url }}" class="btn btn-dark btn-lg btn-block">Go to this news</a>
+                            <a href="{{ item.url }}" class="btn btn-secondary btn-lg btn-block">Go to this news</a>
                         </td>
                     </tr>
                 </table>

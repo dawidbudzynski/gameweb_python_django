@@ -219,7 +219,7 @@ class DeleteDeveloperView(PermissionRequiredMixin, View):
     raise_exception = True
 
     def get(self, request, developer_id):
-        developer = Developer.objects.get(id=developer_id)
+        developer = Developer.objects.get(pk=developer_id)
         developer.delete()
 
         return HttpResponseRedirect('/developers')

@@ -22,12 +22,16 @@
             <tbody>
             <tr>
                 <td>
-                    <a href="" class="btn btn-light btn-lg btn-block">{{ genre.name }}</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="{% url 'delete-genre' genre.id %}" class="btn btn-dark btn-lg btn-block">Delete genre</a>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" style="width: 1000px">
+                            {{ genre.name }}
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            <a href="{% url 'delete-genre' genre.id %}">
+                                Delete genre
+                            </a>
+                        </button>
+                    </div>
                 </td>
             </tr>
             </tbody>

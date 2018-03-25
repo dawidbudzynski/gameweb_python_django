@@ -22,13 +22,16 @@
             <tbody>
             <tr>
                 <td>
-                    <a href="" class="btn btn-light btn-lg btn-block">{{ developer.name }}</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="{% url 'delete-developer' developer.id %}"
-                       class="btn btn-dark btn-lg btn-block">Delete developer</a>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" style="width: 1000px">
+                            {{ developer.name }}
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                            <a href="{% url 'delete-developer' developer.id %}">
+                                Delete developer
+                            </a>
+                        </button>
+                    </div>
                 </td>
             </tr>
             </tbody>
