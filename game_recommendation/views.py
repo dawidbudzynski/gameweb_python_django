@@ -569,7 +569,7 @@ class RecommendByRating(LoginRequiredMixin, View):
 
 class APINewsView(View):
     def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey={}'.format(api_key))
+        url = ('https://newsapi.org/v2/top-headlines?sources=polygon&apiKey={}'.format(api_key))
 
         response = requests.get(url)
 

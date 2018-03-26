@@ -1,7 +1,6 @@
 body {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
-    /*background-image: url("/static/img/wall.jpg");*/
-    background-color: #BAB2B5;
+    background-color: lightsteelblue;
 }
 .buttons_and_login {
     width: 100%;
@@ -48,11 +47,11 @@ a:hover {
     text-decoration: none;
 }
 h1, h2, h3, h4, h5, h6 {
-    color: #C5C6C7;
+    color: mintcream;
     text-align: center;
 }
 .table {
-    background-color: dimgray;
+    background-color: slategray;
     border-radius: 15px;
     border: none;
 }
@@ -100,10 +99,6 @@ input[type="checkbox"] {
     width: 250px;
     margin-left: auto;
     margin-right: auto;
-}
-.btn-dark {
-    background-color: lightslategray;
-    border: none;
 }
 .btn-dark:hover {
     background-color: #535f6b;
