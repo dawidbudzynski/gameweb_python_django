@@ -77,30 +77,30 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projekt_koncowy2',
-        'USER': 'root',
-        'PASSWORD': 'coderslab',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'projekt_koncowy2',
+#         'USER': 'root',
+#         'PASSWORD': 'coderslab',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # DATABASE FOR PYTHONANYWHERE
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'dawidb$default',
-#         'USER': 'dawidb',
-#         'PASSWORD': '{}'.format(db_pass),
-#         'HOST': 'dawidb.mysql.pythonanywhere-services.com',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dawidb$default',
+        'USER': 'dawidb',
+        'PASSWORD': '{}'.format(db_pass),
+        'HOST': 'dawidb.mysql.pythonanywhere-services.com',
+    }
+}
 
 
 # Password validation
