@@ -17,7 +17,7 @@
                 <p></p>
                 <a class="btn btn-secondary" href="{% url 'logout' %}">Logout</a><br>
                 <p></p>
-                <a class="btn btn-secondary" href="{% url 'add-user' %}">Register</a>
+                <a class="btn btn-secondary" style=visibility:hidden></a>
             {% else %}
                 <a class="btn btn-secondary" href="">USER: None</a>
                 <p></p>
@@ -80,7 +80,7 @@
                             <h1>{{ item.title }}</h1>
                         </td>
                         <td rowspan="2">
-                            <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:300px;float:right>
+                            <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:200px;float:right>
                         </td>
                     </tr>
                     <tr>

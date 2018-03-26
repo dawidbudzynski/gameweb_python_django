@@ -252,7 +252,7 @@ class AddGameView(View):
         form = AddGameForm(request.POST, request.FILES)
         if form.is_valid():
             title = form.cleaned_data['title']
-            description = form.cleaned_data['description']
+            # description = form.cleaned_data['description']
             year = form.cleaned_data['year']
             developer = form.cleaned_data['developer']
             genre = form.cleaned_data['genre']
@@ -270,7 +270,7 @@ class AddGameView(View):
             if Game.objects.filter(title=title).exists():
                 return HttpResponseRedirect('/object_already_exist')
 
-            new_game = Game.objects.create(title=title, description=description, year=year,
+            new_game = Game.objects.create(title=title, year=year,
                                            developer=developer, image=image, top_20=top_20)
 
             new_game.genre.add(genre)
@@ -307,20 +307,31 @@ class DeleteGameView(PermissionRequiredMixin, View):
 # LOGIN
 
 class LoginUserView(View):
+
     def get(self, request):
-        form = LoginUserForm().as_p()
-        ctx = {
-            'form': form
-        }
-        return render(request,
-                      template_name='login.html',
-                      context=ctx)
+        loggedUser = request.session.get('loggedUser')
+        if loggedUser is None:
+            form = LoginUserForm().as_p()
+            ctx = {
+                'form': form
+            }
+            print(loggedUser)
+            return render(request,
+                          template_name='login.html',
+                          context=ctx)
+
+        else:
+            name_to_display = loggedUser
+            del request.session['loggedUser']
+            print(loggedUser)
+            return HttpResponse('Welcome: {} - from session.'.format(name_to_display, ))
 
     def post(self, request):
         form = LoginUserForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            request.session['loggedUser'] = username
             user = authenticate(username=username, password=password)
 
             if user is not None:

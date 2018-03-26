@@ -38,7 +38,7 @@ class AddDeveloperForm(Form):
 
 class AddGameForm(Form):
     title = CharField(max_length=64)
-    description = CharField(widget=Textarea, required=False)
+    # description = CharField(widget=Textarea, required=False)
     year = ChoiceField(choices=SORTED_YEARS)
     developer = ModelChoiceField(queryset=all_developers.order_by('name'),
                                  widget=Select)

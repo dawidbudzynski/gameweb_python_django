@@ -26,9 +26,9 @@ SECRET_KEY = 'c9d1p7vo@y%r!4_9#b!5au9ye)_p$77slzsz%8$(4!(=4yhgyw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
+ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -145,5 +145,8 @@ MEDIA_URL = '/media/'
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
 MEDIA_ROOT = (os.path.join(BASE_DIR,  'game_recommendation/media'))
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_AGE = 1 * 60
 
 
