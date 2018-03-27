@@ -4,3 +4,4 @@ $('input[name="tags"]').on('change', function(evt) {
        this.checked = false;
    }
 });
+

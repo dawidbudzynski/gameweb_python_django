@@ -148,5 +148,6 @@ MEDIA_ROOT = (os.path.join(BASE_DIR,  'game_recommendation/media'))
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SESSION_COOKIE_AGE = 1 * 60
+LOGIN_URL = '/login'
 
 

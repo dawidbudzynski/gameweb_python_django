@@ -324,7 +324,7 @@ class LoginUserView(View):
             name_to_display = loggedUser
             del request.session['loggedUser']
             print(loggedUser)
-            return HttpResponse('Welcome: {} - from session.'.format(name_to_display, ))
+            return HttpResponseRedirect('/')
 
     def post(self, request):
         form = LoginUserForm(request.POST)
@@ -351,14 +351,7 @@ class LogoutUserView(View):
 
 # RECOMMENDATIONS
 
-class ExperienceChoiceView(View):
-    def get(self, request):
-        return render(request,
-                      template_name='choose_experience_level.html')
-
-
 class RecommendManually(LoginRequiredMixin, View):
-    raise_exception = True
 
     def get(self, request):
         form = ChooseTagsForm().as_p()
@@ -418,8 +411,8 @@ class RecommendManually(LoginRequiredMixin, View):
                 elif game_object.developer.name != developer.name:
                     developer_match = False
                 for user_tag in game[1]:
-                    tag_object = Tag.objects.get(name=user_tag)
-                    # tag_objects_list.append(tag_object)
+                    # tag_object = Tag.objects.get(name=user_tag)
+                    # # tag_objects_list.append(tag_object)
                     match_score += 10
                     for game_tag in game_object.tags.all():
                         if user_tag == game_tag.name:
@@ -453,7 +446,6 @@ class RecommendManually(LoginRequiredMixin, View):
 
 
 class RecommendByRating(LoginRequiredMixin, View):
-    raise_exception = True
 
     def get(self, request):
         games_top_20 = Game.objects.filter(top_20=True)

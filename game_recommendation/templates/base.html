@@ -9,98 +9,117 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-<div class="buttons_and_login">
-    <div class="sidebar">
-        <div class="login">
-            {% if request.user.is_authenticated %}
-                <a class="btn btn-secondary" href="">USER: {{ request.user.username }}</a>
-                <p></p>
-                <a class="btn btn-secondary" href="{% url 'logout' %}">Logout</a><br>
-                <p></p>
-                <a class="btn btn-secondary" style=visibility:hidden></a>
-            {% else %}
-                <a class="btn btn-secondary" href="">USER: None</a>
-                <p></p>
-                <a class="btn btn-secondary" href="{% url 'login' %}">Login</a><br>
-                <p></p>
-                <a class="btn btn-secondary" href="{% url 'add-user' %}">Register</a>
-            {% endif %}
-        </div>
-        <div class="buttons">
-            <a href="{% url 'mainpage' %}" class="btn btn-secondary">Main page</a>
-            <br>
-            <p></p>
-            <a href="{% url 'experience-choice' %}" class="btn btn-secondary">Recommend game</a>
-            <br>
-            <p></p>
-            <a href="{% url 'users' %}" class="btn btn-secondary">User list</a>
-            <br>
-            <p></p>
-            <a href="{% url 'games' %}" class="btn btn-secondary">Game list</a>
-            <br>
-            <p></p>
-            <a href="{% url 'developers' %}" class="btn btn-secondary">Developer list</a>
-            <br>
-            <p></p>
-            <a href="{% url 'genres' %}" class="btn btn-secondary">Genre list</a>
-            <br>
-            <p></p>
-            <a href="{% url 'tags' %}" class="btn btn-secondary">Tag list</a>
-            <br>
-        </div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'mainpage' %}">Main page</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Recommend game
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'recommend-by-tags' %}">Recommend by tags</a>
+                    <a class="dropdown-item" href="{% url 'recommend-by-rating' %}">Recommend by rated games</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'games' %}">Game list</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Other lists
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'developers' %}">Developers</a>
+                    <a class="dropdown-item" href="{% url 'genres' %}">Genres</a>
+                    <a class="dropdown-item" href="{% url 'tags' %}">Tags</a>
+                </div>
+            </li>
+        </ul>
     </div>
-
-    <div class="content">
-        <div class="header">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" style=visibility:hidden></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=""><b>USER: {{ request.user.username }}</b></a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add-user' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=""><b>USER: None</b></a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron">
+    <h1 class="display-4">Games Recommendations</h1>
+</div>
+<div class="content">
+    {% block content %}
+        <table class="table">
+            <thead>
+            <tr>
+                <td colspan="3">
+                    <h1>GAMING NEWS</h1>
+                </td>
+            </tr>
+            </thead>
+        </table>
+        {% for item in response %}
             <table class="table">
-                <thead>
                 <tr>
                     <td>
-                        <h1>GAME RECOMMENDATIONS</h1>
+                        <h1>{{ item.title }}</h1>
+                    </td>
+                    <td rowspan="2">
+                        <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:200px;float:right>
                     </td>
                 </tr>
-                </thead>
-            </table>
-        </div>
-        <p></p>
-        {% block content %}
-            <table class="table">
-                <thead>
                 <tr>
-                    <td colspan="3">
-                        <h1>GAMING NEWS</h1>
+                    <td rowspan="2">
+                        <h3>{{ item.description }}</h3>
                     </td>
                 </tr>
-                </thead>
+                <tr>
+                    <td>
+                        <a href="{{ item.url }}" class="btn btn-dark btn-lg" style=float:right;width:300px>Go
+                            to this news</a>
+                    </td>
+                </tr>
             </table>
-            {% for item in response %}
-                <table class="table">
-                    <tr>
-                        <td>
-                            <h1>{{ item.title }}</h1>
-                        </td>
-                        <td rowspan="2">
-                            <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:200px;float:right>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">
-                            <h3>{{ item.description }}</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ item.url }}" class="btn btn-dark btn-lg" style=float:right;width:300px>Go
-                                to this news</a>
-                        </td>
-                    </tr>
-                </table>
-            {% endfor %}
-
-
-        {% endblock %}
-    </div>
+        {% endfor %}
+    {% endblock %}
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/js/main.js"></script>
 </body>

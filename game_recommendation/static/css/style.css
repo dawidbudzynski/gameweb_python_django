@@ -2,30 +2,18 @@ body {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
     background-color: lightsteelblue;
 }
-.buttons_and_login {
-    width: 100%;
+
+.jumbotron {
+    background-color: #6B6DD8;
 }
-.header {
-    padding-top: 30px;
-    padding-bottom: 10px;
-}
-.sidebar{
-     position: fixed;
-    float:left;
-}
-.login {
-    padding: 30px;
-    padding-left: 70px;
-}
-.buttons {
-    width: 30%;
-    padding: 30px;
-    padding-left: 70px;
+.jumbotron h1 {
+    color: mintcream;
 }
 .content {
-    float: right;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
     width: 80%;
-    padding-right: 100px;
 }
 .imgContainer {
     float: left;
@@ -51,9 +39,20 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 .table {
-    background-color: slategray;
+    background-color: #6534ff;
     border-radius: 15px;
-    border: none;
+}
+.navbar {
+    background-color: #6534ff;
+}
+.navbar.navbar-expand-lg.navbar-dark li a {
+    color: mintcream;
+}
+.navbar-nav>li>.dropdown-menu {
+    background-color: #6534ff ;
+}
+.navbar-nav>li>.dropdown-menu>a:hover {
+    background-color: #4D21D5 ;
 }
 
 .table>tbody>tr>td,
@@ -83,15 +82,14 @@ input[type="checkbox"] {
 }
 
 .btn-secondary {
-    background-color: lightslategray;
+    background-color: #6534ff;
     width: 250px;
     margin-left: auto;
     margin-right: auto;
 }
 .btn-secondary:hover {
-    background-color: #535f6b;
+    background-color: #4D21D5;
 }
-
 .btn-success {
     align-self: center;
     align-items: center;
@@ -100,8 +98,11 @@ input[type="checkbox"] {
     margin-left: auto;
     margin-right: auto;
 }
+.btn-dark {
+    background-color: #3C087A;
+}
 .btn-dark:hover {
-    background-color: #535f6b;
+    background-color: #2A045A;
 }
 .btn-group-justified > .btn-group:nth-of-type(odd) {
   width: .25%;

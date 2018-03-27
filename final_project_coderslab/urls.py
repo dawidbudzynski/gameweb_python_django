@@ -25,7 +25,7 @@ from game_recommendation.views import (MainPage, AddUserView, ShowUsersView, Del
                                        AddGameView, ShowGamesView, DeleteGameView,
                                        WrongValueView, ObjectAlreadyExistView, WrongPasswordView,
                                        LoginUserView, LogoutUserView,
-                                       RecommendManually, RecommendByRating, ExperienceChoiceView,
+                                       RecommendManually, RecommendByRating,
                                        APINewsView)
 
 urlpatterns = [
@@ -73,8 +73,6 @@ urlpatterns = [
          name='delete-developer'),
     path('recommend_game_by_rating', RecommendByRating.as_view(),
          name='recommend-by-rating'),
-    path('experience_level_choice', ExperienceChoiceView.as_view(),
-         name='experience-choice'),
 ]
 
 
