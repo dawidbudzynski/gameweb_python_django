@@ -9,7 +9,7 @@
 - recommending new games based on user's taste
 - displaying news using Polygon API
 
-**Requirements**
+**Requirements:**
 - Python 3.5+
 - Django 2.0+
 - mysqlclient 1.3.12
