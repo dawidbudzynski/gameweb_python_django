@@ -12,6 +12,7 @@ from django.views import View
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
 from .keys import api_key
 from .models import (User, Tag, Game, Genre, Developer)
+from .constants import *
 
 
 # Create your views here.
@@ -390,28 +391,26 @@ class RecommendManually(LoginRequiredMixin, View):
                 for game_genre in game_object.genre.all():
                     if game_genre.name == genre.name:
                         genre_match = True
-                        match_score += 14
+                        match_score += genre_match_constant
                     elif game_genre.name != genre.name:
                         genre_match = False
                 if game_object.developer.name == developer.name:
                     developer_match = True
-                    match_score += 14
+                    match_score += developer_match_constant
                 elif game_object.developer.name != developer.name:
                     developer_match = False
                 for user_tag in game[1]:
-                    match_score += 12
+                    match_score += tag_match_constant
                     for game_tag in game_object.tags.all():
                         if user_tag == game_tag.name:
                             matched_tags.append(game_tag)
                         else:
                             unmatched_tags.append(game_tag)
 
-
                 if len(matched_tags) > 0:
                     unmatched_tags = list(set(unmatched_tags) ^ set(matched_tags))
                 else:
                     unmatched_tags = list(set(unmatched_tags))
-
 
                 single_game_information.update(
                     {'game': game_object, 'genre_match': genre_match, 'developer_match': developer_match,
@@ -516,7 +515,7 @@ class RecommendByRating(LoginRequiredMixin, View):
                 for game_tag in game.tags.all():
                     if user_tag.name == game_tag.name:
                         matched_tags.append(game_tag)
-                        match_score += 12
+                        match_score += tag_match_constant
                     else:
                         unmatched_tags.append(game_tag)
 
@@ -524,7 +523,7 @@ class RecommendByRating(LoginRequiredMixin, View):
                 try:
                     if game_genre.name == favorite_genre.name:
                         genre_match = True
-                        match_score += 14
+                        match_score += genre_match_constant
                     elif game_genre.name != favorite_genre.name:
                         genre_match = False
                 except AttributeError:
@@ -532,7 +531,7 @@ class RecommendByRating(LoginRequiredMixin, View):
 
             if game.developer.name == favorite_developer.name:
                 developer_match = True
-                match_score += 14
+                match_score += developer_match_constant
             elif game.developer.name != favorite_developer.name:
                 developer_match = False
 
