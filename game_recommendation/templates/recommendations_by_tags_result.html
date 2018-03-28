@@ -55,7 +55,7 @@
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">GAME INFO</th>
+                <th scope="col"></th>
                 <th scope="col">
                     <div>
                         <h3>SCORE: {{ single_game_information.match_score }}%
@@ -73,7 +73,9 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row">GENRE</th>
+                <td>
+                    <h4><b>GENRE</b></h4>
+                </td>
                 <td style="text-align:center">
                     {% for genre in single_game_information.game.genre.all %}
                         <p>{{ genre.name }}</p>
@@ -95,7 +97,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">DEVELOPER</th>
+                <td>
+                    <h4><b>DEVELOPER</b></h4>
+                </td>
                 <td style="text-align:center">
                     <p>{{ single_game_information.game.developer }}</p>
                     {% if single_game_information.developer_match == True %}
@@ -113,7 +117,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">MATCHING TAGS</th>
+                <td>
+                    <h4><b>MATCHING TAGS</b></h4>
+                </td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_information.matched_tags %}
                         <a href="" class="btn btn-success">{{ game_tag.name }}</a><br>
@@ -121,7 +127,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">OTHER TAGS</th>
+                <td>
+                    <h4><b>OTHER TAGS</b></h4>
+                </td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_information.unmatched_tags %}
                         <a href="" class="btn btn-secondary">{{ game_tag.name }}</a><br>
@@ -129,7 +137,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">YEAR</th>
+                <td>
+                    <h4><b>YEAR</b></h4>
+                </td>
                 <td>
                     <p>{{ single_game_information.game.year }}</p>
                 </td>

@@ -2,7 +2,6 @@ body {
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
     background-color: lightsteelblue;
 }
-
 .jumbotron {
     background-color: #6B6DD8;
 }
@@ -13,31 +12,25 @@ div.textContent {
   display: none;
 }
 .content {
-    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
 }
-.imgContainer {
-    float: left;
-    margin: auto;
-    padding: 100px;
-    padding-left: 150px;
-}
 img {
     margin: auto;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-}
-
-p, ul, ol, li, a, th {
-    color: mintcream;
+    border: 3px solid mintcream;
+    border-radius: 10px;
 }
 a:hover {
     color: mintcream;
     text-decoration: none;
 }
-h1, h2, h3, h4, h5, h6 {
+th, h4 {
+    color: mintcream;
+    margin-left: 100px;
+    margin-right: auto;
+}
+h1, h2, h3, h5, h6, p {
     color: mintcream;
     text-align: center;
 }
@@ -58,7 +51,6 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-nav>li>.dropdown-menu>a:hover {
     background-color: #4D21D5 ;
 }
-
 .table>tbody>tr>td,
 .table>tbody>tr>th,
 .table>thead>tr>td,
@@ -115,8 +107,6 @@ input[type="checkbox"] {
     width: 200px;
     border: none;
 }
-
-
 input[type=text] {
     padding: 5px;
     border: 2px solid #ccc;

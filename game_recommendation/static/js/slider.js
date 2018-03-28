@@ -10,7 +10,7 @@ function slide() {
   if (cnt >= texts.length) cnt = 0;
   $('#textMessage').html(texts[cnt++]);
   $('#textMessage')
-    .fadeIn(3000)
-    .fadeOut(5000, slide);
+    .fadeIn(3000).delay(3000)
+    .fadeOut(3000, slide);
 }
 slide();

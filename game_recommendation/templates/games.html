@@ -28,7 +28,9 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row">GENRE</th>
+                <td>
+                    <h4><b>GENRE</b></h4>
+                </td>
                 <td>
                     {% for genre in game.genre.all %}
                         <h5>{{ genre.name }}</h5>
@@ -39,13 +41,17 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">DEVELOPER</th>
+                <td>
+                    <h4><b>DEVELOPER</b></h4>
+                </td>
                 <td>
                     <h5>{{ game.developer }}</h5>
                 </td>
             </tr>
             <tr>
-                <th scope="row">TAGS</th>
+                <td>
+                    <h4><b>TAGS</b></h4>
+                </td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
                         <a href="" class="btn btn-secondary">{{ tag.name }}</a><br>
@@ -53,7 +59,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">YEAR</th>
+                <td>
+                    <h4><b>YEAR</b></h4>
+                </td>
                 <td>
                     <h5>{{ game.year }}</h5>
                 </td>

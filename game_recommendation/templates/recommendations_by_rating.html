@@ -56,7 +56,7 @@
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col"><h4>GAME INFO</h4></th>
+                <th scope="col"></th>
                 <th scope="col">
                     <div>
                         <h3>SCORE: {{ single_game_info.match_score }}%
@@ -74,7 +74,7 @@
             </thead>
             <tbody>
             <tr>
-                <td><h4>GENRE</h4></td>
+                <td><h4><b>GENRE</b></h4></td>
                 <td style="text-align:center">
                     {% for genre in single_game_info.game.genre.all %}
                         <p>{{ genre.name }}</p>
@@ -96,7 +96,7 @@
                 </td>
             </tr>
             <tr>
-                <td><h4>DEVELOPER</h4></td>
+                <td><h4><b>DEVELOPER</b></h4></td>
                 <td style="text-align:center">
                     <p>{{ single_game_info.game.developer }}</p>
                     {% if single_game_info.developer_match == True %}
@@ -113,7 +113,7 @@
                 </td>
             </tr>
             <tr>
-                <td><h4>MATCHING TAGS</h4></td>
+                <td><h4><b>MATCHING TAGS</b></h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.matched_tags %}
                         <a href="" class="btn btn-success">{{ game_tag.name }}</a><br>
@@ -121,7 +121,7 @@
                 </td>
             </tr>
             <tr>
-                <td><h4>OTHER TAGS</h4></td>
+                <td><h4><b>OTHER TAGS</b></h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.unmatched_tags %}
                         <a href="" class="btn btn-secondary">{{ game_tag.name }}</a><br>
@@ -129,9 +129,9 @@
                 </td>
             </tr>
             <tr>
-                <td><h4>YEAR</h4></td>
+                <td><h4><b>YEAR</b></h4></td>
                 <td>
-                    <h4>{{ single_game_info.game.year }}</h4>
+                    <p>{{ single_game_info.game.year }}</p>
                 </td>
             </tr>
             </tbody>
