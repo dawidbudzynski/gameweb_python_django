@@ -50,7 +50,7 @@ h1, h2, h3, h5, h6, p, a, label {
 .table {
     border-collapse: separate !important;
     background-color: #E4E5EE;
-    border: 5px solid #6534ff;
+    border: 5px solid #420EE8;
     border-radius: 15px;
 }
 
@@ -114,7 +114,7 @@ input[type="checkbox"] {
 }
 
 .btn-secondary:hover {
-    background-color: #4D21D5;
+    background-color: #420EE8;
 }
 
 .btn-success {
@@ -127,11 +127,11 @@ input[type="checkbox"] {
 }
 
 .btn-dark {
-    background-color: #3C087A;
+    background-color: #6534ff;
 }
 
 .btn-dark:hover {
-    background-color: #2A045A;
+    background-color: #420EE8;
 }
 
 .btn-group-justified > .btn-group:nth-of-type(odd) {
