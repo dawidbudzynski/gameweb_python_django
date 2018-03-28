@@ -50,6 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .navbar.navbar-expand-lg.navbar-dark li a {
     color: mintcream;
+    font-size: 20px;
 }
 .navbar-nav>li>.dropdown-menu {
     background-color: #6534ff ;

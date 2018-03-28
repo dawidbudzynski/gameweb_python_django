@@ -11,7 +11,7 @@ from django.views import View
 
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
 from .keys import api_key
-from .models import (User, Tag, Game, Genre, Developer, GamingQuotes)
+from .models import (User, Tag, Game, Genre, Developer)
 
 
 # Create your views here.
@@ -31,17 +31,6 @@ class ObjectAlreadyExistView(View):
 class WrongPasswordView(View):
     def get(self, request):
         return render(request, template_name='wrong_password.html')
-
-
-# USERS
-
-# class MainPage(View):
-#     def get(self, request):
-#
-#         ctx = {'quotes': quotes}
-#         return render(request,
-#                       template_name='base.html',
-#                       context=ctx)
 
 
 class ShowUsersView(View):
@@ -256,7 +245,6 @@ class AddGameView(View):
         form = AddGameForm(request.POST, request.FILES)
         if form.is_valid():
             title = form.cleaned_data['title']
-            # description = form.cleaned_data['description']
             year = form.cleaned_data['year']
             developer = form.cleaned_data['developer']
             genre = form.cleaned_data['genre']
@@ -326,7 +314,6 @@ class LoginUserView(View):
         else:
             name_to_display = loggedUser
             del request.session['loggedUser']
-            print(loggedUser)
             return HttpResponseRedirect('/')
 
     def post(self, request):
@@ -394,7 +381,6 @@ class RecommendManually(LoginRequiredMixin, View):
 
             for game in all_games_with_common_tags:
                 single_game_information = {}
-                # tag_objects_list = []
                 genre_match = None
                 developer_match = None
                 matched_tags = []
@@ -413,8 +399,6 @@ class RecommendManually(LoginRequiredMixin, View):
                 elif game_object.developer.name != developer.name:
                     developer_match = False
                 for user_tag in game[1]:
-                    # tag_object = Tag.objects.get(name=user_tag)
-                    # # tag_objects_list.append(tag_object)
                     match_score += 10
                     for game_tag in game_object.tags.all():
                         if user_tag == game_tag.name:
@@ -575,13 +559,10 @@ class APINewsView(View):
     def get(self, request):
         url = ('https://newsapi.org/v2/top-headlines?sources=polygon&apiKey={}'.format(api_key))
 
-        all_quotes = GamingQuotes.objects.all()
-
         response = requests.get(url)
 
         ctx = {
             'response': response.json()['articles'],
-            'all_quotes': all_quotes
         }
         return render(request,
                       template_name='base.html',
