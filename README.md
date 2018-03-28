@@ -1,4 +1,4 @@
-# final_project
+# Game Picker
 
 **Simple website made in Django 2.0**
 
