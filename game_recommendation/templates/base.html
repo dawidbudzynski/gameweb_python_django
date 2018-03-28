@@ -44,6 +44,7 @@
                     <a class="dropdown-item" href="{% url 'developers' %}">Developers</a>
                     <a class="dropdown-item" href="{% url 'genres' %}">Genres</a>
                     <a class="dropdown-item" href="{% url 'tags' %}">Tags</a>
+                    <a class="dropdown-item" href="{% url 'about' %}">About</a>
                 </div>
             </li>
         </ul>
@@ -77,7 +78,13 @@
 
 
 <div class="jumbotron">
-    <h1 class="display-4">Games Recommendations</h1>
+<div>
+    <img src="/static/img/logo/logo.png" alt="No image" style="width: 230px;height: 230px; float: left; border: none;">
+</div>
+<div>
+    <img src="/static/img/logo/logo.png" alt="No image" style="width: 230px;height: 230px; float: right; border: none;">
+</div>
+    <h1 class="display-4" style="text-align: center">Game Picker</h1>
     <p></p>
     <div id="textMessage"></div>
     {% for quote in all_quotes %}
@@ -106,7 +113,8 @@
                         <h1>{{ item.title }}</h1>
                     </td>
                     <td rowspan="2">
-                        <img src="{{ item.urlToImage }}" alt="'No image" style=width:300px;height:200px;float:right>
+                        <img src="{{ item.urlToImage }}" alt="'No image"
+                             style='width:300px;height:200px;float:right; margin-right: 50px'>
                     </td>
                 </tr>
                 <tr>
@@ -116,7 +124,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="{{ item.url }}" class="btn btn-dark btn-lg" style=float:right;width:300px>Go
+                        <a href="{{ item.url }}" class="btn btn-dark btn-lg"
+                           style='float:right;width:300px; margin-right: 50px'>Go
                             to this news</a>
                     </td>
                 </tr>

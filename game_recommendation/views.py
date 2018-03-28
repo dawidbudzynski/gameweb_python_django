@@ -17,6 +17,13 @@ from .constants import *
 
 # Create your views here.
 
+# OTHER
+
+class AboutPageView(View):
+    def get(self, request):
+        return render(request, template_name='about.html')
+
+
 # ERRORS
 
 class WrongValueView(View):

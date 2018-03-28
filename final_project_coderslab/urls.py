@@ -26,12 +26,15 @@ from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserVie
                                        WrongValueView, ObjectAlreadyExistView, WrongPasswordView,
                                        LoginUserView, LogoutUserView,
                                        RecommendManually, RecommendByRating,
-                                       APINewsView)
+                                       APINewsView,
+                                       AboutPageView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', APINewsView.as_view(),
          name='mainpage'),
+    path('about/', AboutPageView.as_view(),
+         name='about'),
     path('users/', ShowUsersView.as_view(),
          name='users'),
     path('add_user/', AddUserView.as_view(),

@@ -1,7 +1,6 @@
 var cnt = 0,
   texts = [];
 
-// save the texts in an array for re-use
 $(".textContent").each(function() {
   texts[cnt++] = $(this).html();
 });

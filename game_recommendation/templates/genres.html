@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <table class="table table-striped table-dark">
+    <table class="table table-dark">
         <thead>
         <tr>
             <td>
@@ -19,15 +19,15 @@
     </tr>
     </thead>
     {% for genre in all_genres %}
-        <table class="table table-striped table-dark">
+        <table class="table table-dark">
             <tbody>
             <tr>
                 <td>
-                    <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary" style="width: 1000px">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Basic example" style="width: 100%;">
+                        <button type="button" class="btn btn-secondary" style="width: 80%">
                             {{ genre.name }}
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" style="width: 20%;">
                             <a href="{% url 'delete-genre' genre.id %}">
                                 Delete genre
                             </a>
