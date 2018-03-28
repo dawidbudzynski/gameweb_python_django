@@ -52,3 +52,7 @@ class GameScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     score = models.IntegerField(blank=True)
+
+class GamingQuotes(models.Model):
+    quote = models.CharField(max_length=256)
+    author = models.CharField(max_length=64)

@@ -74,8 +74,19 @@
         </ul>
     </div>
 </nav>
+
+
 <div class="jumbotron">
     <h1 class="display-4">Games Recommendations</h1>
+    <p></p>
+    <div id="textMessage"></div>
+    {% for quote in all_quotes %}
+    <div class="textContent">
+        <h2 style="padding:6px; color:mintcream; font-size:28px;">
+            {{ quote.quote }} - <em>{{ quote.author }}</em>
+        </h2>
+    </div>
+    {% endfor %}
 </div>
 <div class="content">
     {% block content %}
@@ -113,7 +124,7 @@
         {% endfor %}
     {% endblock %}
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -125,5 +136,7 @@
         crossorigin="anonymous"></script>
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/js/main.js"></script>
+<script src="/static/js/slider.js"></script>
+
 </body>
 </html>

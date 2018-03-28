@@ -9,6 +9,9 @@ body {
 .jumbotron h1 {
     color: mintcream;
 }
+div.textContent {
+  display: none;
+}
 .content {
     margin-top: 50px;
     margin-left: auto;

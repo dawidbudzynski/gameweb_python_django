@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from game_recommendation.views import (MainPage, AddUserView, ShowUsersView, DeleteUserView,
+from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserView,
                                        ShowTagsView, AddTagView, DeleteTagView,
                                        AddGenreView, ShowGenreView, DeleteGenreView,
                                        AddDeveloperView, ShowDevelopersView, DeleteDeveloperView,

@@ -8,10 +8,10 @@ from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
-from .keys import api_key
 
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
-from .models import (User, Tag, Game, Genre, Developer)
+from .keys import api_key
+from .models import (User, Tag, Game, Genre, Developer, GamingQuotes)
 
 
 # Create your views here.
@@ -35,9 +35,13 @@ class WrongPasswordView(View):
 
 # USERS
 
-class MainPage(View):
-    def get(self, request):
-        return render(request, template_name='base.html')
+# class MainPage(View):
+#     def get(self, request):
+#
+#         ctx = {'quotes': quotes}
+#         return render(request,
+#                       template_name='base.html',
+#                       context=ctx)
 
 
 class ShowUsersView(View):
@@ -307,7 +311,6 @@ class DeleteGameView(PermissionRequiredMixin, View):
 # LOGIN
 
 class LoginUserView(View):
-
     def get(self, request):
         loggedUser = request.session.get('loggedUser')
         if loggedUser is None:
@@ -352,7 +355,6 @@ class LogoutUserView(View):
 # RECOMMENDATIONS
 
 class RecommendManually(LoginRequiredMixin, View):
-
     def get(self, request):
         form = ChooseTagsForm().as_p()
         ctx = {
@@ -446,7 +448,6 @@ class RecommendManually(LoginRequiredMixin, View):
 
 
 class RecommendByRating(LoginRequiredMixin, View):
-
     def get(self, request):
         games_top_20 = Game.objects.filter(top_20=True)
 
@@ -574,10 +575,13 @@ class APINewsView(View):
     def get(self, request):
         url = ('https://newsapi.org/v2/top-headlines?sources=polygon&apiKey={}'.format(api_key))
 
+        all_quotes = GamingQuotes.objects.all()
+
         response = requests.get(url)
 
         ctx = {
-            'response': response.json()['articles']
+            'response': response.json()['articles'],
+            'all_quotes': all_quotes
         }
         return render(request,
                       template_name='base.html',
