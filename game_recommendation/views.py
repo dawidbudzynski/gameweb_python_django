@@ -266,6 +266,19 @@ class ShowDevelopersView(View):
                       template_name='developers.html',
                       context=ctx)
 
+class ShowAllGamesWithDeveloperView(View):
+
+    def get(self, request, developer_id):
+        selected_developer = Developer.objects.get(id=developer_id)
+        all_games_with_developer = Game.objects.filter(developer=selected_developer)
+
+        ctx = {'all_games_with_developer': all_games_with_developer,
+               'selected_developer': selected_developer}
+
+        return render(request,
+                      template_name='all_games_with_selected_developer.html',
+                      context=ctx)
+
 
 # GAMES
 

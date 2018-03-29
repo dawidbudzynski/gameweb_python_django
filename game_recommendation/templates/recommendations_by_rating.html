@@ -21,12 +21,14 @@
         <tr>
             <td>
                 <h4>
-                    <a href="{% url 'show-genre' user_favorites.favorite_genre.id %}">{{ user_favorites.favorite_genre }}</a>
+                    <a href="{% url 'show-genre' user_favorites.favorite_genre.id %}">
+                        {{ user_favorites.favorite_genre }}</a>
                 </h4>
             </td>
             <td>
-
-                <h4>{{ user_favorites.favorite_developer }}</h4>
+                <h4><a href="{% url 'show-developer' user_favorites.favorite_developer.id %}">
+                    {{ user_favorites.favorite_developer }}
+                </a></h4>
             </td>
             <td style="text-align:center">
                 {% for tag in user_favorites.favorite_tags_top_6 %}
@@ -100,7 +102,10 @@
             <tr>
                 <td><h4><b>DEVELOPER</b></h4></td>
                 <td style="text-align:center">
-                    <p>{{ single_game_info.game.developer }}</p>
+                    <p>
+                        <a href="{% url 'show-developer' single_game_info.game.developer.id %}">
+                            {{ single_game_info.game.developer }}</a>
+                    </p>
                     {% if single_game_info.developer_match == True %}
                         <a href="" class="btn btn-success">
                             MATCH

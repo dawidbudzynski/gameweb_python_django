@@ -37,7 +37,9 @@
                     <h4><b>DEVELOPER</b></h4>
                 </td>
                 <td>
-                    <h5>{{ game.developer }}</h5>
+                    <h5><a href="{% url 'show-developer' game.developer.id %}">
+                        {{ game.developer }}
+                    </a></h5>
                 </td>
             </tr>
             <tr>

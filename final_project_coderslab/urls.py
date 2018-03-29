@@ -28,7 +28,7 @@ from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserVie
                                        RecommendManually, RecommendByRating,
                                        APINewsView,
                                        AboutPageView,
-                                       ShowAllGamesWithTagView, ShowAllGamesWithGenreView)
+                                       ShowAllGamesWithTagView, ShowAllGamesWithGenreView, ShowAllGamesWithDeveloperView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -81,8 +81,9 @@ urlpatterns = [
          name='show-tag'),
     path('show_games_with_genre/<genre_id>', ShowAllGamesWithGenreView.as_view(),
          name='show-genre'),
+    path('show_games_with_developer/<developer_id>', ShowAllGamesWithDeveloperView.as_view(),
+         name='show-developer'),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

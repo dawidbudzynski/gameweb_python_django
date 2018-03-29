@@ -25,7 +25,9 @@
                 </h4>
             </td>
             <td>
-                <h4>{{ user_favorites.favorite_developer }}</h4>
+                <h4><a href="{% url 'show-developer' user_favorites.favorite_developer.id %}">
+                    {{ user_favorites.favorite_developer }}
+                </a></h4>
             </td>
             <td style="text-align:center">
                 {% for tag in user_favorites.favorite_tags_top_6 %}
