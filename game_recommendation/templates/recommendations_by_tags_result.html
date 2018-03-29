@@ -105,7 +105,9 @@
                     <h4><b>DEVELOPER</b></h4>
                 </td>
                 <td style="text-align:center">
-                    <p>{{ single_game_information.game.developer }}</p>
+                    <p><a href="{% url 'show-developer' single_game_information.game.developer.id %}">
+                        {{ single_game_information.game.developer }}
+                    </a></p>
                     {% if single_game_information.developer_match == True %}
                         <a href="" class="btn btn-success">
                             MATCH
