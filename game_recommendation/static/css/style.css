@@ -47,6 +47,9 @@ h1, h2, h3, h5, h6, p, a, label {
     color: #2B2C5F;
     text-align: center;
 }
+a:hover {
+    color: darkblue;
+}
 
 .table {
     border-collapse: separate !important;

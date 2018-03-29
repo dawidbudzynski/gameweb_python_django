@@ -28,7 +28,7 @@ from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserVie
                                        RecommendManually, RecommendByRating,
                                        APINewsView,
                                        AboutPageView,
-                                       ShowAllGamesWithTagView)
+                                       ShowAllGamesWithTagView, ShowAllGamesWithGenreView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -79,6 +79,8 @@ urlpatterns = [
          name='recommend-by-rating'),
     path('show_games_with_tag/<tag_id>', ShowAllGamesWithTagView.as_view(),
          name='show-tag'),
+    path('show_games_with_genre/<genre_id>', ShowAllGamesWithGenreView.as_view(),
+         name='show-genre'),
 ]
 
 

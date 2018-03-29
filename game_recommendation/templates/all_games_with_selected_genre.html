@@ -3,21 +3,13 @@
     <table class="table">
         <thead>
         <tr>
-            <td colspan="3">
-                <h1>GAME LIST</h1>
+            <td>
+                <h1>GAMES WITH GENRE: {{ selected_genre.name }}</h1>
             </td>
         </tr>
         </thead>
     </table>
-    <thead>
-    <tr>
-        <td colspan="3">
-            <a href="{% url 'add-game' %}" class="btn btn-dark btn-lg btn-block">Add game</a>
-            <p></p>
-        </td>
-    </tr>
-    </thead>
-    {% for game in all_games %}
+    {% for game in all_games_with_genre %}
         <table class="table">
             <thead>
             <tr>
@@ -33,7 +25,9 @@
                 </td>
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
-                        <h5><a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a></h5>
+                        <h5>
+                            <a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a>
+                        </h5>
                     {% endfor %}
                 </td>
                 <td rowspan="4" style="text-align: center">

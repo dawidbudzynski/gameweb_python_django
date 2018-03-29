@@ -9,10 +9,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
+from .constants import *
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
 from .keys import api_key
 from .models import (User, Tag, Game, Genre, Developer)
-from .constants import *
 
 
 # Create your views here.
@@ -40,6 +40,8 @@ class WrongPasswordView(View):
     def get(self, request):
         return render(request, template_name='wrong_password.html')
 
+
+# USERS
 
 class ShowUsersView(View):
     def get(self, request):
@@ -142,6 +144,7 @@ class DeleteTagView(PermissionRequiredMixin, View):
 
         return HttpResponseRedirect('/tags')
 
+
 class ShowAllGamesWithTagView(View):
 
     def get(self, request, tag_id):
@@ -151,11 +154,9 @@ class ShowAllGamesWithTagView(View):
         ctx = {'all_games_with_tag': all_games_with_tag,
                'selected_tag': selected_tag}
 
-
         return render(request,
                       template_name='all_games_with_selected_tag.html',
                       context=ctx)
-
 
 
 # GENRE
@@ -203,6 +204,19 @@ class DeleteGenreView(PermissionRequiredMixin, View):
         genre.delete()
 
         return HttpResponseRedirect('/genres')
+
+class ShowAllGamesWithGenreView(View):
+
+    def get(self, request, genre_id):
+        selected_genre = Genre.objects.get(id=genre_id)
+        all_games_with_genre = Game.objects.filter(genre=selected_genre)
+
+        ctx = {'all_games_with_genre': all_games_with_genre,
+               'selected_genre': selected_genre}
+
+        return render(request,
+                      template_name='all_games_with_selected_genre.html',
+                      context=ctx)
 
 
 # DEVELOPER
