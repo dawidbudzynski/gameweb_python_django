@@ -60,9 +60,9 @@
                 <th scope="col">
                     <div>
                         <h3>SCORE: {{ single_game_info.match_score }}%
-                            {% if single_game_info.match_score >= 70 %}
+                            {% if single_game_info.match_score >= 60 %}
                                 <i class="material-icons md-48">thumb_up</i>
-                            {% elif single_game_info.match_score > 50 %}
+                            {% elif single_game_info.match_score > 35 %}
                                 <i class="material-icons md-48">thumbs_up_down</i>
                             {% else %}
                                 <i class="material-icons md-48">thumb_down</i>
