@@ -3,21 +3,13 @@
     <table class="table">
         <thead>
         <tr>
-            <td colspan="3">
-                <h1>GAME LIST</h1>
+            <td>
+                <h1>GAMES WITH TAG: {{ selected_tag.name }}</h1>
             </td>
         </tr>
         </thead>
     </table>
-    <thead>
-    <tr>
-        <td colspan="3">
-            <a href="{% url 'add-game' %}" class="btn btn-dark btn-lg btn-block">Add game</a>
-            <p></p>
-        </td>
-    </tr>
-    </thead>
-    {% for game in all_games %}
+    {% for game in all_games_with_tag %}
         <table class="table">
             <thead>
             <tr>

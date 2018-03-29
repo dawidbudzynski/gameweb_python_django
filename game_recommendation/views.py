@@ -109,7 +109,7 @@ class ShowTagsView(View):
                       context=ctx)
 
 
-class AddTagView(View):
+class AddTagView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddTagForm().as_p()
         ctx = {'form': form}
@@ -142,10 +142,25 @@ class DeleteTagView(PermissionRequiredMixin, View):
 
         return HttpResponseRedirect('/tags')
 
+class ShowAllGamesWithTagView(View):
+
+    def get(self, request, tag_id):
+        selected_tag = Tag.objects.get(id=tag_id)
+        all_games_with_tag = Game.objects.filter(tags=selected_tag)
+
+        ctx = {'all_games_with_tag': all_games_with_tag,
+               'selected_tag': selected_tag}
+
+
+        return render(request,
+                      template_name='all_games_with_selected_tag.html',
+                      context=ctx)
+
+
 
 # GENRE
 
-class AddGenreView(View):
+class AddGenreView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddGenreForm().as_p()
         ctx = {'form': form}
@@ -192,7 +207,7 @@ class DeleteGenreView(PermissionRequiredMixin, View):
 
 # DEVELOPER
 
-class AddDeveloperView(View):
+class AddDeveloperView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddDeveloperForm().as_p()
         ctx = {'form': form}
@@ -240,7 +255,7 @@ class ShowDevelopersView(View):
 
 # GAMES
 
-class AddGameView(View):
+class AddGameView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddGameForm().as_p()
         ctx = {'form': form}
@@ -349,7 +364,7 @@ class LogoutUserView(View):
 
 # RECOMMENDATIONS
 
-class RecommendManually(LoginRequiredMixin, View):
+class RecommendManually(View):
     def get(self, request):
         form = ChooseTagsForm().as_p()
         ctx = {
@@ -442,7 +457,7 @@ class RecommendManually(LoginRequiredMixin, View):
         return HttpResponseRedirect('/wrong_value')
 
 
-class RecommendByRating(LoginRequiredMixin, View):
+class RecommendByRating(View):
     def get(self, request):
         games_top_20 = Game.objects.filter(top_20=True)
 
