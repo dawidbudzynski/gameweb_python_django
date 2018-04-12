@@ -132,7 +132,7 @@ input[type="checkbox"] {
 }
 
 .btn-secondary {
-    background-color: #6534ff;
+    background-color: #3F19A4;
     width: 250px;
     margin-left: auto;
     margin-right: auto;
@@ -152,7 +152,7 @@ input[type="checkbox"] {
 }
 
 .btn-dark {
-    background-color: #6534ff;
+    background-color: #3F19A4;
 }
 
 .btn-dark:hover {
