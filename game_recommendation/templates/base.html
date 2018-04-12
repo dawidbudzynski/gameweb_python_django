@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Righteous">
     <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
-    {% load static %}
+
+    {#    icons#}
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
@@ -22,12 +27,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mainpage' %}">Main page</a>
+                    <a class="nav-link" href="{% url 'mainpage' %}">
+                        <i class="material-icons">home</i>
+                        Home
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">favorite_border</i>
                         Recommend game
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,17 +44,36 @@
                         <a class="dropdown-item" href="{% url 'recommend-by-rating' %}">Recommend by rated games</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'games' %}">Games</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users' %}">Users</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">videogame_asset</i>
+                        Games
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'add-game' %}">Add game</a>
+                        <a class="dropdown-item" href="{% url 'games' %}">Show games</a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Other lists
+                        <i class="material-icons">people</i>
+                        Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'add-user' %}">Add user</a>
+                        <a class="dropdown-item" href="{% url 'users' %}">Show users</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">comment</i>
+                        Other
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'developers' %}">Developers</a>
@@ -83,29 +111,24 @@
         </div>
     </nav>
 </div>
-<div class="slider">
-    <div id="textMessage">
-    {% for quote in all_quotes %}
-        <div class="textContent">
-            <h2 style="padding-top:17px; color:mintcream; font-size:28px;">
-                {{ quote.quote }} - <em>{{ quote.author }}</em>
-            </h2>
-        </div>
-    {% endfor %}
-</div>
-</div>
 <div class="header">
-    {#    <div class="col-xs-2 logo">#}
-    {#        <h1 class="display-4" style="text-align: center;font-family:'Faster One', serif; font-size: 70px">#}
-    {#            Game Picker</h1>#}
-    {#    </div>#}
-    {#    <div>#}
-    {#        <img src="/static/img/logo.png" alt="No image" style="width: 230px;height: 230px; float: left; border: none;">#}
-    {#    </div>#}
-    {#    <div>#}
-    {#        <img src="/static/img/logo.png" alt="No image" style="width: 230px;height: 230px; float: right; border: none;">#}
-    {#    </div>#}
-
+    <div>
+        <img src="/static/img/logo.png" alt="No image" style="height: 200px; width: auto; float: left; border: none;">
+    </div>
+    <div class="col-xs-2 title">
+        <h1 class="display-4" style="color: mintcream">Game Picker</h1>
+    </div>
+    <div id="textMessage">
+        {% for quote in all_quotes %}
+            <div class="textContent">
+                <p style="padding-top:10px; color:mintcream; font-size:20px;">
+                    {{ quote.quote }} - <em>{{ quote.author }}</em>
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="image_banner">
 </div>
 <div class="content">
     {% block content %}

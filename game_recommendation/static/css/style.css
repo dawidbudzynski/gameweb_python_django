@@ -1,38 +1,39 @@
 body {
     margin-top: 70px;
-    /*font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;*/
     font-family: 'Righteous', serif;
     background-color: whitesmoke;
 }
 
-.header {
+.image_banner {
     background: url('/static/img/new_banner.jpg');
     background-size: cover;
     height: 285px;
 }
+
 .header img {
-  width:100%;
+    width: 100%;
 }
 
-.logo {
-  color:#fff;
-  font-weight:800;
-  font-size:14pt;
-  padding:25px;
-  text-align:center;
-}
-
-.jumbotron h1 {
+.title {
+    font-family: 'Faster One', serif;
     color: mintcream;
+    padding: 25px;
+    text-align: center;
 }
 
 div.textContent {
     display: none;
 }
-.slider {
-    background-color: black;
-    height: 100px;
+
+.header {
+    background-color: #3F19A4;
+    height: 200px;
 }
+
+.title {
+    color: mintcream;
+}
+
 #textMessage {
     width: 80%;
     height: 40%;
@@ -42,6 +43,7 @@ div.textContent {
 .content {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
     width: 80%;
 }
 
@@ -49,6 +51,7 @@ img {
     border: 3px solid mintcream;
     border-radius: 10px;
 }
+
 a:hover {
     color: mintcream;
     text-decoration: none;
@@ -64,6 +67,7 @@ h1, h2, h3, h5, h6, p, a, label {
     color: #2B2C5F;
     text-align: center;
 }
+
 a:hover {
     color: darkblue;
 }
@@ -71,7 +75,7 @@ a:hover {
 .table {
     border-collapse: separate !important;
     background-color: #E4E5EE;
-    border: 5px solid #420EE8;
+    border: 5px solid #3F19A4;
     border-radius: 15px;
 }
 
@@ -80,7 +84,7 @@ a:hover {
 }
 
 .navbar {
-    background-color: #6534ff;
+    background-color: #3F19A4;
 }
 
 .navbar.navbar-expand-lg.navbar-dark li a {
@@ -89,7 +93,7 @@ a:hover {
 }
 
 .navbar-nav > li > .dropdown-menu {
-    background-color: #6534ff;
+    background-color: #3F19A4;
 }
 
 .navbar-nav > li > .dropdown-menu > a:hover {
