@@ -10,9 +10,9 @@ body {
     height: 285px;
 }
 
-.header img {
-    width: 100%;
-}
+/*.header img {*/
+    /*width: 100%;*/
+/*}*/
 
 .title {
     font-family: 'Faster One', serif;
