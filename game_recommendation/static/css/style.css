@@ -1,12 +1,25 @@
 body {
+    margin-top: 70px;
     /*font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;*/
     font-family: 'Righteous', serif;
     background-color: whitesmoke;
 }
 
-.jumbotron {
-    background-color: #8082D8;
-    height: 300px;
+.header {
+    background: url('/static/img/new_banner.jpg');
+    background-size: cover;
+    height: 285px;
+}
+.header img {
+  width:100%;
+}
+
+.logo {
+  color:#fff;
+  font-weight:800;
+  font-size:14pt;
+  padding:25px;
+  text-align:center;
 }
 
 .jumbotron h1 {
@@ -16,8 +29,13 @@ body {
 div.textContent {
     display: none;
 }
+.slider {
+    background-color: black;
+    height: 100px;
+}
 #textMessage {
     width: 80%;
+    height: 40%;
     margin: auto;
 }
 
@@ -31,7 +49,6 @@ img {
     border: 3px solid mintcream;
     border-radius: 10px;
 }
-
 a:hover {
     color: mintcream;
     text-decoration: none;
