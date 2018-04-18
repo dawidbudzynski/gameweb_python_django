@@ -1,6 +1,6 @@
 # Game Picker
 
-**Simple website made in Django 2.0**
+**Course completion project at Coders Lab - Website made in Django 2.0**
 
 **Link to the website:**
 **http://dawidb.pythonanywhere.com**
