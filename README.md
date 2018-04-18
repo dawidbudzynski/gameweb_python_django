@@ -5,7 +5,7 @@
 **Link to the website:**
 **http://dawidb.pythonanywhere.com**
 
-**Main features:**
+**Main functions:**
 - recommending new games based on user's taste
 - displaying news using Polygon API
 
