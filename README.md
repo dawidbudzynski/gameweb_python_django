@@ -1,6 +1,6 @@
 # Game Picker
 
-**Course completion project at Coders Lab - Website made in Django 2.0**
+**Course completion project at Coders Lab. A web application made with Django 2.0 and MySQL database**
 
 **Link to the website:**
 **http://dawidb.pythonanywhere.com**
