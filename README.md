@@ -6,7 +6,7 @@
 **http://dawidb.pythonanywhere.com**
 
 **Main functions:**
-- recommending new games based on user's taste
+- recommending new games based on user's preferences
 - displaying gaming and tech news using API from sites like: Polygon, IGN, The Verge and TechRadar
 
 **Requirements:**
