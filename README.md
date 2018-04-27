@@ -7,7 +7,7 @@
 
 **Main functions:**
 - recommending new games based on user's taste
-- displaying news using Polygon API
+- displaying gaming and tech news using API from sites like: Polygon, IGN, The Verge and TechRadar
 
 **Requirements:**
 - Python 3.5+
