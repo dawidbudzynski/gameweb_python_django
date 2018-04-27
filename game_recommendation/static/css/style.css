@@ -92,16 +92,17 @@ a:hover {
     background-color: #3F19A4;
 }
 
+.navbar-nav > li > .dropdown-menu > a {
+    border: transparent solid 2px;
+}
+
 .navbar-nav > li > .dropdown-menu > a:hover {
     background-color: #4D21D5;
     border: white solid 2px;
 }
+
 .dropdown-toggle::after {
-    display:none
-}
-.nav-link:hover {
-    background-color: #4D21D5;
-    border: white solid 2px;
+    display: none
 }
 
 .table > tbody > tr > td,
