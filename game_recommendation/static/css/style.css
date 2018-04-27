@@ -10,7 +10,6 @@ body {
     height: 285px;
 }
 
-
 .title {
     font-family: 'Faster One', serif;
     color: mintcream;
@@ -94,6 +93,9 @@ a:hover {
 
 .navbar-nav > li > .dropdown-menu > a:hover {
     background-color: #4D21D5;
+}
+.dropdown:hover>.dropdown-menu {
+  display: block;
 }
 
 .table > tbody > tr > td,
