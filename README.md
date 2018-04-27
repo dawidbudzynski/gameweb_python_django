@@ -1,11 +1,11 @@
 # Game Picker
 
-**Simple website made in Django 2.0**
+**Course completion project at Coders Lab. A web application made with Django 2.0 and MySQL database**
 
 **Link to the website:**
 **http://dawidb.pythonanywhere.com**
 
-**Main features:**
+**Main functions:**
 - recommending new games based on user's taste
 - displaying news using Polygon API
 
