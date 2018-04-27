@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,15 +121,15 @@
 </div>
 <div class="header">
     <div>
-        <img src="/static/img/logo.jpg" alt="No image" style="height: 200px; width: auto; float: left; border: none;">
+        <img src="/static/img/logo.jpg" alt="No image" style="height: 180px; width: auto; float: left; border: none;">
     </div>
-    <div class="col-xs-2 title">
+    <div class="title">
         <h1 class="display-4" style="color: mintcream; padding-right: 200px">Game Picker</h1>
     </div>
     <div id="textMessage">
         {% for quote in all_quotes %}
             <div class="textContent">
-                <p style="padding-top:10px; color:mintcream; font-size:23px;">
+                <p style="color:mintcream; font-size:23px;">
                     {{ quote.quote }} - <em>{{ quote.author }}</em>
                 </p>
             </div>
@@ -157,6 +157,7 @@
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/slider.js"></script>
+<script src="/static/js/dropdown_hover.js"></script>
 
 </body>
 </html>

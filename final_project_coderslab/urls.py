@@ -33,7 +33,7 @@ from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserVie
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', APINewsPolygonView.as_view(),
+    path(r'', APINewsVergeView.as_view(),
          name='mainpage'),
     path('about/', AboutPageView.as_view(),
          name='about'),

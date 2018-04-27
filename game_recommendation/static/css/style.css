@@ -23,7 +23,7 @@ div.textContent {
 
 .header {
     background-color: #3F19A4;
-    height: 200px;
+    height: 180px;
 }
 
 .title {
@@ -80,6 +80,7 @@ a:hover {
 
 .navbar {
     background-color: #3F19A4;
+    height: 60px;
 }
 
 .navbar.navbar-expand-lg.navbar-dark li a {
@@ -93,9 +94,14 @@ a:hover {
 
 .navbar-nav > li > .dropdown-menu > a:hover {
     background-color: #4D21D5;
+    border: white solid 2px;
 }
-.dropdown:hover>.dropdown-menu {
-  display: block;
+.dropdown-toggle::after {
+    display:none
+}
+.nav-link:hover {
+    background-color: #4D21D5;
+    border: white solid 2px;
 }
 
 .table > tbody > tr > td,
