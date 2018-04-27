@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <td style='text-align: right' rowspan="2">
+                <img src="/static/img/verge.png" alt="No image" style="width: 180px; height: 180px">
+            </td>
+            <td>
+                <h1 style="padding-right: 200px">GAMING AND TECH NEWS</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h1 style="padding-right: 200px">The Verge</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center" colspan="2">
+                <a href="{% url 'news-Polygon' %}" class="btn btn-dark " role="button" style="width: 22%">Polygon</a>
+                <a href="{% url 'news-IGN' %}" class="btn btn-dark" role="button" style="width: 22%">IGN</a>
+                <a href="{% url 'news-Verge' %}" class="btn btn-dark" role="button" style="width: 22%">The Verge</a>
+                <a href="{% url 'news-TechRadar' %}" class="btn btn-dark" role="button" style="width: 22%">TechRadar</a>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    {% for item in response %}
+        <table class="table">
+            <tr>
+                <td>
+                    <h1>{{ item.title }}</h1>
+                </td>
+                <td rowspan="2">
+                    <img src="{{ item.urlToImage }}" alt="'No image"
+                         style='width:300px;height:200px;float:right; margin-right: 50px'>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">
+                    <h3>{{ item.description }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ item.url }}" class="btn btn-dark btn-lg"
+                       style='float:right;width:300px; margin-right: 50px'>Go
+                        to this news</a>
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+
+{% endblock %}

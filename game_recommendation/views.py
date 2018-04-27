@@ -606,9 +606,9 @@ class RecommendByRating(View):
                       context=ctx)
 
 
-# APU IGN NEWS
+# API - GAMING AND TECH NEWS
 
-class APINewsView(View):
+class APINewsPolygonView(View):
     def get(self, request):
         url = ('https://newsapi.org/v2/top-headlines?sources=polygon&apiKey={}'.format(api_key))
 
@@ -618,5 +618,57 @@ class APINewsView(View):
             'response': response.json()['articles'],
         }
         return render(request,
-                      template_name='base.html',
+                      template_name='news_Polygon.html',
+                      context=ctx)
+
+class APINewsIGNView(View):
+    def get(self, request):
+        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey={}'.format(api_key))
+
+        response = requests.get(url)
+
+        ctx = {
+            'response': response.json()['articles'],
+        }
+        return render(request,
+                      template_name='news_IGN.html',
+                      context=ctx)
+
+class APINewsVergeView(View):
+    def get(self, request):
+        url = ('https://newsapi.org/v2/top-headlines?sources=the-verge&apiKey={}'.format(api_key))
+
+        response = requests.get(url)
+
+        ctx = {
+            'response': response.json()['articles'],
+        }
+        return render(request,
+                      template_name='news_Verge.html',
+                      context=ctx)
+
+class APINewsVergeView(View):
+    def get(self, request):
+        url = ('https://newsapi.org/v2/top-headlines?sources=the-verge&apiKey={}'.format(api_key))
+
+        response = requests.get(url)
+
+        ctx = {
+            'response': response.json()['articles'],
+        }
+        return render(request,
+                      template_name='news_Verge.html',
+                      context=ctx)
+
+class APINewsTechradarView(View):
+    def get(self, request):
+        url = ('https://newsapi.org/v2/top-headlines?sources=techradar&apiKey={}'.format(api_key))
+
+        response = requests.get(url)
+
+        ctx = {
+            'response': response.json()['articles'],
+        }
+        return render(request,
+                      template_name='news_Techradar.html',
                       context=ctx)

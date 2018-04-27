@@ -26,14 +26,13 @@ from game_recommendation.views import (AddUserView, ShowUsersView, DeleteUserVie
                                        WrongValueView, ObjectAlreadyExistView, WrongPasswordView,
                                        LoginUserView, LogoutUserView,
                                        RecommendManually, RecommendByRating,
-                                       APINewsView,
+                                       APINewsPolygonView, APINewsIGNView, APINewsVergeView, APINewsTechradarView,
                                        AboutPageView,
-                                       ShowAllGamesWithTagView, ShowAllGamesWithGenreView, ShowAllGamesWithDeveloperView)
+                                       ShowAllGamesWithTagView, ShowAllGamesWithGenreView,
+                                       ShowAllGamesWithDeveloperView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', APINewsView.as_view(),
-         name='mainpage'),
     path('about/', AboutPageView.as_view(),
          name='about'),
     path('users/', ShowUsersView.as_view(),
@@ -83,6 +82,14 @@ urlpatterns = [
          name='show-genre'),
     path('show_games_with_developer/<developer_id>', ShowAllGamesWithDeveloperView.as_view(),
          name='show-developer'),
+    path(r'news_Polygon', APINewsPolygonView.as_view(),
+         name='news-Polygon'),
+    path(r'news_IGN', APINewsIGNView.as_view(),
+         name='news-IGN'),
+    path(r'news_Verge', APINewsVergeView.as_view(),
+         name='news-Verge'),
+    path(r'news_Techradar', APINewsTechradarView.as_view(),
+         name='news-TechRadar'),
 ]
 
 if settings.DEBUG:

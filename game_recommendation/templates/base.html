@@ -27,9 +27,9 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mainpage' %}">
-                        <i class="material-icons">home</i>
-                        Home
+                    <a class="nav-link" href="{% url 'news-Polygon' %}">
+                        <i class="material-icons">library_books</i>
+                        News
                     </a>
                 </li>
                 <li class="nav-item dropdown">
@@ -72,7 +72,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">comment</i>
+                        <i class="material-icons">format_align_justify</i>
                         Other
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -116,7 +116,7 @@
         <img src="/static/img/logo.jpg" alt="No image" style="height: 200px; width: auto; float: left; border: none;">
     </div>
     <div class="col-xs-2 title">
-        <h1 class="display-4" style="color: mintcream">Game Picker</h1>
+        <h1 class="display-4" style="color: mintcream; padding-right: 200px">Game Picker</h1>
     </div>
     <div id="textMessage">
         {% for quote in all_quotes %}
@@ -132,40 +132,6 @@
 </div>
 <div class="content">
     {% block content %}
-        <table class="table">
-            <thead>
-            <tr>
-                <td colspan="3">
-                    <h1>GAMING NEWS</h1>
-                </td>
-            </tr>
-            </thead>
-        </table>
-        {% for item in response %}
-            <table class="table">
-                <tr>
-                    <td>
-                        <h1>{{ item.title }}</h1>
-                    </td>
-                    <td rowspan="2">
-                        <img src="{{ item.urlToImage }}" alt="'No image"
-                             style='width:300px;height:200px;float:right; margin-right: 50px'>
-                    </td>
-                </tr>
-                <tr>
-                    <td rowspan="2">
-                        <h3>{{ item.description }}</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="{{ item.url }}" class="btn btn-dark btn-lg"
-                           style='float:right;width:300px; margin-right: 50px'>Go
-                            to this news</a>
-                    </td>
-                </tr>
-            </table>
-        {% endfor %}
     {% endblock %}
 </div>
 
