@@ -14,7 +14,7 @@ Course completion project at Coders Lab. A web application made with Django 2.0 
 * REST API
 
 ## Demo
-**http://dawidb.pythonanywhere.com**
+## http://dawidb.pythonanywhere.com
 
 **Gaming and tech news updated every few hours using API from sites like: Polygon, IGN, The Verge and TechRadar**
 
