@@ -15,6 +15,7 @@ Course completion project at Coders Lab. A web application made with Django 2.0 
 
 ## Demo
 **http://dawidb.pythonanywhere.com**
+
 **Gaming and tech news updated every few hours using API from sites like: Polygon, IGN, The Verge and TechRadar**
 
 ![alt text](https://raw.githubusercontent.com/dawidbudzynski/game_picker_python_django/master/examples/example1.png)
