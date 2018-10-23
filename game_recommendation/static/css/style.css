@@ -326,3 +326,6 @@ input[type=checkbox].css-checkbox {
     background: white;
 }
 
+.news_button {
+    width: 22%;
+}
