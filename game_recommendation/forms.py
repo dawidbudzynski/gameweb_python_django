@@ -1,4 +1,4 @@
-from django.forms import (Form, CharField, ChoiceField, ModelChoiceField, Textarea, PasswordInput,
+from django.forms import (Form, CharField, ChoiceField, ModelChoiceField, PasswordInput,
                           ImageField, ModelMultipleChoiceField, CheckboxSelectMultiple, Select,
                           EmailField, NullBooleanField)
 
@@ -24,6 +24,7 @@ class AddUserForm(Form):
     last_name = CharField(label='Surname', strip=True)
     email = EmailField(label='Email')
 
+
 class AddTagForm(Form):
     name = CharField(max_length=64)
 
@@ -38,7 +39,6 @@ class AddDeveloperForm(Form):
 
 class AddGameForm(Form):
     title = CharField(max_length=64)
-    # description = CharField(widget=Textarea, required=False)
     year = ChoiceField(choices=SORTED_YEARS)
     developer = ModelChoiceField(queryset=all_developers.order_by('name'),
                                  widget=Select)

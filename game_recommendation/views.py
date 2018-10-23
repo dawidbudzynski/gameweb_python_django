@@ -2,43 +2,42 @@ from collections import Counter
 from operator import itemgetter
 
 import requests
+from decouple import config
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
+from django.views.generic import TemplateView
 
 from .constants import *
 from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
-from .keys import api_key
 from .models import (User, Tag, Game, Genre, Developer)
+
+NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
 
 # Create your views here.
 
 # OTHER
 
-class AboutPageView(View):
-    def get(self, request):
-        return render(request, template_name='about.html')
+class AboutPageView(TemplateView):
+    template_name = 'about.html'
 
 
 # ERRORS
 
-class WrongValueView(View):
-    def get(self, request):
-        return render(request, template_name='wrong_value_error.html')
+class WrongValueView(TemplateView):
+    template_name = 'wrong_value_error.html'
 
 
-class ObjectAlreadyExistView(View):
-    def get(self, request):
-        return render(request, template_name='object_already_exist.html')
+class ObjectAlreadyExistView(TemplateView):
+    template_name = 'object_already_exist.html'
 
 
-class WrongPasswordView(View):
-    def get(self, request):
-        return render(request, template_name='wrong_password.html')
+class WrongPasswordView(TemplateView):
+    template_name = 'wrong_password.html'
 
 
 # USERS
@@ -79,10 +78,12 @@ class AddUserView(View):
             if DjangoUser.objects.filter(username=username).exists():
                 return HttpResponseRedirect('/object_already_exist')
 
-            django_user = DjangoUser.objects.create_user(username=username, password=password,
-                                                         first_name=first_name, last_name=last_name, email=email)
+            django_user = DjangoUser.objects.create_user(username=username,
+                                                         password=password,
+                                                         first_name=first_name,
+                                                         last_name=last_name,
+                                                         email=email)
             User.objects.create(user=django_user)
-
             return HttpResponseRedirect('/users')
         return HttpResponseRedirect('/wrong_value')
 
@@ -94,7 +95,6 @@ class DeleteUserView(PermissionRequiredMixin, View):
     def get(self, request, user_id):
         user = User.objects.get(id=user_id)
         user.delete()
-
         return HttpResponseRedirect('/users')
 
 
@@ -205,6 +205,7 @@ class DeleteGenreView(PermissionRequiredMixin, View):
 
         return HttpResponseRedirect('/genres')
 
+
 class ShowAllGamesWithGenreView(View):
 
     def get(self, request, genre_id):
@@ -266,6 +267,7 @@ class ShowDevelopersView(View):
                       template_name='developers.html',
                       context=ctx)
 
+
 class ShowAllGamesWithDeveloperView(View):
 
     def get(self, request, developer_id):
@@ -312,8 +314,11 @@ class AddGameView(LoginRequiredMixin, View):
             if Game.objects.filter(title=title).exists():
                 return HttpResponseRedirect('/object_already_exist')
 
-            new_game = Game.objects.create(title=title, year=year,
-                                           developer=developer, image=image, top_20=top_20)
+            new_game = Game.objects.create(title=title,
+                                           year=year,
+                                           developer=developer,
+                                           image=image,
+                                           top_20=top_20)
 
             new_game.genre.add(genre)
 
@@ -356,13 +361,11 @@ class LoginUserView(View):
             ctx = {
                 'form': form
             }
-            print(loggedUser)
             return render(request,
                           template_name='login.html',
                           context=ctx)
 
         else:
-            name_to_display = loggedUser
             del request.session['loggedUser']
             return HttpResponseRedirect('/')
 
@@ -608,67 +611,24 @@ class RecommendByRating(View):
 
 # API - GAMING AND TECH NEWS
 
-class APINewsPolygonView(View):
-    def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=polygon&apiKey={}'.format(api_key))
-
+class TechNews(View):
+    def get(self, request, news_source='polygon'):
+        image_url = None
+        source_name = None
+        selected_source = None
+        for news_source_key, news_source_values in NEWS_SOURCE_DATA_ALL.items():
+            if news_source == news_source_key:
+                selected_source = news_source_key
+                image_url = news_source_values['image_url']
+                source_name = news_source_values['api_name']
+        url = ('https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(
+            selected_source, NEWS_API_KEY))
         response = requests.get(url)
-
         ctx = {
-            'response': response.json()['articles'],
+            'articles': response.json()['articles'],
+            'image_url': image_url,
+            'source_name': source_name
         }
         return render(request,
-                      template_name='news_Polygon.html',
-                      context=ctx)
-
-class APINewsIGNView(View):
-    def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=ign&apiKey={}'.format(api_key))
-
-        response = requests.get(url)
-
-        ctx = {
-            'response': response.json()['articles'],
-        }
-        return render(request,
-                      template_name='news_IGN.html',
-                      context=ctx)
-
-class APINewsVergeView(View):
-    def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=the-verge&apiKey={}'.format(api_key))
-
-        response = requests.get(url)
-
-        ctx = {
-            'response': response.json()['articles'],
-        }
-        return render(request,
-                      template_name='news_Verge.html',
-                      context=ctx)
-
-class APINewsVergeView(View):
-    def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=the-verge&apiKey={}'.format(api_key))
-
-        response = requests.get(url)
-
-        ctx = {
-            'response': response.json()['articles'],
-        }
-        return render(request,
-                      template_name='news_Verge.html',
-                      context=ctx)
-
-class APINewsTechradarView(View):
-    def get(self, request):
-        url = ('https://newsapi.org/v2/top-headlines?sources=techradar&apiKey={}'.format(api_key))
-
-        response = requests.get(url)
-
-        ctx = {
-            'response': response.json()['articles'],
-        }
-        return render(request,
-                      template_name='news_Techradar.html',
+                      template_name='news_main.html',
                       context=ctx)

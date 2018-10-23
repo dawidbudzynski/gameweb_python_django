@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from game_recommendation.keys import db_pass
+import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c9d1p7vo@y%r!4_9#b!5au9ye)_p$77slzsz%8$(4!(=4yhgyw'
+SECRET_KEY = config('SECRET_KEY', default=False, cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['dawidb.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 # ALLOWED_HOSTS = []
 
@@ -78,31 +79,23 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'projekt_koncowy2',
-#         'USER': 'root',
-#         'PASSWORD': 'coderslab',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
-
-# DATABASE FOR PYTHONANYWHERE
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dawidb$default',
-        'USER': 'dawidb',
-        'PASSWORD': '{}'.format(db_pass),
-        'HOST': 'dawidb.mysql.pythonanywhere-services.com',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME', cast=str),
+#         'USER': config('DB_USER', cast=str),
+#         'PASSWORD': config('DB_PASSWORD', cast=str),
+#         'HOST': config('DB_HOST', cast=str),
+#         'PORT': config('DB_PORT', cast=str),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -140,15 +133,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
-
 MEDIA_ROOT = (os.path.join(BASE_DIR,  'game_recommendation/media'))
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-# SESSION_COOKIE_AGE = 1 * 60
 LOGIN_URL = '/login'
 
-
+# Activate Django-Heroku.
+django_heroku.settings(locals())

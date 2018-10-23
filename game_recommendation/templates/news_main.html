@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <td style='text-align: right' rowspan="2">
+                <img src="{% static image_url %}" alt="No image" style="width: 180px; height: 180px">
+            </td>
+            <td>
+                <h1 style="padding-right: 200px">GAMING AND TECH NEWS</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h1 style="padding-right: 200px">{{ source_name }}</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center" colspan="2">
+                <a href="{% url 'tech_news' news_source='polygon' %}"
+                   class="news_button btn btn-dark hvr-float-shadow"
+                   role="button">Polygon</a>
+                <a href="{% url 'tech_news' news_source='ign' %}"
+                   class="news_button btn btn-dark hvr-float-shadow"
+                   role="button">IGN</a>
+                <a href="{% url 'tech_news' news_source='the-verge' %}"
+                   class="news_button btn btn-dark hvr-float-shadow"
+                   role="button">The Verge</a>
+                <a href="{% url 'tech_news' news_source='techradar' %}"
+                   class="news_button btn btn-dark hvr-float-shadow"
+                   role="button">TechRadar</a>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    {% for article in articles %}
+        <table class="table">
+            <tr>
+                <td>
+                    <h1>{{ article.title }}</h1>
+                </td>
+                <td rowspan="2">
+                    <img src="{{ article.urlToImage }}" alt="'No image"
+                         style='width:300px;height:200px;float:right; margin-right: 50px'>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">
+                    <h3>{{ article.description }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ article.url }}" class="btn btn-dark btn-lg hvr-float-shadow"
+                       style='float:right;width:300px; margin-right: 50px'>Read news</a>
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+
+{% endblock %}

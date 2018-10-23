@@ -4,17 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Picker</title>
-    <link rel="icon" type="image/png" href="static/img/icon.png"/>
+    <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Righteous">
     <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
-
-    {#    icons#}
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <link href="{% static 'css/hover-min.css' %}" rel="stylesheet" media="all">
 </head>
@@ -36,11 +31,14 @@
                         News
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'news-Polygon' %}">Polygon</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'news-IGN' %}">IGN</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'news-Verge' %}">The Verge</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'news-TechRadar' %}">TechRadar</a>
+                           href="{% url 'tech_news' news_source='polygon' %}">Polygon</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'tech_news' news_source='ign' %}">IGN</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'tech_news' news_source='the-verge' %}">The Verge</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'tech_news' news_source='techradar' %}}">TechRadar</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -52,10 +50,10 @@
                         Recommend game
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'recommend-by-tags' %}">Recommend
-                            by tags</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'recommend-by-rating' %}">Recommend
-                            by rated games</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'recommend-by-tags' %}">Recommend by tags</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'recommend-by-rating' %}">Recommend by rated games</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -67,8 +65,10 @@
                         Games
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'add-game' %}">Add game</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'games' %}">Show games</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'add-game' %}">Add game</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'games' %}">Show games</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -80,8 +80,10 @@
                         Users
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'add-user' %}">Add user</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'users' %}">Show users</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'add-user' %}">Add user</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'users' %}">Show users</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -93,10 +95,14 @@
                         Other
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'developers' %}">Developers</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'genres' %}">Genres</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'tags' %}">Tags</a>
-                        <a class="dropdown-item hvr-underline-from-center" href="{% url 'about' %}">About</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'developers' %}">Developers</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'genres' %}">Genres</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'tags' %}">Tags</a>
+                        <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'about' %}">About</a>
                     </div>
                 </li>
             </ul>
@@ -108,7 +114,8 @@
                         <a class="nav-link" style=visibility:hidden></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link hvr-underline-from-center" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link hvr-underline-from-center"
+                           href="{% url 'logout' %}">Logout</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
@@ -116,13 +123,16 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link hvr-underline-from-center" href="{% url 'add-user' %}">Register</a>
+                        <a class="nav-link hvr-underline-from-center"
+                           href="{% url 'add-user' %}">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link hvr-underline-from-center" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link hvr-underline-from-center"
+                           href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link hvr-underline-from-center" href=""><b>USER: None</b></a>
+                        <a class="nav-link hvr-underline-from-center"
+                           href=""><b>USER: None</b></a>
                     </li>
                 {% endif %}
             </ul>
