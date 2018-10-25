@@ -4,7 +4,7 @@
         <thead>
         <tr>
             <td colspan="3">
-                <h1>GAME LIST</h1>
+                <h3>GAME LIST</h3>
             </td>
         </tr>
         </thead>
@@ -22,14 +22,14 @@
             <thead>
             <tr>
                 <td colspan="4">
-                    <h1>{{ game.title }}</h1>
+                    <h3>{{ game.title }}</h3>
                 </td>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>
-                    <h4><b>GENRE</b></h4>
+                    <h4>GENRE</h4>
                 </td>
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
@@ -37,12 +37,12 @@
                     {% endfor %}
                 </td>
                 <td rowspan="4" style="text-align: center">
-                    <img src="{{ game.image.url }}" style=width:500px;height:400px;>
+                    <img src="{{ game.image.url }}" style=width:400px;height:300px;>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <h4><b>DEVELOPER</b></h4>
+                    <h4>DEVELOPER</h4>
                 </td>
                 <td>
                     <h5><a href="{% url 'show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td>
-                    <h4><b>TAGS</b></h4>
+                    <h4>TAGS</h4>
                 </td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
@@ -60,7 +60,7 @@
             </tr>
             <tr>
                 <td>
-                    <h4><b>YEAR</b></h4>
+                    <h4>YEAR</h4>
                 </td>
                 <td>
                     <h5>{{ game.year }}</h5>

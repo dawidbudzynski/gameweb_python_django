@@ -4,16 +4,10 @@ body {
     background-color: whitesmoke;
 }
 
-.image_banner {
-    background: url('/static/img/new_banner.jpg');
-    background-size: cover;
-    height: 285px;
-}
-
 .title {
     font-family: 'Faster One', serif;
     color: mintcream;
-    padding: 25px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -22,18 +16,8 @@ div.textContent {
 }
 
 .header {
-    background-color: #3F19A4;
-    height: 180px;
-}
-
-.title {
-    color: mintcream;
-}
-
-#textMessage {
-    width: 80%;
-    height: 40%;
-    margin: auto;
+    background-color: #005ec3;
+    height: 140px;
 }
 
 .content {
@@ -41,10 +25,6 @@ div.textContent {
     margin-right: auto;
     margin-top: 10px;
     width: 80%;
-}
-
-img {
-    border-radius: 10px;
 }
 
 a:hover {
@@ -70,7 +50,7 @@ a:hover {
 .table {
     border-collapse: separate !important;
     background-color: #E4E5EE;
-    border: 5px solid #3F19A4;
+    border: 3px solid #005ec3;
     border-radius: 15px;
 }
 
@@ -79,17 +59,17 @@ a:hover {
 }
 
 .navbar {
-    background-color: #3F19A4;
-    height: 60px;
+    background-color: #005ec3;
+    height: 50px;
 }
 
 .navbar.navbar-expand-lg.navbar-dark li a {
     color: mintcream;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .navbar-nav > li > .dropdown-menu {
-    background-color: #3F19A4;
+    background-color: #005ec3;
 }
 
 .navbar-nav > li > .dropdown-menu > a {
@@ -97,7 +77,7 @@ a:hover {
 }
 
 .navbar-nav > li > .dropdown-menu > a:hover {
-    background-color: #4D21D5;
+    background-color: #005ec3;
     border: white solid 2px;
 }
 
@@ -137,7 +117,7 @@ input[type="checkbox"] {
 }
 
 .btn-secondary {
-    background-color: #3F19A4;
+    background-color: #005ec3;
     width: 250px;
     margin-left: auto;
     margin-right: auto;
@@ -157,7 +137,7 @@ input[type="checkbox"] {
 }
 
 .btn-dark {
-    background-color: #3F19A4;
+    background-color: #005ec3;
 }
 
 .btn-dark:hover {
@@ -259,9 +239,8 @@ input[type=checkbox].css-checkbox {
     display: block;
     position: relative;
     padding-left: 35px;
-    margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 18px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -270,7 +249,7 @@ input[type=checkbox].css-checkbox {
 
 .radio_buttons_container {
     background-color: #6B6DD8;
-    border: 3px solid #6534ff;
+    border: 3px solid #005ec3;
     border-radius: 5px;
     padding: 5px;
     margin-right: 150px;
@@ -328,4 +307,37 @@ input[type=checkbox].css-checkbox {
 
 .news_button {
     width: 22%;
+}
+
+.header-title{
+    color: mintcream;
+    font-size: 30px;
+    margin-top: -10px;
+}
+
+#header-logo{
+    height: 140px;
+    width: auto;
+    float: left;
+}
+
+#quote-text{
+    font-size: 18px;
+    color: mintcream;
+}
+
+#image-banner{
+    height: 180px;
+    width: 100%;
+}
+
+#news-source-logo{
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    margin-left: 70px;
+}
+
+.news-header-text{
+    margin-right: 300px;
 }

@@ -4,14 +4,14 @@
         <thead>
         <tr>
             <td colspan="4">
-                <h1>{{ game.title }}</h1>
+                <h3>{{ game.title }}</h3>
             </td>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>
-                <h4><b>Genre</b></h4>
+                <h4>Genre</h4>
             </td>
             <td style="text-align: center">
                 {% for genre in game.genre.all %}
@@ -19,12 +19,12 @@
                 {% endfor %}
             </td>
             <td rowspan="4" style="text-align: center">
-                <img src="{{ game.image.url }}" style=width:500px;height:400px;>
+                <img src="{{ game.image.url }}" style=width:400px;height:300px;>
             </td>
         </tr>
         <tr>
             <td>
-                <h4><b>Developer</b></h4>
+                <h4>Developer</h4>
             </td>
             <td>
                 <h5><a href="{% url 'show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <td>
-                <h4><b>Tags</b></h4>
+                <h4>Tags</h4>
             </td>
             <td style="text-align:center">
                 {% for tag in game.tags.all %}
@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td>
-                <h4><b>Year</b></h4>
+                <h4>Year</h4>
             </td>
             <td>
                 <h5>{{ game.year }}</h5>
@@ -50,7 +50,7 @@
         </tr>
         <tr>
             <td>
-                <h4><b>Game Rating</b></h4>
+                <h4>Game Rating</h4>
             </td>
             <td>
                 {% if gamescore %}
@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td>
-                <h4><b>Rate Game</b></h4>
+                <h4>Rate Game</h4>
             </td>
             <td>
                 <form action="{% url 'game-details' game.id %}" method="POST" enctype="multipart/form-data">

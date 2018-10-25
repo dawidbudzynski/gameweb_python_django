@@ -141,22 +141,23 @@
 </div>
 <div class="header">
     <div>
-        <img src="/static/img/logo.jpg" alt="No image" style="height: 180px; width: auto; float: left; border: none;">
+        <img id="header-logo" src="{% static 'img/logo.jpg' %} " alt="No image">
     </div>
     <div class="title">
-        <h1 class="display-4" style="color: mintcream; padding-right: 200px">Game Picker</h1>
+        <h1 class="header-title display-4">Game Picker</h1>
     </div>
     <div id="textMessage">
         {% for quote in all_quotes %}
             <div class="textContent">
-                <p style="color:mintcream; font-size:23px;">
+                <p id="quote-text">
                     {{ quote.quote }} - <em>{{ quote.author }}</em>
                 </p>
             </div>
         {% endfor %}
     </div>
 </div>
-<div class="image_banner">
+<div class="image_banner_container">
+    <img id="image-banner" src="{% static 'img/new_banner.jpg' %}" alt="">
 </div>
 <div class="content">
     {% block content %}

@@ -4,16 +4,16 @@
     <table class="table">
         <thead>
         <tr>
-            <td style='text-align: right' rowspan="2">
-                <img src="{% static image_url %}" alt="No image" style="width: 180px; height: 180px">
+            <td rowspan="2">
+                <img id="news-source-logo" src="{% static image_url %}" alt="No image">
             </td>
             <td>
-                <h1 style="padding-right: 200px">GAMING AND TECH NEWS</h1>
+                <h3 class="news-header-text">Gaming and Tech News</h3>
             </td>
         </tr>
         <tr>
             <td>
-                <h1 style="padding-right: 200px">{{ source_name }}</h1>
+                <h3 class="news-header-text">{{ source_name }}</h3>
             </td>
         </tr>
         <tr>
@@ -38,22 +38,22 @@
         <table class="table">
             <tr>
                 <td>
-                    <h1>{{ article.title }}</h1>
+                    <h3>{{ article.title }}</h3>
                 </td>
                 <td rowspan="2">
                     <img src="{{ article.urlToImage }}" alt="'No image"
-                         style='width:300px;height:200px;float:right; margin-right: 50px'>
+                         style='width:250px;height:150px;float:right; margin-right: 50px'>
                 </td>
             </tr>
             <tr>
                 <td rowspan="2">
-                    <h3>{{ article.description }}</h3>
+                    <h5>{{ article.description }}</h5>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a href="{{ article.url }}" class="btn btn-dark btn-lg hvr-float-shadow"
-                       style='float:right;width:300px; margin-right: 50px'>Read news</a>
+                    <a href="{{ article.url }}" class="btn btn-dark hvr-float-shadow"
+                       style='float:right;width:250px; margin-right: 50px'>Read news</a>
                 </td>
             </tr>
         </table>
