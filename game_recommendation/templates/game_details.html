@@ -54,24 +54,26 @@
             </td>
             <td>
                 {% if gamescore %}
-                    {{ gamescore.score }}
+                    <h5>{{ gamescore.score }}</h5>
                 {% else %}
-                    -------
+                    <h5>Not rated yet</h5>
                 {% endif %}
             </td>
         </tr>
-        <tr>
-            <td>
-                <h4>Rate Game</h4>
-            </td>
-            <td>
-                <form action="{% url 'game-details' game.id %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
-                </form>
-            </td>
-        </tr>
+        {% if user.is_authenticated %}
+            <tr>
+                <td>
+                    <h4>Rate Game</h4>
+                </td>
+                <td>
+                    <form action="{% url 'game-details' game.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+                    </form>
+                </td>
+            </tr>
+        {% endif %}
         <tr>
             <td colspan="3">
                 <a href="{% url 'delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
