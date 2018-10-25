@@ -22,6 +22,7 @@ RATING = {(1, '1 star'),
           (10, '10 star')}
 
 SORTED_YEARS = sorted(YEARS, key=lambda x: x[1])
+SORTED_RATING = sorted(RATING, key=lambda x: x[0])
 
 all_tags = Tag.objects.all()
 all_developers = Developer.objects.all()
@@ -54,7 +55,7 @@ class AddDeveloperForm(Form):
 
 
 class RateGameForm(Form):
-    score = ChoiceField(choices=RATING)
+    score = ChoiceField(choices=SORTED_RATING)
 
 
 class AddGameForm(Form):

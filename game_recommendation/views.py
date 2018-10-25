@@ -354,10 +354,10 @@ class SingeGameDetails(View):
 
     def post(self, request, game_id):
         """Get rating from form and create or update gamescore"""
-        game = Game.objects.get(id=game_id)
-        user = User.objects.get(id=request.user.id)
         form = RateGameForm(request.POST)
         try:
+            user = User.objects.get(id=request.user.id)
+            game = Game.objects.get(id=game_id)
             old_gamescore = GameScore.objects.get(game=game, user=user)
         except ObjectDoesNotExist:
             old_gamescore = None
