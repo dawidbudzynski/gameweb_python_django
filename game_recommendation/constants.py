@@ -20,3 +20,14 @@ NEWS_SOURCE_DATA_ALL = {
         'image_url': 'img/verge.png'
     },
 }
+
+GAMING_QUOTES = [
+    {"quote": "What is better? To be born good or to overcome your evil nature through great effort?",
+     "author": "Paarthurnax, Elder Scrolls V: Skyrim"},
+    {
+        "quote": "Stand in the ashes of a trillion dead souls, and asks the ghosts if honor matters. "
+                 "The silence is your answer",
+        "author": "Javik, Mass Effect 3"},
+    {"quote": "Even in dark times, we cannot relinquish the things that make us human.",
+     "author": "Khan, Metro 2033"},
+]
