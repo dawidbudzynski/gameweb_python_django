@@ -6,14 +6,22 @@ from decouple import config
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.models import User as DjangoUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
 from .constants import *
-from .forms import (AddUserForm, AddTagForm, AddGenreForm, AddDeveloperForm, LoginUserForm, AddGameForm, ChooseTagsForm)
-from .models import (User, Tag, Game, Genre, Developer)
+from .forms import (AddUserForm,
+                    AddTagForm,
+                    AddGenreForm,
+                    AddDeveloperForm,
+                    LoginUserForm,
+                    AddGameForm,
+                    ChooseTagsForm,
+                    RateGameForm)
+from .models import (User, Tag, Game, Genre, Developer, GameScore)
 
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
@@ -68,13 +76,10 @@ class AddUserView(View):
 
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            password2 = form.cleaned_data['password2']
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
 
-            if password != password2:
-                return HttpResponseRedirect("/wrong_password")
             if DjangoUser.objects.filter(username=username).exists():
                 return HttpResponseRedirect('/object_already_exist')
 
@@ -146,8 +151,8 @@ class DeleteTagView(PermissionRequiredMixin, View):
 
 
 class ShowAllGamesWithTagView(View):
-
     def get(self, request, tag_id):
+        """Display all games with selected tag"""
         selected_tag = Tag.objects.get(id=tag_id)
         all_games_with_tag = Game.objects.filter(tags=selected_tag)
 
@@ -207,7 +212,7 @@ class DeleteGenreView(PermissionRequiredMixin, View):
 
 
 class ShowAllGamesWithGenreView(View):
-
+    """Display all games with selected genre"""
     def get(self, request, genre_id):
         selected_genre = Genre.objects.get(id=genre_id)
         all_games_with_genre = Game.objects.filter(genre=selected_genre)
@@ -251,7 +256,6 @@ class DeleteDeveloperView(PermissionRequiredMixin, View):
 
     def get(self, request, developer_pk):
         developer = Developer.objects.get(pk=developer_pk)
-        print(developer)
         developer.delete()
 
         return HttpResponseRedirect('/developers')
@@ -269,7 +273,7 @@ class ShowDevelopersView(View):
 
 
 class ShowAllGamesWithDeveloperView(View):
-
+    """Display all games with selected developer"""
     def get(self, request, developer_id):
         selected_developer = Developer.objects.get(id=developer_id)
         all_games_with_developer = Game.objects.filter(developer=selected_developer)
@@ -329,8 +333,59 @@ class AddGameView(LoginRequiredMixin, View):
         return HttpResponseRedirect('/wrong_value')
 
 
+class SingeGameDetails(View):
+    def get(self, request, game_id):
+        """Display single game details with form for rating"""
+        game = Game.objects.get(id=game_id)
+        try:
+            user = User.objects.get(id=request.user.id)
+            gamescore = GameScore.objects.get(game=game, user=user)
+        except ObjectDoesNotExist:
+            gamescore = None
+        form = RateGameForm()
+
+        ctx = {'game': game,
+               'gamescore': gamescore,
+               'form': form}
+
+        return render(request,
+                      template_name='game_details.html',
+                      context=ctx)
+
+    def post(self, request, game_id):
+        """Get rating from form and create or update gamescore"""
+        game = Game.objects.get(id=game_id)
+        user = User.objects.get(id=request.user.id)
+        form = RateGameForm(request.POST)
+        try:
+            old_gamescore = GameScore.objects.get(game=game, user=user)
+        except ObjectDoesNotExist:
+            old_gamescore = None
+        if form.is_valid():
+            score = form.cleaned_data['score']
+            if old_gamescore is not None:
+                old_gamescore.score = score
+                old_gamescore.save()
+                gamescore = old_gamescore
+            else:
+                gamescore = GameScore.objects.create(
+                    user=user,
+                    game=game,
+                    score=score
+                )
+
+        ctx = {'game': game,
+               'form': form,
+               'gamescore': gamescore}
+
+        return render(request,
+                      template_name='game_details.html',
+                      context=ctx)
+
+
 class ShowGamesView(View):
     def get(self, request):
+        """Display all games in database"""
         all_games = Game.objects.all().order_by('title')
 
         ctx = {'all_games': all_games}
@@ -341,6 +396,7 @@ class ShowGamesView(View):
 
 
 class DeleteGameView(PermissionRequiredMixin, View):
+    """Delete game"""
     permission_required = 'game_recommendation.delete_game'
     raise_exception = True
 
@@ -612,6 +668,7 @@ class RecommendByRating(View):
 # API - GAMING AND TECH NEWS
 
 class TechNews(View):
+    """Display gaming and tech news using API"""
     def get(self, request, news_source='polygon'):
         image_url = None
         source_name = None

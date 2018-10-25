@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <td colspan="4">
+                <h1>{{ game.title }}</h1>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <h4><b>Genre</b></h4>
+            </td>
+            <td style="text-align: center">
+                {% for genre in game.genre.all %}
+                    <h5><a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a></h5>
+                {% endfor %}
+            </td>
+            <td rowspan="4" style="text-align: center">
+                <img src="{{ game.image.url }}" style=width:500px;height:400px;>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4><b>Developer</b></h4>
+            </td>
+            <td>
+                <h5><a href="{% url 'show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4><b>Tags</b></h4>
+            </td>
+            <td style="text-align:center">
+                {% for tag in game.tags.all %}
+                    <a href="{% url 'show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4><b>Year</b></h4>
+            </td>
+            <td>
+                <h5>{{ game.year }}</h5>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4><b>Game Rating</b></h4>
+            </td>
+            <td>
+                {% if gamescore %}
+                    {{ gamescore.score }}
+                {% else %}
+                    -------
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4><b>Rate Game</b></h4>
+            </td>
+            <td>
+                <form action="{% url 'game-details' game.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="{% url 'delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

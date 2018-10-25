@@ -8,6 +8,17 @@ YEARS = {(1990, 1990), (1991, 1991), (1992, 1992), (1993, 1993), (1994, 1994), (
          (2007, 2007), (2008, 2008), (2009, 2009), (2010, 2010), (2011, 2011), (2012, 2012), (2013, 2013), (2014, 2014),
          (2015, 2015), (2016, 2016), (2017, 2017), (2018, 2018)}
 
+RATING = {(1, '1 star'),
+          (2, '2 star'),
+          (3, '3 star'),
+          (4, '4 star'),
+          (5, '5 star'),
+          (6, '6 star'),
+          (7, '7 star'),
+          (8, '8 star'),
+          (9, '9 star'),
+          (10, '10 star')}
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=64)
@@ -51,9 +62,4 @@ class Game(models.Model):
 class GameScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    score = models.IntegerField(blank=True)
-
-
-class GamingQuotes(models.Model):
-    quote = models.CharField(max_length=256)
-    author = models.CharField(max_length=64)
+    score = models.IntegerField(choices=RATING, blank=True)

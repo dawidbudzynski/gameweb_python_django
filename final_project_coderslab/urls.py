@@ -48,6 +48,8 @@ urlpatterns = [
          name='add-game'),
     path('games/', views.ShowGamesView.as_view(),
          name='games'),
+    path('game_details/<game_id>', views.SingeGameDetails.as_view(),
+         name='game-details'),
     path('delete_game/<game_id>', views.DeleteGameView.as_view(),
          name='delete-game'),
     path('wrong_value', views.WrongValueView.as_view()),
