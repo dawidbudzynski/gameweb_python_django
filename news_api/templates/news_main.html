@@ -18,16 +18,16 @@
         </tr>
         <tr>
             <td style="text-align: center" colspan="2">
-                <a href="{% url 'tech_news' news_source='polygon' %}"
+                <a href="{% url 'news_api:show-news' news_source='polygon' %}"
                    class="news_button btn btn-dark hvr-float-shadow"
                    role="button">Polygon</a>
-                <a href="{% url 'tech_news' news_source='ign' %}"
+                <a href="{% url 'news_api:show-news' news_source='ign' %}"
                    class="news_button btn btn-dark hvr-float-shadow"
                    role="button">IGN</a>
-                <a href="{% url 'tech_news' news_source='the-verge' %}"
+                <a href="{% url 'news_api:show-news' news_source='the-verge' %}"
                    class="news_button btn btn-dark hvr-float-shadow"
                    role="button">The Verge</a>
-                <a href="{% url 'tech_news' news_source='techradar' %}"
+                <a href="{% url 'news_api:show-news' news_source='techradar' %}"
                    class="news_button btn btn-dark hvr-float-shadow"
                    role="button">TechRadar</a>
             </td>
