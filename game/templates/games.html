@@ -12,7 +12,7 @@
     <thead>
     <tr>
         <td colspan="3">
-            <a href="{% url 'add-game' %}" class="btn btn-dark btn-lg btn-block">Add game</a>
+            <a href="{% url 'game:add-game' %}" class="btn btn-dark btn-lg btn-block">Add game</a>
             <p></p>
         </td>
     </tr>
@@ -33,7 +33,7 @@
                 </td>
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
-                        <h5><a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a></h5>
+                        <h5><a href="{% url 'genre:show-genre' genre.id %}">{{ genre.name }}</a></h5>
                     {% endfor %}
                 </td>
                 <td rowspan="4" style="text-align: center">
@@ -45,7 +45,7 @@
                     <h4>DEVELOPER</h4>
                 </td>
                 <td>
-                    <h5><a href="{% url 'show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
+                    <h5><a href="{% url 'developer:show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
                 </td>
             </tr>
             <tr>
@@ -54,7 +54,7 @@
                 </td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
-                        <a href="{% url 'show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                        <a href="{% url 'tag:show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
                     {% endfor %}
                 </td>
             </tr>
@@ -68,12 +68,12 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{% url 'game-details' game.id %}" class="btn btn-dark btn-lg btn-block">Game details</a>
+                    <a href="{% url 'game:game-details' game.id %}" class="btn btn-dark btn-lg btn-block">Game details</a>
                 </td>
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{% url 'delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
+                    <a href="{% url 'game:delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
                 </td>
             </tr>
             </tbody>
