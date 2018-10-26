@@ -21,18 +21,18 @@
         <tr>
             <td>
                 <h4>
-                    <a href="{% url 'show-genre' user_favorites.favorite_genre.id %}">
+                    <a href="{% url 'genre:show-genre' user_favorites.favorite_genre.id %}">
                         {{ user_favorites.favorite_genre }}</a>
                 </h4>
             </td>
             <td>
-                <h4><a href="{% url 'show-developer' user_favorites.favorite_developer.id %}">
+                <h4><a href="{% url 'developer:show-developer' user_favorites.favorite_developer.id %}">
                     {{ user_favorites.favorite_developer }}
                 </a></h4>
             </td>
             <td style="text-align:center">
                 {% for tag in user_favorites.favorite_tags_top_6 %}
-                    <a href="{% url 'show-tag' tag.id %}" class="btn btn-success">{{ tag.name }}</a><br>
+                    <a href="{% url 'tag:show-tag' tag.id %}" class="btn btn-success">{{ tag.name }}</a><br>
                 {% endfor %}
             </td>
         </tr>
@@ -81,7 +81,7 @@
                 <td><h4><b>GENRE</b></h4></td>
                 <td style="text-align:center">
                     {% for genre in single_game_info.game.genre.all %}
-                        <p><a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a></p>
+                        <p><a href="{% url 'genre:show-genre' genre.id %}">{{ genre.name }}</a></p>
                     {% endfor %}
                     {% if single_game_info.genre_match == True %}
                         <a href="" class="btn btn-success">
@@ -103,7 +103,7 @@
                 <td><h4><b>DEVELOPER</b></h4></td>
                 <td style="text-align:center">
                     <p>
-                        <a href="{% url 'show-developer' single_game_info.game.developer.id %}">
+                        <a href="{% url 'developer:show-developer' single_game_info.game.developer.id %}">
                             {{ single_game_info.game.developer }}</a>
                     </p>
                     {% if single_game_info.developer_match == True %}
@@ -123,7 +123,7 @@
                 <td><h4><b>MATCHING TAGS</b></h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.matched_tags %}
-                        <a href="{% url 'show-tag' game_tag.id %}" class="btn btn-success">{{ game_tag.name }}</a><br>
+                        <a href="{% url 'tag:show-tag' game_tag.id %}" class="btn btn-success">{{ game_tag.name }}</a><br>
                     {% endfor %}
                 </td>
             </tr>
@@ -131,7 +131,7 @@
                 <td><h4><b>OTHER TAGS</b></h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.unmatched_tags %}
-                        <a href="{% url 'show-tag' game_tag.id %}" class="btn btn-secondary">{{ game_tag.name }}</a><br>
+                        <a href="{% url 'tag:show-tag' game_tag.id %}" class="btn btn-secondary">{{ game_tag.name }}</a><br>
                     {% endfor %}
                 </td>
             </tr>

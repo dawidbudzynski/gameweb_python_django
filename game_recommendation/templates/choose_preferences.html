@@ -12,7 +12,7 @@
     <table class="table table-dark">
     <tr>
         <td>
-        <form action="{% url 'recommend-by-tags' %}" method="POST" class="form-group">
+        <form action="{% url 'game_recommendation:recommend-by-tags' %}" method="POST" class="form-group">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">

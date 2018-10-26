@@ -1,454 +1,18 @@
 from collections import Counter
 from operator import itemgetter
 
-import requests
-from decouple import config
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.contrib.auth.models import User as DjangoUser
-from django.core.exceptions import ObjectDoesNotExist
+from constants import (DEVELOPER_MATCH,
+                       GENRE_MATCH,
+                       TAG_MATCH)
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from game.models import Game
 
-from .constants import *
-from .forms import (AddUserForm,
-                    AddTagForm,
-                    AddGenreForm,
-                    AddDeveloperForm,
-                    LoginUserForm,
-                    AddGameForm,
-                    ChooseTagsForm,
-                    RateGameForm)
-from .models import (User, Tag, Game, Genre, Developer, GameScore)
-
-NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
+from .forms import (ChooseTagsForm)
 
 
 # Create your views here.
-
-# OTHER
-
-class AboutPageView(TemplateView):
-    template_name = 'about.html'
-
-
-# ERRORS
-
-class WrongValueView(TemplateView):
-    template_name = 'wrong_value_error.html'
-
-
-class ObjectAlreadyExistView(TemplateView):
-    template_name = 'object_already_exist.html'
-
-
-class WrongPasswordView(TemplateView):
-    template_name = 'wrong_password.html'
-
-
-# USERS
-
-class ShowUsersView(View):
-    def get(self, request):
-        all_users = User.objects.all().order_by('user__username')
-
-        ctx = {'all_users': all_users}
-
-        return render(request,
-                      template_name='users.html',
-                      context=ctx)
-
-
-class AddUserView(View):
-    def get(self, request):
-        form = AddUserForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_user.html',
-                      context=ctx)
-
-    def post(self, request):
-        form = AddUserForm(request.POST)
-        if form.is_valid():
-
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-
-            if DjangoUser.objects.filter(username=username).exists():
-                return HttpResponseRedirect('/object_already_exist')
-
-            django_user = DjangoUser.objects.create_user(username=username,
-                                                         password=password,
-                                                         first_name=first_name,
-                                                         last_name=last_name,
-                                                         email=email)
-            User.objects.create(user=django_user)
-            return HttpResponseRedirect('/users')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class DeleteUserView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_genre'
-    raise_exception = True
-
-    def get(self, request, user_id):
-        user = User.objects.get(id=user_id)
-        user.delete()
-        return HttpResponseRedirect('/users')
-
-
-# TAGS
-
-class ShowTagsView(View):
-    def get(self, request):
-        all_tags = Tag.objects.all().order_by('name')
-
-        ctx = {'all_tags': all_tags}
-
-        return render(request,
-                      template_name='tags.html',
-                      context=ctx)
-
-
-class AddTagView(LoginRequiredMixin, View):
-    def get(self, request):
-        form = AddTagForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_tag.html',
-                      context=ctx)
-
-    def post(self, request):
-        form = AddTagForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-
-            if Tag.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
-
-            Tag.objects.create(name=name)
-
-            return HttpResponseRedirect('/tags')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class DeleteTagView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_tag'
-    raise_exception = True
-
-    def get(self, request, tag_id):
-        tag = Tag.objects.get(id=tag_id)
-        tag.delete()
-
-        return HttpResponseRedirect('/tags')
-
-
-class ShowAllGamesWithTagView(View):
-    def get(self, request, tag_id):
-        """Display all games with selected tag"""
-        selected_tag = Tag.objects.get(id=tag_id)
-        all_games_with_tag = Game.objects.filter(tags=selected_tag)
-
-        ctx = {'all_games_with_tag': all_games_with_tag,
-               'selected_tag': selected_tag}
-
-        return render(request,
-                      template_name='all_games_with_selected_tag.html',
-                      context=ctx)
-
-
-# GENRE
-
-class AddGenreView(LoginRequiredMixin, View):
-    def get(self, request):
-        form = AddGenreForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_genre.html',
-                      context=ctx)
-
-    def post(self, request):
-        form = AddTagForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-
-            if Genre.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
-
-            Genre.objects.create(name=name)
-
-            return HttpResponseRedirect('/genres')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class ShowGenreView(View):
-    def get(self, request):
-        all_genres = Genre.objects.all().order_by('name')
-
-        ctx = {'all_genres': all_genres}
-
-        return render(request,
-                      template_name='genres.html',
-                      context=ctx)
-
-
-class DeleteGenreView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_genre'
-    raise_exception = True
-
-    def get(self, request, genre_id):
-        genre = Genre.objects.get(id=genre_id)
-        genre.delete()
-
-        return HttpResponseRedirect('/genres')
-
-
-class ShowAllGamesWithGenreView(View):
-    """Display all games with selected genre"""
-    def get(self, request, genre_id):
-        selected_genre = Genre.objects.get(id=genre_id)
-        all_games_with_genre = Game.objects.filter(genre=selected_genre)
-
-        ctx = {'all_games_with_genre': all_games_with_genre,
-               'selected_genre': selected_genre}
-
-        return render(request,
-                      template_name='all_games_with_selected_genre.html',
-                      context=ctx)
-
-
-# DEVELOPER
-
-class AddDeveloperView(LoginRequiredMixin, View):
-    def get(self, request):
-        form = AddDeveloperForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_developer.html',
-                      context=ctx)
-
-    def post(self, request):
-        form = AddDeveloperForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-
-            if Developer.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
-
-            Developer.objects.create(name=name)
-
-            return HttpResponseRedirect('/developers')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class DeleteDeveloperView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_developer'
-    raise_exception = True
-
-    def get(self, request, developer_pk):
-        developer = Developer.objects.get(pk=developer_pk)
-        developer.delete()
-
-        return HttpResponseRedirect('/developers')
-
-
-class ShowDevelopersView(View):
-    def get(self, request):
-        all_developers = Developer.objects.all().order_by('name')
-
-        ctx = {'all_developers': all_developers}
-
-        return render(request,
-                      template_name='developers.html',
-                      context=ctx)
-
-
-class ShowAllGamesWithDeveloperView(View):
-    """Display all games with selected developer"""
-    def get(self, request, developer_id):
-        selected_developer = Developer.objects.get(id=developer_id)
-        all_games_with_developer = Game.objects.filter(developer=selected_developer)
-
-        ctx = {'all_games_with_developer': all_games_with_developer,
-               'selected_developer': selected_developer}
-
-        return render(request,
-                      template_name='all_games_with_selected_developer.html',
-                      context=ctx)
-
-
-# GAMES
-
-class AddGameView(LoginRequiredMixin, View):
-    def get(self, request):
-        form = AddGameForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_game.html',
-                      context=ctx)
-
-    def post(self, request):
-        form = AddGameForm(request.POST, request.FILES)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            year = form.cleaned_data['year']
-            developer = form.cleaned_data['developer']
-            genre = form.cleaned_data['genre']
-            tags = form.cleaned_data['tags']
-            image = form.cleaned_data['image']
-            top_20 = form.cleaned_data['top_20']
-
-            tags_list = []
-            if tags:
-                for tag in tags:
-                    tags_list.append(tag)
-            else:
-                tags_list = []
-
-            if Game.objects.filter(title=title).exists():
-                return HttpResponseRedirect('/object_already_exist')
-
-            new_game = Game.objects.create(title=title,
-                                           year=year,
-                                           developer=developer,
-                                           image=image,
-                                           top_20=top_20)
-
-            new_game.genre.add(genre)
-
-            for tag in tags_list:
-                new_game.tags.add(tag)
-
-            return HttpResponseRedirect('/games')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class SingeGameDetails(View):
-    def get(self, request, game_id):
-        """Display single game details with form for rating"""
-        game = Game.objects.get(id=game_id)
-        try:
-            user = User.objects.get(id=request.user.id)
-            gamescore = GameScore.objects.get(game=game, user=user)
-        except ObjectDoesNotExist:
-            gamescore = None
-        form = RateGameForm()
-
-        ctx = {'game': game,
-               'gamescore': gamescore,
-               'form': form}
-
-        return render(request,
-                      template_name='game_details.html',
-                      context=ctx)
-
-    def post(self, request, game_id):
-        """Get rating from form and create or update gamescore"""
-        form = RateGameForm(request.POST)
-        try:
-            user = User.objects.get(id=request.user.id)
-            game = Game.objects.get(id=game_id)
-            old_gamescore = GameScore.objects.get(game=game, user=user)
-        except ObjectDoesNotExist:
-            old_gamescore = None
-        if form.is_valid():
-            score = form.cleaned_data['score']
-            if old_gamescore is not None:
-                old_gamescore.score = score
-                old_gamescore.save()
-                gamescore = old_gamescore
-            else:
-                gamescore = GameScore.objects.create(
-                    user=user,
-                    game=game,
-                    score=score
-                )
-
-        ctx = {'game': game,
-               'form': form,
-               'gamescore': gamescore}
-
-        return render(request,
-                      template_name='game_details.html',
-                      context=ctx)
-
-
-class ShowGamesView(View):
-    def get(self, request):
-        """Display all games in database"""
-        all_games = Game.objects.all().order_by('title')
-
-        ctx = {'all_games': all_games}
-
-        return render(request,
-                      template_name='games.html',
-                      context=ctx)
-
-
-class DeleteGameView(PermissionRequiredMixin, View):
-    """Delete game"""
-    permission_required = 'game_recommendation.delete_game'
-    raise_exception = True
-
-    def get(self, request, game_id):
-        game = Game.objects.get(id=game_id)
-        game.delete()
-
-        return HttpResponseRedirect('/games')
-
-
-# LOGIN
-
-class LoginUserView(View):
-    def get(self, request):
-        loggedUser = request.session.get('loggedUser')
-        if loggedUser is None:
-            form = LoginUserForm().as_p()
-            ctx = {
-                'form': form
-            }
-            return render(request,
-                          template_name='login.html',
-                          context=ctx)
-
-        else:
-            del request.session['loggedUser']
-            return HttpResponseRedirect('/')
-
-    def post(self, request):
-        form = LoginUserForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            request.session['loggedUser'] = username
-            user = authenticate(username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect('/')
-            else:
-                return HttpResponseRedirect('/wrong_password')
-        else:
-            return HttpResponseRedirect('/wrong_value')
-
-
-class LogoutUserView(View):
-    def get(self, request):
-        logout(request)
-        return HttpResponseRedirect('/')
-
-
-# RECOMMENDATIONS
 
 class RecommendManually(View):
     def get(self, request):
@@ -499,16 +63,16 @@ class RecommendManually(View):
                 for game_genre in game_object.genre.all():
                     if game_genre.name == genre.name:
                         genre_match = True
-                        match_score += genre_match_constant
+                        match_score += GENRE_MATCH
                     elif game_genre.name != genre.name:
                         genre_match = False
                 if game_object.developer.name == developer.name:
                     developer_match = True
-                    match_score += developer_match_constant
+                    match_score += DEVELOPER_MATCH
                 elif game_object.developer.name != developer.name:
                     developer_match = False
                 for user_tag in game[1]:
-                    match_score += tag_match_constant
+                    match_score += TAG_MATCH
                     for game_tag in game_object.tags.all():
                         if user_tag == game_tag.name:
                             matched_tags.append(game_tag)
@@ -623,7 +187,7 @@ class RecommendByRating(View):
                 for game_tag in game.tags.all():
                     if user_tag.name == game_tag.name:
                         matched_tags.append(game_tag)
-                        match_score += tag_match_constant
+                        match_score += TAG_MATCH
                     else:
                         unmatched_tags.append(game_tag)
 
@@ -631,7 +195,7 @@ class RecommendByRating(View):
                 try:
                     if game_genre.name == favorite_genre.name:
                         genre_match = True
-                        match_score += genre_match_constant
+                        match_score += GENRE_MATCH
                     elif game_genre.name != favorite_genre.name:
                         genre_match = False
                 except AttributeError:
@@ -639,7 +203,7 @@ class RecommendByRating(View):
 
             if game.developer.name == favorite_developer.name:
                 developer_match = True
-                match_score += developer_match_constant
+                match_score += DEVELOPER_MATCH
             elif game.developer.name != favorite_developer.name:
                 developer_match = False
 
@@ -662,30 +226,4 @@ class RecommendByRating(View):
 
         return render(request,
                       template_name='recommendations_by_rating.html',
-                      context=ctx)
-
-
-# API - GAMING AND TECH NEWS
-
-class TechNews(View):
-    """Display gaming and tech news using API"""
-    def get(self, request, news_source='polygon'):
-        image_url = None
-        source_name = None
-        selected_source = None
-        for news_source_key, news_source_values in NEWS_SOURCE_DATA_ALL.items():
-            if news_source == news_source_key:
-                selected_source = news_source_key
-                image_url = news_source_values['image_url']
-                source_name = news_source_values['api_name']
-        url = ('https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(
-            selected_source, NEWS_API_KEY))
-        response = requests.get(url)
-        ctx = {
-            'articles': response.json()['articles'],
-            'image_url': image_url,
-            'source_name': source_name
-        }
-        return render(request,
-                      template_name='news_main.html',
                       context=ctx)
