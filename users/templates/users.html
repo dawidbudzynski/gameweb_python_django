@@ -12,7 +12,7 @@
     <thead>
     <tr>
         <td colspan="3">
-            <a href="{% url 'add-user' %}" class="btn btn-dark btn-lg btn-block">Add user</a>
+            <a href="{% url 'users:add-user' %}" class="btn btn-dark btn-lg btn-block">Add user</a>
             <p></p>
         </td>
     </tr>
@@ -81,7 +81,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{% url 'delete-user' user.id %}" class="btn btn-dark btn-lg btn-block">Delete user</a>
+                    <a href="{% url 'users:delete-user' user.id %}" class="btn btn-dark btn-lg btn-block">Delete user</a>
                 </td>
             </tr>
             </tbody>
