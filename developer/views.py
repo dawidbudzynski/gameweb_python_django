@@ -71,6 +71,6 @@ class ShowAllGamesWithDeveloperView(View):
 
         return render(
             request,
-            template_name='all_games_with_selected_developer.html',
+            template_name='games_by_developer.html',
             context=ctx
         )
