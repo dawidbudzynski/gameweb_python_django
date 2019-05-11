@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table table-dark">
         <thead>
@@ -13,7 +13,7 @@
     <thead>
     <tr>
         <td>
-            <a href="{% url 'tag:add-tag' %}" class="btn btn-dark btn-lg btn-block">Add tag</a>
+            <a href="{% url 'tag:tag-create' %}" class="btn btn-dark btn-lg btn-block">{% trans 'Create' %}</a>
             <p></p>
         </td>
     </tr>

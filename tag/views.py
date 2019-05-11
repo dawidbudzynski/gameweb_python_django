@@ -21,7 +21,7 @@ class ShowTagsView(View):
                       context=ctx)
 
 
-class AddTagView(LoginRequiredMixin, View):
+class TagCreateView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddTagForm().as_p()
         ctx = {'form': form}
