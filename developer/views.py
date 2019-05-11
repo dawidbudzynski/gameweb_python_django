@@ -1,8 +1,12 @@
 from decouple import config
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
+from django.views.generic.list import ListView
 from game.models import Game
 
 from .forms import AddDeveloperForm
@@ -11,16 +15,16 @@ from .models import Developer
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
 
-# Create your views here.
-
-class AddDeveloperView(LoginRequiredMixin, View):
+class DeveloperCreateView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddDeveloperForm().as_p()
         ctx = {'form': form}
 
-        return render(request,
-                      template_name='add_developer.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='developer_create.html',
+            context=ctx
+        )
 
     def post(self, request):
         form = AddDeveloperForm(request.POST)
@@ -28,34 +32,31 @@ class AddDeveloperView(LoginRequiredMixin, View):
             name = form.cleaned_data['name']
 
             if Developer.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
+                messages.add_message(request, messages.WARNING, _('Developer with this name already exists'))
+                return HttpResponseRedirect(reverse('developer:developer-create'))
 
             Developer.objects.create(name=name)
+            messages.add_message(request, messages.INFO, _('Developer: {} created successfully').format(name))
+            return HttpResponseRedirect(reverse('developer:developer-list'))
 
-            return HttpResponseRedirect('/developer/developers')
-        return HttpResponseRedirect('/wrong_value')
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('developer:developer-create'))
 
 
-class DeleteDeveloperView(PermissionRequiredMixin, View):
+class DeveloperDeleteView(PermissionRequiredMixin, View):
     permission_required = 'developer.delete_developer'
     raise_exception = True
 
-    def get(self, request, developer_pk):
-        developer = Developer.objects.get(pk=developer_pk)
+    def get(self, request, developer_id):
+        developer = Developer.objects.get(id=developer_id)
         developer.delete()
+        messages.add_message(request, messages.WARNING, _('Developer: {} has been deleted').format(developer.name))
+        return HttpResponseRedirect(reverse('developer:developer-list'))
 
-        return HttpResponseRedirect('/developers')
 
-
-class ShowDevelopersView(View):
-    def get(self, request):
-        all_developers = Developer.objects.all().order_by('name')
-
-        ctx = {'all_developers': all_developers}
-
-        return render(request,
-                      template_name='developers.html',
-                      context=ctx)
+class DeveloperListView(ListView):
+    model = Developer
+    template_name = 'developer_list.html'
 
 
 class ShowAllGamesWithDeveloperView(View):
@@ -63,11 +64,13 @@ class ShowAllGamesWithDeveloperView(View):
 
     def get(self, request, developer_id):
         selected_developer = Developer.objects.get(id=developer_id)
-        all_games_with_developer = Game.objects.filter(developer=selected_developer)
+        ctx = {
+            'all_games_with_developer': Game.objects.filter(developer=selected_developer),
+            'selected_developer': selected_developer
+        }
 
-        ctx = {'all_games_with_developer': all_games_with_developer,
-               'selected_developer': selected_developer}
-
-        return render(request,
-                      template_name='all_games_with_selected_developer.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='all_games_with_selected_developer.html',
+            context=ctx
+        )

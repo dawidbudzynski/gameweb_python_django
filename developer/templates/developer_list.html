@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 
 {% block content %}
     <table class="table table-dark">
         <thead>
         <tr>
             <td>
-                <h1>DEVELOPER LIST</h1>
+                <h1>{% trans 'Developers' %}</h1>
             </td>
         </tr>
         </thead>
@@ -13,12 +14,22 @@
     <thead>
     <tr>
         <td>
-            <a href="{% url 'developer:add-developer' %}" class="btn btn-dark btn-lg btn-block">Add developer</a>
+            <a href="{% url 'developer:developer-create' %}"
+               class="btn btn-dark btn-lg btn-block">{% trans 'Create developer' %}</a>
             <p></p>
         </td>
     </tr>
     </thead>
-    {% for developer in all_developers %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.level == 20 %}
+                class="alert alert-primary" {% else %}
+                class="alert alert-warning" {% endif %} role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for developer in object_list %}
         <table class="table table-dark">
             <tbody>
             <tr>
@@ -30,8 +41,8 @@
                                style="color: mintcream">{{ developer.name }}</a>
                         </button>
                         <button type="button" class="btn btn-danger" style="width: 20%;">
-                            <a href="{% url 'developer:delete-developer' developer.pk %}">
-                                Delete developer
+                            <a href="{% url 'developer:delete-developer' developer.id %}">
+                                {% trans 'Delete' %}
                             </a>
                         </button>
                     </div>

@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table">
         <thead>
         <tr>
             <td>
-                <h1>GAMES MADE BY: {{ selected_developer.name }}</h1>
+                <h1>{% trans 'Games made by: ' %}{{ selected_developer.name }}</h1>
             </td>
         </tr>
         </thead>
@@ -21,7 +22,7 @@
             <tbody>
             <tr>
                 <td>
-                    <h4><b>GENRE</b></h4>
+                    <h4>{% trans 'Genre' %}</h4>
                 </td>
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
@@ -36,17 +37,17 @@
             </tr>
             <tr>
                 <td>
-                    <h4><b>DEVELOPER</b></h4>
+                    <h4>{% trans 'Developer' %}</h4>
                 </td>
                 <td>
-                    <h5><a href="{% url 'developer:show-developer' game.developer.id %}">
-                        {{ game.developer }}
-                    </a></h5>
+                    <h5>
+                        <a href="{% url 'developer:show-developer' game.developer.id %}">{{ game.developer }}</a>
+                    </h5>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <h4><b>TAGS</b></h4>
+                    <h4>{% trans 'Tags' %}</h4>
                 </td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
@@ -56,7 +57,7 @@
             </tr>
             <tr>
                 <td>
-                    <h4><b>YEAR</b></h4>
+                    <h4>{% trans 'Year' %}</h4>
                 </td>
                 <td>
                     <h5>{{ game.year }}</h5>
@@ -64,7 +65,8 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{% url 'delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
+                    <a href="{% url 'delete-game' game.id %}"
+                       class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a>
                 </td>
             </tr>
             </tbody>
