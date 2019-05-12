@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+{% block content %}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <td colspan="3"><h1>{% trans 'Create genre' %}</h1></td>
+        </tr>
+        </thead>
+    </table>
+    <table class="table table-dark">
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <tr>
+            <td>
+                <form action="{% url 'genre:genre-create' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="{% trans 'Create' %}" class="btn btn-dark btn-lg btn-block">
+                </form>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

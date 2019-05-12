@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+{% block content %}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <td><h1>{% trans 'Genre' %}</h1></td>
+        </tr>
+        </thead>
+    </table>
+    <thead>
+    <tr>
+        <td><a href="{% url 'genre:genre-create' %}"
+               class="btn btn-dark btn-lg btn-block">{% trans 'Create genre' %}</a></td>
+    </tr>
+    </thead>
+    <p></p>
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.level == 20 %}
+                class="alert alert-primary" {% else %}
+                class="alert alert-warning" {% endif %} role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for genre in object_list %}
+        <table class="table table-dark">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="Basic example"
+                         style="width: 100%;">
+                        <button type="button" class="btn btn-secondary" style="width: 80%">
+                            <a href="{% url 'genre:games-by-genre' genre.id %}"
+                               style="color: mintcream">{{ genre.name }}</a>
+                        </button>
+                        <button type="button" class="btn btn-danger" style="width: 20%;">
+                            <a href="{% url 'genre:genre-delete' genre.id %}">
+                                {% trans 'Delete' %}
+                            </a>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}

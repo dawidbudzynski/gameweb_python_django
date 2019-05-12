@@ -1,8 +1,12 @@
 from decouple import config
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
+from django.views.generic import ListView
 from game.models import Game
 
 from .forms import AddGenreForm
@@ -11,16 +15,20 @@ from .models import Genre
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
 
-# Create your views here.
+class GenreListView(ListView):
+    model = Genre
+    template_name = 'genre_list.html'
 
-class AddGenreView(LoginRequiredMixin, View):
+
+class GenreCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddGenreForm().as_p()
-        ctx = {'form': form}
+        ctx = {'form': AddGenreForm().as_p()}
 
-        return render(request,
-                      template_name='add_genre.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='genre_create.html',
+            context=ctx
+        )
 
     def post(self, request):
         form = AddGenreForm(request.POST)
@@ -28,46 +36,37 @@ class AddGenreView(LoginRequiredMixin, View):
             name = form.cleaned_data['name']
 
             if Genre.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
+                messages.add_message(request, messages.WARNING, _('Genre with this name already exists'))
+                return HttpResponseRedirect(reverse('genre:genre-create'))
 
             Genre.objects.create(name=name)
+            messages.add_message(request, messages.INFO, _('Genre: {} created successfully').format(name))
+            return HttpResponseRedirect(reverse('genre:genre-list'))
 
-            return HttpResponseRedirect('genre/genres')
-        return HttpResponseRedirect('/wrong_value')
-
-
-class ShowGenreView(View):
-    def get(self, request):
-        all_genres = Genre.objects.all().order_by('name')
-
-        ctx = {'all_genres': all_genres}
-
-        return render(request,
-                      template_name='genres.html',
-                      context=ctx)
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('genre:genre-create'))
 
 
-class DeleteGenreView(PermissionRequiredMixin, View):
+class GenreDeleteView(PermissionRequiredMixin, View):
     permission_required = 'game_recommendation.delete_genre'
     raise_exception = True
 
     def get(self, request, genre_id):
         genre = Genre.objects.get(id=genre_id)
         genre.delete()
+        return HttpResponseRedirect(reverse('genre:genre-list'))
 
-        return HttpResponseRedirect('genre/genres')
 
-
-class ShowAllGamesWithGenreView(View):
+class GamesByGenreView(View):
     """Display all games with selected genre"""
 
     def get(self, request, genre_id):
         selected_genre = Genre.objects.get(id=genre_id)
-        all_games_with_genre = Game.objects.filter(genre=selected_genre)
-
-        ctx = {'all_games_with_genre': all_games_with_genre,
+        ctx = {'all_games_with_genre': Game.objects.filter(genre=selected_genre),
                'selected_genre': selected_genre}
 
-        return render(request,
-                      template_name='all_games_with_selected_genre.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='games_by_genre.html',
+            context=ctx
+        )
