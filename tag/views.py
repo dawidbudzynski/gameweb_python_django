@@ -37,6 +37,7 @@ class TagCreateView(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse('tag:tag-create'))
 
             Tag.objects.create(name=name)
+            messages.add_message(request, messages.INFO, _('Tag: {} created successfully').format(name))
             return HttpResponseRedirect(reverse('tag:tag-list'))
 
         messages.add_message(request, messages.ERROR, _('Form invalid'))
