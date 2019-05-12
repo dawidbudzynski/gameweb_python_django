@@ -15,6 +15,11 @@ from .models import Developer
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
 
+class DeveloperListView(ListView):
+    model = Developer
+    template_name = 'developer_list.html'
+
+
 class DeveloperCreateView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddDeveloperForm().as_p()
@@ -54,12 +59,7 @@ class DeveloperDeleteView(PermissionRequiredMixin, View):
         return HttpResponseRedirect(reverse('developer:developer-list'))
 
 
-class DeveloperListView(ListView):
-    model = Developer
-    template_name = 'developer_list.html'
-
-
-class ShowAllGamesWithDeveloperView(View):
+class GamesByDeveloperView(View):
     """Display all games with selected developer"""
 
     def get(self, request, developer_id):

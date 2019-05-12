@@ -5,21 +5,17 @@
     <table class="table table-dark">
         <thead>
         <tr>
-            <td>
-                <h1>{% trans 'Developers' %}</h1>
-            </td>
+            <td><h1>{% trans 'Developers' %}</h1></td>
         </tr>
         </thead>
     </table>
     <thead>
     <tr>
-        <td>
-            <a href="{% url 'developer:developer-create' %}"
-               class="btn btn-dark btn-lg btn-block">{% trans 'Create developer' %}</a>
-            <p></p>
-        </td>
+        <td><a href="{% url 'developer:developer-create' %}"
+               class="btn btn-dark btn-lg btn-block">{% trans 'Create developer' %}</a></td>
     </tr>
     </thead>
+    <p></p>
     {% if messages %}
         {% for message in messages %}
             <div {% if message.level == 20 %}
@@ -37,7 +33,7 @@
                     <div class="btn-group btn-group-justified" role="group" aria-label="Basic example"
                          style="width: 100%">
                         <button type="button" class="btn btn-secondary" style="width: 80%">
-                            <a href="{% url 'developer:show-developer' developer.id %}"
+                            <a href="{% url 'developer:games-by-developer' developer.id %}"
                                style="color: mintcream">{{ developer.name }}</a>
                         </button>
                         <button type="button" class="btn btn-danger" style="width: 20%;">

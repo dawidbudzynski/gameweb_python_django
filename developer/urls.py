@@ -11,6 +11,6 @@ urlpatterns = [
          name='developer-list'),
     path('delete_developer/<developer_id>', views.DeveloperDeleteView.as_view(),
          name='delete-developer'),
-    path('show_games_with_developer/<developer_id>', views.ShowAllGamesWithDeveloperView.as_view(),
-         name='show-developer')
+    path('games_by_developer/<developer_id>', views.GamesByDeveloperView.as_view(),
+         name='games-by-developer')
 ]
