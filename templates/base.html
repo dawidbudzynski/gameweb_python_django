@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-{% load static %}
+{% load bootstrap4 i18n staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game Picker</title>
+    <title>{% trans 'Gameweb' %}</title>
     <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -28,7 +28,7 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">library_books</i>
-                        News
+                        {% trans 'News' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
@@ -48,13 +48,15 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">favorite_border</i>
-                        Recommend game
+                        {% trans 'Recommend Game' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'game_recommendation:recommend-by-tags' %}">Recommend by tags</a>
+                           href="{% url 'game_recommendation:recommend-by-tags' %}">
+                            {% trans 'Recommend by tags' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'game_recommendation:recommend-by-rating' %}">Recommend by rated games</a>
+                           href="{% url 'game_recommendation:recommend-by-rating' %}">
+                            {% trans 'Recommend by rated games' %}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -64,13 +66,13 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">videogame_asset</i>
-                        Games
+                        {% trans 'Games' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'game:add-game' %}">Add game</a>
+                           href="{% url 'game:add-game' %}">{% trans 'Add games' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'game:games' %}">Show games</a>
+                           href="{% url 'game:games' %}">{% trans 'Show games' %}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -80,13 +82,13 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">people</i>
-                        Users
+                        {% trans 'Users' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'users:add-user' %}">Add user</a>
+                           href="{% url 'users:add-user' %}">{% trans 'Add users' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'users:users' %}">Show users</a>
+                           href="{% url 'users:users' %}">{% trans 'Show users' %}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -96,17 +98,17 @@
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">format_align_justify</i>
-                        Other
+                        {% trans 'Other' %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'developer:developer-list' %}">Developers</a>
+                           href="{% url 'developer:developer-list' %}">{% trans 'Developers' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'genre:genres' %}">Genres</a>
+                           href="{% url 'genre:genres' %}">{% trans 'Genres' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'tag:tags' %}">Tags</a>
+                           href="{% url 'tag:tag-list' %}">{% trans 'Tags' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'main_app:about' %}">About</a>
+                           href="{% url 'main_app:about' %}">{% trans 'About' %}</a>
                     </div>
                 </li>
             </ul>
@@ -119,24 +121,24 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href="{% url 'users:logout' %}">Logout</a>
+                           href="{% url 'users:logout' %}">{% trans 'Logout' %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href=""><b>USER: {{ request.user.username }}</b></a>
+                           href=""><b>{{ request.user.username }}</b></a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href="{% url 'users:add-user' %}">Register</a>
+                           href="{% url 'users:add-user' %}">{% trans 'Register' %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href="{% url 'users:login' %}">Login</a>
+                           href="{% url 'users:login' %}">{% trans 'Login' %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href=""><b>USER: None</b></a>
+                           href=""><b>---</b></a>
                     </li>
                 {% endif %}
             </ul>
@@ -148,7 +150,7 @@
         <img id="header-logo" src="{% static 'img/logo.jpg' %} " alt="No image">
     </div>
     <div class="title">
-        <h1 class="header-title display-4">Game Picker</h1>
+        <h1 class="header-title display-4">{% trans 'Gameweb' %}</h1>
     </div>
     <div id="textMessage">
         {% for quote in all_quotes %}
