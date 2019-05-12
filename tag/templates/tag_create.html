@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table table-striped table-dark">
         <thead>
         <tr>
             <td colspan="3">
-                <h1>ADD NEW TAG</h1>
+                <h1>{% trans 'Create tag' %}</h1>
             </td>
         </tr>
         </thead>
     </table>
     <table class="table table-striped table-dark">
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
         <tr>
             <td>
                 <form action="{% url 'tag:tag-create' %}" method="POST" class="form-group">
                     {% csrf_token %}
                     {{ form }}
-                    <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+                    <input type="submit" value="{% trans 'Create' %}" class="btn btn-dark btn-lg btn-block">
                 </form>
             </td>
         </tr>

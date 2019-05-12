@@ -1,34 +1,31 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
+from django.views.generic import ListView
 from game.models import Game
 
 from .forms import AddTagForm
 from .models import Tag
 
 
-# Create your views here.
-
-class ShowTagsView(View):
-    def get(self, request):
-        all_tags = Tag.objects.all().order_by('name')
-
-        ctx = {'all_tags': all_tags}
-
-        return render(request,
-                      template_name='tags.html',
-                      context=ctx)
+class TagListView(ListView):
+    model = Tag
+    template_name = 'tag_list.html'
 
 
 class TagCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddTagForm().as_p()
-        ctx = {'form': form}
+        ctx = {'form': AddTagForm().as_p()}
 
-        return render(request,
-                      template_name='add_tag.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='tag_create.html',
+            context=ctx
+        )
 
     def post(self, request):
         form = AddTagForm(request.POST)
@@ -36,15 +33,17 @@ class TagCreateView(LoginRequiredMixin, View):
             name = form.cleaned_data['name']
 
             if Tag.objects.filter(name=name).exists():
-                return HttpResponseRedirect('/object_already_exist')
+                messages.add_message(request, messages.WARNING, _('Tag with this name already exists'))
+                return HttpResponseRedirect(reverse('tag:tag-create'))
 
             Tag.objects.create(name=name)
+            return HttpResponseRedirect(reverse('tag:tag-list'))
 
-            return HttpResponseRedirect('tag/tags')
-        return HttpResponseRedirect('/wrong_value')
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('tag:tag-create'))
 
 
-class DeleteTagView(PermissionRequiredMixin, View):
+class TagDeleteView(PermissionRequiredMixin, View):
     permission_required = 'game_recommendation.delete_tag'
     raise_exception = True
 
@@ -52,18 +51,19 @@ class DeleteTagView(PermissionRequiredMixin, View):
         tag = Tag.objects.get(id=tag_id)
         tag.delete()
 
-        return HttpResponseRedirect('tag/tags')
+        return HttpResponseRedirect(reverse('tag:tag-list'))
 
 
-class ShowAllGamesWithTagView(View):
+class GamesByTagView(View):
     def get(self, request, tag_id):
         """Display all games with selected tag"""
         selected_tag = Tag.objects.get(id=tag_id)
-        all_games_with_tag = Game.objects.filter(tags=selected_tag)
 
-        ctx = {'all_games_with_tag': all_games_with_tag,
+        ctx = {'all_games_with_tag': Game.objects.filter(tags=selected_tag),
                'selected_tag': selected_tag}
 
-        return render(request,
-                      template_name='all_games_with_selected_tag.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='all_games_with_selected_tag.html',
+            context=ctx
+        )

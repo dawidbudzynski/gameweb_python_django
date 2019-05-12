@@ -5,12 +5,12 @@ from . import views
 app_name = 'tag'
 
 urlpatterns = [
-    path('tags/', views.ShowTagsView.as_view(),
-         name='tags'),
+    path('tag_list/', views.TagListView.as_view(),
+         name='tag-list'),
     path('tag_create/', views.TagCreateView.as_view(),
          name='tag-create'),
-    path('delete_tag/<tag_id>', views.DeleteTagView.as_view(),
-         name='delete-tag'),
-    path('show_games_with_tag/<tag_id>', views.ShowAllGamesWithTagView.as_view(),
-         name='show-tag')
+    path('tag_delete/<tag_id>', views.TagDeleteView.as_view(),
+         name='tag-delete'),
+    path('games_by_tag/<tag_id>', views.GamesByTagView.as_view(),
+         name='games-by-tag')
 ]

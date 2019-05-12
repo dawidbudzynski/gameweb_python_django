@@ -3,9 +3,7 @@
     <table class="table">
         <thead>
         <tr>
-            <td>
-                <h1>GAMES WITH TAG: {{ selected_tag.name }}</h1>
-            </td>
+            <td><h1>{% trans 'Games with tag: ' %}{{ selected_tag.name }}</h1></td>
         </tr>
         </thead>
     </table>
@@ -13,39 +11,28 @@
         <table class="table">
             <thead>
             <tr>
-                <td colspan="4">
-                    <h1>{{ game.title }}</h1>
-                </td>
+                <td colspan="4"><h1>{{ game.title }}</h1></td>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>
-                    <h4><b>GENRE</b></h4>
-                </td>
+                <td><h4>{% trans 'Genre' %}</h4></td>
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
                         <h5><a href="{% url 'genre:show-genre' genre.id %}">{{ genre.name }}</a></h5>
                     {% endfor %}
                 </td>
                 <td rowspan="4" style="text-align: center">
-                    <img src="{{ game.image.url }}" style=width:500px;height:400px;>
+                    <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:500px;height:400px;>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <h4><b>Developer</b></h4>
-                </td>
-                <td>
-                    <h5><a href="{% url 'developer:show-developer' game.developer.id %}">
-                        {{ game.developer }}
-                    </a></h5>
-                </td>
+                <td><h4>{% trans 'Developer' %}</h4></td>
+                <td><h5><a href="{% url 'developer:show-developer' game.developer.id %}">
+                    {{ game.developer }}</a></h5></td>
             </tr>
             <tr>
-                <td>
-                    <h4><b>TAGS</b></h4>
-                </td>
+                <td><h4>{% trans 'Tags' %}</h4></td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
                         <a href="{% url 'show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
@@ -53,17 +40,12 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <h4><b>YEAR</b></h4>
-                </td>
-                <td>
-                    <h5>{{ game.year }}</h5>
-                </td>
+                <td><h4>{% trans 'Year' %}</h4></td>
+                <td><h5>{{ game.year }}</h5></td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <a href="{% url 'delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
-                </td>
+                <td colspan="3"><a href="{% url 'delete-game' game.id %}"
+                                   class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a></td>
             </tr>
             </tbody>
         </table>
