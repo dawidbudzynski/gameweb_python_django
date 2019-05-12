@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table table-dark">
         <thead>
         <tr>
-            <td colspan="3">
-                <h1>ADD NEW GAME</h1>
-            </td>
+            <td colspan="3"><h1>{% trans 'Add game' %}</h1></td>
         </tr>
         </thead>
     </table>
     <table class="table table-dark">
         <tr>
             <td>
-                <form action="{% url 'game:add-game' %}" method="POST" enctype="multipart/form-data">
+                <form action="{% url 'game:game-create' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
-
-                    <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+                    <input type="submit" value="{% trans 'Create' %}" class="btn btn-dark btn-lg btn-block">
                 </form>
             </td>
         </tr>

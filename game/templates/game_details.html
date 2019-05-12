@@ -1,70 +1,53 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table">
         <thead>
         <tr>
-            <td colspan="4">
-                <h3>{{ game.title }}</h3>
-            </td>
+            <td colspan="4"><h3>{{ game.title }}</h3></td>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>
-                <h4>Genre</h4>
-            </td>
+            <td><h4>{% trans 'Genre' %}</h4></td>
             <td style="text-align: center">
                 {% for genre in game.genre.all %}
-                    <h5><a href="{% url 'genre:show-genre' genre.id %}">{{ genre.name }}</a></h5>
+                    <h5><a href="{% url 'genre:games-by-genre' genre.id %}">{{ genre.name }}</a></h5>
                 {% endfor %}
             </td>
             <td rowspan="4" style="text-align: center">
-                <img src="{{ game.image.url }}" style=width:400px;height:300px;>
-            </td>
+                <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:400px;height:300px;></td>
         </tr>
         <tr>
-            <td>
-                <h4>Developer</h4>
-            </td>
-            <td>
-                <h5><a href="{% url 'developer:show-developer' game.developer.id %}">{{ game.developer }}</a></h5>
-            </td>
+            <td><h4>{% trans 'Developer' %}</h4></td>
+            <td><h5><a href="{% url 'developer:games-by-developer' game.developer.id %}">
+                {{ game.developer }}</a></h5></td>
         </tr>
         <tr>
-            <td>
-                <h4>Tags</h4>
-            </td>
+            <td><h4>{% trans 'Tags' %}</h4></td>
             <td style="text-align:center">
                 {% for tag in game.tags.all %}
-                    <a href="{% url 'show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                    <a href="{% url 'tag:games-by-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
                 {% endfor %}
             </td>
         </tr>
         <tr>
-            <td>
-                <h4>Year</h4>
-            </td>
-            <td>
-                <h5>{{ game.year }}</h5>
-            </td>
+            <td><h4>{% trans 'Year' %}</h4></td>
+            <td><h5>{{ game.year }}</h5></td>
         </tr>
         <tr>
-            <td>
-                <h4>Game Rating</h4>
-            </td>
+            <td><h4>{% trans 'Rating' %}</h4></td>
             <td>
                 {% if gamescore %}
                     <h5>{{ gamescore.score }}</h5>
                 {% else %}
-                    <h5>Not rated yet</h5>
+                    <h5>{% trans 'No rating' %}</h5>
                 {% endif %}
             </td>
         </tr>
         {% if user.is_authenticated %}
             <tr>
-                <td>
-                    <h4>Rate Game</h4>
-                </td>
+                <td><h4>{% trans 'Rate game' %}</h4></td>
                 <td>
                     <form action="{% url 'game:game-details' game.id %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -75,9 +58,8 @@
             </tr>
         {% endif %}
         <tr>
-            <td colspan="3">
-                <a href="{% url 'game:delete-game' game.id %}" class="btn btn-dark btn-lg btn-block">Delete game</a>
-            </td>
+            <td colspan="3"><a href="{% url 'game:game-delete' game.id %}"
+                               class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a></td>
         </tr>
         </tbody>
     </table>

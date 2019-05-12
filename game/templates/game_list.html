@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <td colspan="3"><h3>{% trans 'Games' %}</h3></td>
+        </tr>
+        </thead>
+    </table>
+    <thead>
+    <tr>
+        <td colspan="3"><a href="{% url 'game:game-create' %}"
+                           class="btn btn-dark btn-lg btn-block">{% trans 'Add game' %}</a>
+        </td>
+    </tr>
+    </thead>
+    <p></p>
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.level == 20 %}
+                class="alert alert-primary" {% else %}
+                class="alert alert-warning" {% endif %} role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for game in object_list %}
+        <table class="table">
+            <thead>
+            <tr>
+                <td colspan="4"><h3>{{ game.title }}</h3></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><h4>{% trans 'Genre' %}</h4></td>
+                <td style="text-align: center">
+                    {% for genre in game.genre.all %}
+                        <h5><a href="{% url 'genre:games-by-genre' genre.id %}">{{ genre.name }}</a></h5>
+                    {% endfor %}
+                </td>
+                <td rowspan="4" style="text-align: center">
+                    <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:400px;height:300px;>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Developer' %}</h4></td>
+                <td><h5><a href="{% url 'developer:games-by-developer' game.developer.id %}">
+                    {{ game.developer }}</a></h5>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Tags' %}</h4></td>
+                <td style="text-align:center">
+                    {% for tag in game.tags.all %}
+                        <a href="{% url 'tag:games-by-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Year' %}</h4></td>
+                <td><h5>{{ game.year }}</h5></td>
+            </tr>
+            <tr>
+                <td colspan="3"><a href="{% url 'game:game-details' game.id %}"
+                                   class="btn btn-dark btn-lg btn-block">{% trans 'Details' %}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3"><a href="{% url 'game:game-delete' game.id %}"
+                                   class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a></td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}

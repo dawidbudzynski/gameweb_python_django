@@ -1,24 +1,32 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
+from django.views.generic import ListView
 from users.models import User
 
 from .forms import AddGameForm, RateGameForm
 from .models import Game, GameScore
 
 
-# Create your views here.
+class GameListView(ListView):
+    model = Game
+    template_name = 'game_list.html'
 
-class AddGameView(LoginRequiredMixin, View):
+
+class GameCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddGameForm().as_p()
-        ctx = {'form': form}
+        ctx = {'form': AddGameForm().as_p()}
 
-        return render(request,
-                      template_name='add_game.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='game_create.html',
+            context=ctx
+        )
 
     def post(self, request):
         form = AddGameForm(request.POST, request.FILES)
@@ -31,32 +39,32 @@ class AddGameView(LoginRequiredMixin, View):
             image = form.cleaned_data['image']
             top_20 = form.cleaned_data['top_20']
 
-            tags_list = []
-            if tags:
-                for tag in tags:
-                    tags_list.append(tag)
-            else:
-                tags_list = []
+            tags_list = [tag for tag in tags] if tags else []
 
             if Game.objects.filter(title=title).exists():
-                return HttpResponseRedirect('/object_already_exist')
+                messages.add_message(request, messages.WARNING, _('Game with this name already exists'))
+                return HttpResponseRedirect(reverse('game:game-create'))
 
-            new_game = Game.objects.create(title=title,
-                                           year=year,
-                                           developer=developer,
-                                           image=image,
-                                           top_20=top_20)
+            new_game = Game.objects.create(
+                title=title,
+                year=year,
+                developer=developer,
+                image=image,
+                top_20=top_20
+            )
 
             new_game.genre.add(genre)
-
             for tag in tags_list:
                 new_game.tags.add(tag)
 
-            return HttpResponseRedirect('game/games')
-        return HttpResponseRedirect('/wrong_value')
+            messages.add_message(request, messages.INFO, _('Game: {} created successfully').format(title))
+            return HttpResponseRedirect(reverse('game:game-list'))
+
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('game:game-create'))
 
 
-class SingeGameDetails(View):
+class GameDetails(View):
     def get(self, request, game_id):
         """Display single game details with form for rating"""
         game = Game.objects.get(id=game_id)
@@ -65,24 +73,29 @@ class SingeGameDetails(View):
             gamescore = GameScore.objects.get(game=game, user=user)
         except ObjectDoesNotExist:
             gamescore = None
-        form = RateGameForm()
 
         ctx = {'game': game,
                'gamescore': gamescore,
-               'form': form}
+               'form': RateGameForm()}
 
-        return render(request,
-                      template_name='game_details.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='game_details.html',
+            context=ctx
+        )
 
     def post(self, request, game_id):
         """Get rating from form and create or update gamescore"""
         form = RateGameForm(request.POST)
         try:
-            user = User.objects.get(id=request.user.id)
-            game = Game.objects.get(id=game_id)
+            user = User.objects.get(user=request.user)
+        except User.DoesNotExist:
+            messages.add_message(request, messages.INFO, _('User {} can\'t rate games').format(request.user))
+            return HttpResponseRedirect(reverse('game:game-list'))
+        game = Game.objects.get(id=game_id)
+        try:
             old_gamescore = GameScore.objects.get(game=game, user=user)
-        except ObjectDoesNotExist:
+        except GameScore.DoesNotExist:
             old_gamescore = None
         if form.is_valid():
             score = form.cleaned_data['score']
@@ -101,24 +114,14 @@ class SingeGameDetails(View):
                'form': form,
                'gamescore': gamescore}
 
-        return render(request,
-                      template_name='game_details.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='game_details.html',
+            context=ctx
+        )
 
 
-class ShowGamesView(View):
-    def get(self, request):
-        """Display all games in database"""
-        all_games = Game.objects.all().order_by('title')
-
-        ctx = {'all_games': all_games}
-
-        return render(request,
-                      template_name='games.html',
-                      context=ctx)
-
-
-class DeleteGameView(PermissionRequiredMixin, View):
+class GameDeleteView(PermissionRequiredMixin, View):
     """Delete game"""
     permission_required = 'game_recommendation.delete_game'
     raise_exception = True
@@ -126,5 +129,4 @@ class DeleteGameView(PermissionRequiredMixin, View):
     def get(self, request, game_id):
         game = Game.objects.get(id=game_id)
         game.delete()
-
-        return HttpResponseRedirect('game/games')
+        return HttpResponseRedirect(reverse('game:game-list'))
