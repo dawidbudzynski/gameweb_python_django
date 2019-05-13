@@ -1,4 +1,4 @@
-# Game Picker
+# Gameweb
 
 ## General info
 A web application made using Python 3, Django 2, Bootstrap and REST API.
