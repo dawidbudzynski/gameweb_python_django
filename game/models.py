@@ -1,22 +1,20 @@
-from constants import YEARS, RATING
-from developer.models import Developer
 from django.db import models
+
+from constants import SORTED_RATING, SORTED_YEARS
+from developer.models import Developer
 from genre.models import Genre
 from tag.models import Tag
 from users.models import User
-
-SORTED_YEARS = sorted(YEARS, key=lambda x: x[1])
-SORTED_RATING = sorted(RATING, key=lambda x: x[0])
 
 
 class Game(models.Model):
     title = models.CharField(max_length=64)
     year = models.IntegerField(choices=SORTED_YEARS)
     developer = models.ForeignKey(Developer, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
-    genre = models.ManyToManyField(Genre)
     image = models.ImageField(upload_to='images/', blank=True)
-    top_20 = models.NullBooleanField(null=True)
+    to_be_rated = models.NullBooleanField(null=True, default=False)
 
     def __str__(self):
         return self.title

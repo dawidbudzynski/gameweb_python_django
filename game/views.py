@@ -37,7 +37,7 @@ class GameCreateView(LoginRequiredMixin, View):
             genre = form.cleaned_data['genre']
             tags = form.cleaned_data['tags']
             image = form.cleaned_data['image']
-            top_20 = form.cleaned_data['top_20']
+            to_be_rated = form.cleaned_data['to_be_rated']
 
             tags_list = [tag for tag in tags] if tags else []
 
@@ -49,11 +49,11 @@ class GameCreateView(LoginRequiredMixin, View):
                 title=title,
                 year=year,
                 developer=developer,
+                genre=genre,
                 image=image,
-                top_20=top_20
+                to_be_rated=to_be_rated
             )
 
-            new_game.genre.add(genre)
             for tag in tags_list:
                 new_game.tags.add(tag)
 
