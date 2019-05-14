@@ -21,7 +21,7 @@
                 <td style="text-align: center">
                     {% for genre in game.genre.all %}
                         <h5>
-                            <a href="{% url 'show-genre' genre.id %}">{{ genre.name }}</a>
+                            <a href="{% url 'genre:games-by-genre' genre.id %}">{{ genre.name }}</a>
                         </h5>
                     {% endfor %}
                 </td>
@@ -38,7 +38,7 @@
                 <td><h4>{% trans 'Tags' %}</h4></td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
-                        <a href="{% url 'show-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                        <a href="{% url 'games-by-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
                     {% endfor %}
                 </td>
             </tr>
