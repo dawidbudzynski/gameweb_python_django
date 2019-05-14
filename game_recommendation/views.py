@@ -1,229 +1,194 @@
 from collections import Counter
 from operator import itemgetter
 
-from constants import (DEVELOPER_MATCH,
-                       GENRE_MATCH,
-                       TAG_MATCH)
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
 from game.models import Game
 
-from .forms import (ChooseTagsForm)
+from .forms import ChooseTagsForm
+
+DEVELOPER_MATCH_SCORE = 14
+GENRE_MATCH_SCORE = 14
+TAG_MATCH_SCORE = 12
 
 
-# Create your views here.
-
-class RecommendManually(View):
+class RecommendGamesManuallyView(View):
     def get(self, request):
-        form = ChooseTagsForm().as_p()
-        ctx = {
-            'form': form
-        }
-        return render(request,
-                      template_name='choose_preferences.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='recommend_games_manually.html',
+            context={'form': ChooseTagsForm().as_p()}
+        )
 
     def post(self, request):
+        all_games_qs = Game.objects.all()
         form = ChooseTagsForm(request.POST)
         if form.is_valid():
+            user_genre = form.cleaned_data['genre']
+            user_developer = form.cleaned_data['developer']
+            user_tags = form.cleaned_data['tags']
 
-            genre = form.cleaned_data['genre']
-            developer = form.cleaned_data['developer']
-            tags = form.cleaned_data['tags']
+            all_games_info = []
 
-            all_games_all_information = []
-            all_games_with_common_tags = []
-            sorted_all_game_information = []
-            user_favorites = {}
-
-            if tags:
-                selected_tags = [tag.name for tag in tags]
-            else:
-                selected_tags = []
-
-            all_games = Game.objects.all()
-            for game in all_games:
-                game_tag_list = []
-                for tag in game.tags.all():
-                    game_tag_list.append(tag.name)
-                common_tags = list(set(game_tag_list).intersection(selected_tags))
-
-                result = [game.title, common_tags]
-                all_games_with_common_tags.append(result)
-
-            for game in all_games_with_common_tags:
-                single_game_information = {}
-                genre_match = None
-                developer_match = None
-                matched_tags = []
-                unmatched_tags = []
+            for game in self._assign_matching_tags_to_game(user_tags, all_games_qs):
+                game_object = game['game_object']
+                game_info = {
+                    'game': game_object,
+                    'matched_tags': [],
+                    'unmatched_tags': []
+                }
                 match_score = 0
-                game_object = Game.objects.get(title=game[0])
-                for game_genre in game_object.genre.all():
-                    if game_genre.name == genre.name:
-                        genre_match = True
-                        match_score += GENRE_MATCH
-                    elif game_genre.name != genre.name:
-                        genre_match = False
-                if game_object.developer.name == developer.name:
-                    developer_match = True
-                    match_score += DEVELOPER_MATCH
-                elif game_object.developer.name != developer.name:
-                    developer_match = False
-                for user_tag in game[1]:
-                    match_score += TAG_MATCH
-                    for game_tag in game_object.tags.all():
-                        if user_tag == game_tag.name:
-                            matched_tags.append(game_tag)
-                        else:
-                            unmatched_tags.append(game_tag)
 
-                if len(matched_tags) > 0:
-                    unmatched_tags = list(set(unmatched_tags) ^ set(matched_tags))
+                if game_object.developer == user_developer:
+                    game_info['developer_match'] = True
+                    match_score += DEVELOPER_MATCH_SCORE
                 else:
-                    unmatched_tags = list(set(unmatched_tags))
+                    game_info['developer_match'] = False
 
-                single_game_information.update(
-                    {'game': game_object, 'genre_match': genre_match, 'developer_match': developer_match,
-                     'match_score': match_score, 'matched_tags': matched_tags,
-                     'unmatched_tags': unmatched_tags})
-                all_games_all_information.append(single_game_information)
+                if game_object.genre == user_genre:
+                    game_info['genre_match'] = True
+                    match_score += GENRE_MATCH_SCORE
+                game_info['genre_match'] = False
 
-                sorted_all_game_information = sorted(all_games_all_information, key=itemgetter('match_score'))
-                sorted_all_game_information.reverse()
+                match_score += (TAG_MATCH_SCORE * len(game['matching_tags']))
+                for game_tag in game_object.tags.all():
+                    if game_tag in game['matching_tags']:
+                        game_info['matched_tags'].append(game_tag)
+                    else:
+                        game_info['unmatched_tags'].append(game_tag)
 
-            user_favorites.update({'favorite_tags_top_6': tags, 'favorite_genre': genre,
-                                   'favorite_developer': developer})
+                game_info['match_score'] = match_score
+                all_games_info.append(game_info)
 
             ctx = {
-                'sorted_all_game_information': sorted_all_game_information,
-                'user_favorites': user_favorites
+                'sorted_all_game_information': sorted(
+                    all_games_info, key=itemgetter('match_score'), reverse=True
+                ),
+                'user_favorites': {
+                    'favorite_tags_top_6': user_tags,
+                    'favorite_genre': user_genre,
+                    'favorite_developer': user_developer
+                }
             }
 
-            return render(request,
-                          template_name='recommendations_by_tags_result.html',
-                          context=ctx)
-        return HttpResponseRedirect('/wrong_value')
+            return render(
+                request,
+                template_name='recommend_games_manually_result.html',
+                context=ctx
+            )
+
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('game_recommendation:recommend-by-tags'))
+
+    @staticmethod
+    def _assign_matching_tags_to_game(user_tags, all_games_qs):
+        """Returns all game objects with game tags which match user's favorites"""
+        games_and_matching_tags = []
+        for game in all_games_qs:
+            matching_tags = list(set(game.tags.all()).intersection(user_tags))
+            games_and_matching_tags.append({
+                'game_object': game,
+                'matching_tags': matching_tags
+            })
+        return games_and_matching_tags
 
 
-class RecommendByRating(View):
+class RecommendByRatedGamesView(View):
     def get(self, request):
-        games_top_20 = Game.objects.filter(top_20=True)
-
-        ctx = {
-            'games_top_20': games_top_20
-        }
-        return render(request,
-                      template_name='rate_games_form.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='recommend_by_rated_games.html',
+            context={'to_be_rated': Game.objects.filter(to_be_rated=True)}
+        )
 
     def post(self, request):
-        games_top_20 = Game.objects.filter(top_20=True)
-        all_games = Game.objects.all()
-
-        games_not_rated = list(set(all_games) - set(games_top_20))
-
-        all_games_all_information = []
-        sorted_all_game_information = []
         liked_games = []
         disliked_games = []
-        liked_tags = []
-        favorite_tags_top_6 = []
-        liked_genres = []
-        favorite_genre = None
-        liked_developers = []
-        favorite_developer = None
-        user_favorites = {}
-
-        # sorting games: liked or disliked
-
-        for game in games_top_20:
+        games_rated = Game.objects.filter(to_be_rated=True)
+        for game in games_rated:
             like_or_dislike = request.POST["game_{}".format(game.id)]
             if like_or_dislike == 'like':
                 liked_games.append(game)
             elif like_or_dislike == 'dislike':
                 disliked_games.append(game)
 
+        liked_tags = []
+        liked_genres = []
+        liked_developers = []
         for game in liked_games:
             for tag in game.tags.all():
                 liked_tags.append(tag)
-                try:
-                    for genre in game.genre.all():
-                        liked_genres.append(genre)
-                    liked_developers.append(game.developer)
-                except AttributeError:
-                    return HttpResponseRedirect('/wrong_value')
+            liked_genres.append(game.genre)
+            liked_developers.append(game.developer)
 
         # looking for top 6 favorites tags
-        tags_counted = Counter(liked_tags)
-        tag_items = tags_counted.items()
-        sorted_tags = sorted(tag_items, key=lambda x: x[1], reverse=True)[:6]
-        for element in sorted_tags:
-            favorite_tags_top_6.append(element[0])
+        tag_items = Counter(liked_tags).items()
+        favorite_tags = []
+        for element in sorted(tag_items, key=lambda x: x[1], reverse=True)[:6]:
+            favorite_tags.append(element[0])
 
         # looking for top 1 favorites genres
-        genres_counted = Counter(liked_genres)
-        genre_items = genres_counted.items()
-        sorted_genres = sorted(genre_items, key=lambda x: x[1], reverse=True)[:1]
-        for element in sorted_genres:
+        favorite_genre = None
+        genre_items = Counter(liked_genres).items()
+        for element in sorted(genre_items, key=lambda x: x[1], reverse=True)[:1]:
             favorite_genre = element[0]
 
         # looking for top 1 favorites developers
-        developers_counted = Counter(liked_developers)
-        developers_items = developers_counted.items()
-        sorted_developers = sorted(developers_items, key=lambda x: x[1], reverse=True)[:1]
-        for element in sorted_developers:
+        favorite_developer = None
+        developers_items = Counter(liked_developers).items()
+        for element in sorted(developers_items, key=lambda x: x[1], reverse=True)[:1]:
             favorite_developer = element[0]
 
-        for game in games_not_rated:
-            single_game_all_information = {}
-            matched_tags = []
-            unmatched_tags = []
-            genre_match = None
-            developer_match = None
+        all_games_info = []
+        games_not_rated = list(set(Game.objects.all()) - set(games_rated))
+        for game_object in games_not_rated:
+            game_info = {
+                'game': game_object,
+                'matched_tags': [],
+                'unmatched_tags': []
+            }
             match_score = 0
-            for user_tag in favorite_tags_top_6:
-                for game_tag in game.tags.all():
-                    if user_tag.name == game_tag.name:
-                        matched_tags.append(game_tag)
-                        match_score += TAG_MATCH
-                    else:
-                        unmatched_tags.append(game_tag)
 
-            for game_genre in game.genre.all():
-                try:
-                    if game_genre.name == favorite_genre.name:
-                        genre_match = True
-                        match_score += GENRE_MATCH
-                    elif game_genre.name != favorite_genre.name:
-                        genre_match = False
-                except AttributeError:
-                    return HttpResponse('You have to rate more games')
+            for game_tag in game_object.tags.all():
+                if game_tag in favorite_tags:
+                    game_info['matched_tags'].append(game_tag)
+                    match_score += TAG_MATCH_SCORE
+                else:
+                    game_info['unmatched_tags'].append(game_tag)
 
-            if game.developer.name == favorite_developer.name:
-                developer_match = True
-                match_score += DEVELOPER_MATCH
-            elif game.developer.name != favorite_developer.name:
-                developer_match = False
+            if game_object.genre == favorite_genre:
+                game_info['genre_match'] = True
+                match_score += GENRE_MATCH_SCORE
+            else:
+                game_info['genre_match'] = False
 
-            unmatched_tags = list(set(unmatched_tags) ^ set(matched_tags))
+            if game_object.developer == favorite_developer:
+                game_info['developer_match'] = True
+                match_score += DEVELOPER_MATCH_SCORE
+            else:
+                game_info['developer_match'] = False
 
-            single_game_all_information.update({'game': game, 'matched_tags': matched_tags,
-                                                'unmatched_tags': unmatched_tags, 'match_score': match_score,
-                                                'genre_match': genre_match, 'developer_match': developer_match})
-            all_games_all_information.append(single_game_all_information)
+            game_info['match_score'] = match_score
 
-            sorted_all_game_information = sorted(all_games_all_information, key=itemgetter('match_score'))
-            sorted_all_game_information.reverse()
-        user_favorites.update({'favorite_tags_top_6': favorite_tags_top_6, 'favorite_genre': favorite_genre,
-                               'favorite_developer': favorite_developer})
-        print(games_not_rated)
+            all_games_info.append(game_info)
+
         ctx = {
-            'sorted_all_game_information': sorted_all_game_information,
-            'user_favorites': user_favorites
+            'sorted_all_game_information': sorted(
+                all_games_info, key=itemgetter('match_score'), reverse=True
+            ),
+            'user_favorites': {
+                'favorite_tags_top_6': favorite_tags,
+                'favorite_genre': favorite_genre,
+                'favorite_developer': favorite_developer
+            }
         }
 
-        return render(request,
-                      template_name='recommendations_by_rating.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='recommend_by_rated_games_result.html',
+            context=ctx
+        )

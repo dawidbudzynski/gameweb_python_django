@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <form action="{% url 'game_recommendation:recommend-by-rating' %}" method="post">
         <table class="table table-dark">
             <thead>
             <tr>
-                <td colspan="3">
-                    <h1>Rate games</h1>
+                <td colspan="3"><h1>{% trans 'Rate games' %}</h1>
                 </td>
             </tr>
             </thead>
             <tbody>
-            {% for game in games_top_20 %}
+            {% for game in to_be_rated %}
                 <tr>
-                    <td style="width: 33%; text-align: center"><img src="{{ game.image.url }}"
-                                                                    style='width:250px;height:150px'></td>
-
+                    <td style="width: 33%; text-align: center">
+                        <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style='width:250px;height:150px'>
+                    </td>
                     <td style="text-align: center; width: 33%">
                         <h1>{{ game.title }}</h1>
                     </td>
                     {% csrf_token %}
                     <td style="width: 33%; text-align: center">
                         <div class="radio_buttons_container">
-                            <label class="container">LIKE
+                            <label class="container">{% trans 'Like' %}
                                 <input type="radio" checked="checked" name="game_{{ game.id }}" value='like'>
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="container">DISLIKE
+                            <label class="container">{% trans 'Dislike' %}
                                 <input type="radio" name="game_{{ game.id }}" value='dislike'>
                                 <span class="checkmark"></span>
                             </label>
