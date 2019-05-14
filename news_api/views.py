@@ -2,12 +2,11 @@ import requests
 from decouple import config
 from django.shortcuts import render
 from django.views import View
+
 from constants import NEWS_SOURCE_DATA_ALL
 
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
-
-# Create your views here.
 
 class TechNews(View):
     """Display gaming and tech news using API"""
@@ -21,14 +20,18 @@ class TechNews(View):
                 selected_source = news_source_key
                 image_url = news_source_values['image_url']
                 source_name = news_source_values['api_name']
-        url = ('https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(
-            selected_source, NEWS_API_KEY))
+        url = (
+            'https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(
+                selected_source, NEWS_API_KEY)
+        )
         response = requests.get(url)
         ctx = {
             'articles': response.json()['articles'],
             'image_url': image_url,
             'source_name': source_name
         }
-        return render(request,
-                      template_name='news_main.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='news_main.html',
+            context=ctx
+        )

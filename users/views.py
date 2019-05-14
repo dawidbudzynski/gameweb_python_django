@@ -9,19 +9,15 @@ from .forms import AddUserForm, LoginUserForm
 from .models import User
 
 
-# Create your views here.
-
-
 class AddUserView(View):
     """Register new user"""
 
     def get(self, request):
-        form = AddUserForm().as_p()
-        ctx = {'form': form}
-
-        return render(request,
-                      template_name='add_user.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='add_user.html',
+            context={'form': AddUserForm().as_p()}
+        )
 
     def post(self, request):
         form = AddUserForm(request.POST)
@@ -36,11 +32,13 @@ class AddUserView(View):
             if DjangoUser.objects.filter(username=username).exists():
                 return HttpResponseRedirect('/object_already_exist')
 
-            django_user = DjangoUser.objects.create_user(username=username,
-                                                         password=password,
-                                                         first_name=first_name,
-                                                         last_name=last_name,
-                                                         email=email)
+            django_user = DjangoUser.objects.create_user(
+                username=username,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                email=email
+            )
             User.objects.create(user=django_user)
             return HttpResponseRedirect('/users/users')
         return HttpResponseRedirect('/wrong_value')
@@ -52,13 +50,11 @@ class LoginUserView(View):
     def get(self, request):
         loggedUser = request.session.get('loggedUser')
         if loggedUser is None:
-            form = LoginUserForm().as_p()
-            ctx = {
-                'form': form
-            }
-            return render(request,
-                          template_name='login.html',
-                          context=ctx)
+            return render(
+                request,
+                template_name='login.html',
+                context={'form': LoginUserForm().as_p()}
+            )
 
         else:
             del request.session['loggedUser']
@@ -89,13 +85,11 @@ class LogoutUserView(View):
 
 class ShowUsersView(View):
     def get(self, request):
-        all_users = User.objects.all().order_by('user__username')
-
-        ctx = {'all_users': all_users}
-
-        return render(request,
-                      template_name='users.html',
-                      context=ctx)
+        return render(
+            request,
+            template_name='users.html',
+            context={'all_users': User.objects.all().order_by('user__username')}
+        )
 
 
 class DeleteUserView(PermissionRequiredMixin, View):
