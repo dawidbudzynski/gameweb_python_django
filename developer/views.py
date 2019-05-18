@@ -22,13 +22,10 @@ class DeveloperListView(ListView):
 
 class DeveloperCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        form = AddDeveloperForm().as_p()
-        ctx = {'form': form}
-
         return render(
             request,
             template_name='developer_create.html',
-            context=ctx
+            context={'form': AddDeveloperForm().as_p()}
         )
 
     def post(self, request):

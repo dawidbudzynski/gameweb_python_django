@@ -7,10 +7,10 @@ app_name = 'developer'
 urlpatterns = [
     path('developer_create/', views.DeveloperCreateView.as_view(),
          name='developer-create'),
-    path('developers/', views.DeveloperListView.as_view(),
+    path('developer_list/', views.DeveloperListView.as_view(),
          name='developer-list'),
-    path('delete_developer/<developer_id>', views.DeveloperDeleteView.as_view(),
-         name='delete-developer'),
+    path('developer_delete/<developer_id>', views.DeveloperDeleteView.as_view(),
+         name='developer-delete'),
     path('games_by_developer/<developer_id>', views.GamesByDeveloperView.as_view(),
          name='games-by-developer')
 ]
