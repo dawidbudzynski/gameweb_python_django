@@ -4,19 +4,17 @@
     <table class="table table-dark">
         <thead>
         <tr>
-            <td colspan="3">
-                <h1>Choose your preferences</h1>
-            </td>
+            <td colspan="3"><h1>{% trans 'Choose your preferences' %}</h1></td>
         </tr>
         </thead>
     </table>
     <table class="table table-dark">
     <tr>
         <td>
-        <form action="{% url 'game_recommendation:recommend-by-tags' %}" method="POST" class="form-group">
+        <form action="{% url 'game_recommendation:recommend-manually' %}" method="POST" class="form-group">
             {% csrf_token %}
             {{ form }}
-            <input type="submit" value="Submit" class="btn btn-dark btn-lg btn-block">
+            <input type="submit" value="{% trans 'Submit' %}" class="btn btn-dark btn-lg btn-block">
         </form>
         </td>
     </tr>

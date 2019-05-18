@@ -1,4 +1,5 @@
 from django.forms import (CheckboxSelectMultiple, Form, ModelChoiceField, ModelMultipleChoiceField, Select)
+from django.utils.translation import ugettext_lazy as _
 
 from developer.models import Developer
 from genre.models import Genre
@@ -19,7 +20,7 @@ class ChooseTagsForm(Form):
         widget=Select
     )
     tags = ModelMultipleChoiceField(
-        label='Tags (Select 6)',
+        label=_('Tags (Select 6)'),
         queryset=all_tags.order_by('name'),
         widget=CheckboxSelectMultiple(attrs={'class': 'checkboxmultiple'})
     )

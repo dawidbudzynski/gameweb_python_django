@@ -38,7 +38,7 @@
                         <a class="dropdown-item hvr-underline-from-center"
                            href="{% url 'news_api:show-news' news_source='the-verge' %}">The Verge</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'news_api:show-news' news_source='techradar' %}}">TechRadar</a>
+                           href="{% url 'news_api:show-news' news_source='techradar' %}">TechRadar</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -52,7 +52,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'game_recommendation:recommend-by-tags' %}">
+                           href="{% url 'game_recommendation:recommend-manually' %}">
                             {% trans 'Recommend by tags' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
                            href="{% url 'game_recommendation:recommend-by-rating' %}">
@@ -86,9 +86,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'users:add-user' %}">{% trans 'Add users' %}</a>
+                           href="{% url 'users:user-create' %}">{% trans 'Add users' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
-                           href="{% url 'users:users' %}">{% trans 'Show users' %}</a>
+                           href="{% url 'users:user_list' %}">{% trans 'Show users' %}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -130,7 +130,7 @@
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"
-                           href="{% url 'users:add-user' %}">{% trans 'Register' %}</a>
+                           href="{% url 'users:user-create' %}">{% trans 'Register' %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hvr-underline-from-center"

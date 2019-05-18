@@ -13,15 +13,16 @@
         </tr>
         <tr>
             <td>
-                <h4>
-                    <a href="{% url 'genre:games-by-genre' user_favorites.favorite_genre.id %}">
-                        {{ user_favorites.favorite_genre }}</a>
-                </h4>
+                {% for genre in user_favorites.favorite_genre %}
+                    <a href="{% url 'genre:games-by-genre' genre.id %}" class="btn btn-success">
+                        {{ genre.name }}</a><br>
+                {% endfor %}
             </td>
             <td>
-                <h4><a href="{% url 'developer:games-by-developer' user_favorites.favorite_developer.id %}">
-                    {{ user_favorites.favorite_developer }}
-                </a></h4>
+                {% for developer in user_favorites.favorite_developer %}
+                    <a href="{% url 'developer:games-by-developer' developer.id %}" class="btn btn-success">
+                        {{ developer.name }}</a><br>
+                {% endfor %}
             </td>
             <td style="text-align:center">
                 {% for tag in user_favorites.favorite_tags_top_6 %}
@@ -69,9 +70,8 @@
             <tr>
                 <td><h4>{% trans 'Ganre' %}</h4></td>
                 <td style="text-align:center">
-                    {% for genre in single_game_info.game.genre.all %}
-                        <p><a href="{% url 'genre:games-by-genre' genre.id %}">{{ genre.name }}</a></p>
-                    {% endfor %}
+                    <p><a href="{% url 'genre:games-by-genre' single_game_info.game.genre.id %}">
+                        {{ single_game_info.game.genre.name }}</a></p>
                     {% if single_game_info.genre_match == True %}
                         <a href="" class="btn btn-success">
                             {% trans 'Match' %}
@@ -113,7 +113,8 @@
                 <td><h4>{% trans 'Matching tags' %}</h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.matched_tags %}
-                        <a href="{% url 'tag:games-by-tag' game_tag.id %}" class="btn btn-success">{{ game_tag.name }}</a>
+                        <a href="{% url 'tag:games-by-tag' game_tag.id %}"
+                           class="btn btn-success">{{ game_tag.name }}</a>
                         <br>
                     {% endfor %}
                 </td>
@@ -122,7 +123,8 @@
                 <td><h4>{% trans 'Other tags' %}</h4></td>
                 <td style="text-align:center">
                     {% for game_tag in single_game_info.unmatched_tags %}
-                        <a href="{% url 'tag:games-by-tag' game_tag.id %}" class="btn btn-secondary">{{ game_tag.name }}</a>
+                        <a href="{% url 'tag:games-by-tag' game_tag.id %}"
+                           class="btn btn-secondary">{{ game_tag.name }}</a>
                         <br>
                     {% endfor %}
                 </td>
