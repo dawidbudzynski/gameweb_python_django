@@ -1,6 +1,6 @@
-# Gameweb
+# Gameweb [![Build Status](https://travis-ci.org/dawidbudzynski/gameweb_python_django.svg?branch=master)](https://travis-ci.org/dawidbudzynski/gameweb_python_django)
 
-[![Build Status](https://travis-ci.org/dawidbudzynski/gameweb_python_django.svg?branch=master)](https://travis-ci.org/dawidbudzynski/gameweb_python_django)
+
 
 ## General info
 A web application made using Python 3, Django 2, Bootstrap and REST API.
