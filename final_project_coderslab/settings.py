@@ -20,14 +20,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'game_recommendation',
-    'developer',
-    'game',
-    'genre',
-    'main_app',
-    'news_api',
-    'tag',
-    'users'
+    'debug_toolbar',
+    'developer.apps.DeveloperConfig',
+    'game_recommendation.apps.GameRecommendationConfig',
+    'game.apps.GameConfig',
+    'genre.apps.GenreConfig',
+    'main_app.apps.MainAppConfig',
+    'news_api.apps.NewsApiConfig',
+    'tag.apps.TagConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -39,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'final_project_coderslab.urls'
@@ -73,12 +75,12 @@ DATABASES = {
 if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE':   'django.db.backends.postgresql_psycopg2',
-            'NAME':     'travisci',
-            'USER':     'postgres',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'travisci',
+            'USER': 'postgres',
             'PASSWORD': '',
-            'HOST':     'localhost',
-            'PORT':     '',
+            'HOST': 'localhost',
+            'PORT': '',
         }
     }
 
@@ -125,3 +127,6 @@ LOGIN_REDIRECT_URL = '/users/login'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# internal_ips for django-debug-toolbar
+INTERNAL_IPS = '127.0.0.1'
