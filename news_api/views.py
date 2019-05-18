@@ -8,7 +8,7 @@ from constants import NEWS_SOURCE_DATA_ALL
 NEWS_API_KEY = config('NEWS_API_KEY', cast=str)
 
 
-class TechNews(View):
+class TechNewsView(View):
     """Display gaming and tech news using API"""
 
     def get(self, request, news_source='polygon'):

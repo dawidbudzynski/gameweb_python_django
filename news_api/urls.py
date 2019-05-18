@@ -5,8 +5,8 @@ from . import views
 app_name = 'news_api'
 
 urlpatterns = [
-    path(r'', views.TechNews.as_view(),
+    path('', views.TechNewsView.as_view(),
          name='mainpage'),
-    path(r'show_news/<news_source>', views.TechNews.as_view(),
+    path('show_news/<news_source>', views.TechNewsView.as_view(),
          name='show-news'),
 ]

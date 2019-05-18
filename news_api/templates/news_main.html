@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table">
         <thead>
         <tr>
-            <td rowspan="2">
-                <img id="news-source-logo" src="{% static image_url %}" alt="No image">
-            </td>
-            <td>
-                <h3 class="news-header-text">Gaming and Tech News</h3>
-            </td>
+            <td rowspan="2"><img id="news-source-logo" src="{% static image_url %}" alt="No image"></td>
+            <td><h3 class="news-header-text">{% trans 'Gaming an Tech news' %}</h3></td>
         </tr>
         <tr>
-            <td>
-                <h3 class="news-header-text">{{ source_name }}</h3>
-            </td>
+            <td><h3 class="news-header-text">{{ source_name }}</h3></td>
         </tr>
         <tr>
             <td style="text-align: center" colspan="2">
@@ -37,26 +31,21 @@
     {% for article in articles %}
         <table class="table">
             <tr>
-                <td>
-                    <h3>{{ article.title }}</h3>
-                </td>
+                <td><h3>{{ article.title }}</h3></td>
                 <td rowspan="2">
                     <img src="{{ article.urlToImage }}" alt="'No image"
                          style='width:250px;height:150px;float:right; margin-right: 50px'>
                 </td>
             </tr>
             <tr>
-                <td rowspan="2">
-                    <h5>{{ article.description }}</h5>
-                </td>
+                <td rowspan="2"><h5>{{ article.description }}</h5></td>
             </tr>
             <tr>
                 <td>
                     <a href="{{ article.url }}" class="btn btn-dark hvr-float-shadow"
-                       style='float:right;width:250px; margin-right: 50px'>Read news</a>
+                       style='float:right;width:250px; margin-right: 50px'>{% trans 'Read news' %}</a>
                 </td>
             </tr>
         </table>
     {% endfor %}
-
 {% endblock %}
