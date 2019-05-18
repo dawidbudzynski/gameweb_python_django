@@ -40,9 +40,15 @@
                         <h5><a href="{% url 'genre:games-by-genre' genre.id %}">{{ genre.name }}</a></h5>
                     {% endfor %}
                 </td>
-                <td rowspan="4" style="text-align: center">
-                    <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:400px;height:300px;>
-                </td>
+                {% if game.image %}
+                    <td rowspan="4" style="text-align: center">
+                        <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:400px;height:300px;>
+                    </td>
+                {% else %}
+                    <td rowspan="4" style="text-align: center">
+                        <img alt="{% trans 'No image' %}" src="{% static 'img/icon.png' %}" style=width:400px;height:300px;>
+                    </td>
+                {% endif %}
             </tr>
             <tr>
                 <td><h4>{% trans 'Developer' %}</h4></td>

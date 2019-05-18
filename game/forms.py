@@ -2,6 +2,7 @@ from django.forms import (CharField, CheckboxSelectMultiple, ChoiceField, Form, 
                           ModelMultipleChoiceField, NullBooleanField, Select)
 
 from constants import SORTED_RATING, SORTED_YEARS
+from django.utils.translation import ugettext_lazy as _
 from developer.models import Developer
 from genre.models import Genre
 from tag.models import Tag
@@ -27,9 +28,9 @@ class AddGameForm(Form):
         widget=Select
     )
     tags = ModelMultipleChoiceField(
-        label='Tags (Select 6)',
+        label=_('Tags (Select 6)'),
         queryset=all_tags.order_by('name'),
         widget=CheckboxSelectMultiple(attrs={'class': 'checkboxmultiple'})
     )
     image = ImageField(required=False)
-    to_be_rated = NullBooleanField(label='Should be rated?', required=False)
+    to_be_rated = NullBooleanField(label=_('Should be rated?'), required=False)
