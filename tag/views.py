@@ -6,8 +6,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views import View
 from django.views.generic import ListView
-from game.models import Game
 
+from game.models import Game
 from .forms import AddTagForm
 from .models import Tag
 
@@ -19,12 +19,10 @@ class TagListView(ListView):
 
 class TagCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        ctx = {'form': AddTagForm().as_p()}
-
         return render(
             request,
             template_name='tag_create.html',
-            context=ctx
+            context={'form': AddTagForm().as_p()}
         )
 
     def post(self, request):
@@ -60,11 +58,13 @@ class GamesByTagView(View):
         """Display all games with selected tag"""
         selected_tag = Tag.objects.get(id=tag_id)
 
-        ctx = {'all_games_with_tag': Game.objects.filter(tags=selected_tag),
-               'selected_tag': selected_tag}
+        ctx = {
+            'all_games_with_tag': Game.objects.filter(tags=selected_tag),
+            'selected_tag': selected_tag
+        }
 
         return render(
             request,
-            template_name='all_games_with_selected_tag.html',
+            template_name='games_by_tag.html',
             context=ctx
         )
