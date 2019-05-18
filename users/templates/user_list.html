@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+{% block content %}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <td colspan="3"><h1>{% trans 'User list' %}</h1></td>
+        </tr>
+        </thead>
+    </table>
+    <thead>
+    <tr>
+        <td colspan="3">
+            <a href="{% url 'users:user-create' %}" class="btn btn-dark btn-lg btn-block">{% trans 'Create user' %}</a>
+        </td>
+    </tr>
+    </thead>
+    <p></p>
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.level == 20 %}
+                class="alert alert-primary" {% else %}
+                class="alert alert-warning" {% endif %} role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for user in all_users %}
+        <table class="table table-dark">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="2"><h1>{{ user.user.username }}</h1></td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Full name' %}</h4></td>
+                <td colspan="2"><h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4></td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Email' %}</h4></td>
+                <td colspan="2"><h4>{{ user.user.email }}</h4></td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Favorite tags' %}</h4></td>
+                <td>
+                    {% for tag in user.favorite_tags.all %}
+                        <a href="" class="btn btn-dark">{{ tag.name }}</a>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Favorite genre' %}</h4>
+                </td>
+                <td>
+                    {% for genre in user.favorite_genre.all %}
+                        <a href="" class="btn btn-dark">{{ genre.name }}</a>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td><h4>{% trans 'Favorite developer' %}</h4></td>
+                <td><h4>{{ user.favorite_developer }}</h4></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <a href="{% url 'users:user-delete' user.id %}"
+                       class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
+
+

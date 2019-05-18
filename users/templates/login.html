@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table table-dark">
         <thead>
         <tr>
-            <td colspan="3">
-                <h1>Login</h1>
-            </td>
+            <td colspan="3"><h1>{% trans 'Login' %}</h1></td>
         </tr>
         </thead>
     </table>
@@ -15,7 +14,7 @@
                 <form action="{% url 'users:login' %}" method="POST">
                     {% csrf_token %}
                     {{ form }}
-                    <input type="submit" value="Login" class="btn btn-dark btn-lg btn-block">
+                    <input type="submit" value="{% trans 'Login' %}" class="btn btn-dark btn-lg btn-block">
                 </form>
             </td>
         </tr>

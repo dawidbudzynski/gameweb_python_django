@@ -1,17 +1,27 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.utils.translation import ugettext as _
 from django.views import View
 
 from .forms import AddUserForm, LoginUserForm
 from .models import User
 
 
-class AddUserView(View):
-    """Register new user"""
+class UserListView(View):
+    def get(self, request):
+        return render(
+            request,
+            template_name='user_list.html',
+            context={'all_users': User.objects.all().order_by('user__username')}
+        )
 
+
+class UserCreateView(View):
     def get(self, request):
         return render(
             request,
@@ -30,7 +40,8 @@ class AddUserView(View):
             email = form.cleaned_data['email']
 
             if DjangoUser.objects.filter(username=username).exists():
-                return HttpResponseRedirect('/object_already_exist')
+                messages.add_message(request, messages.WARNING, _('User with this name already exists'))
+                return HttpResponseRedirect(reverse('users:user-create'))
 
             django_user = DjangoUser.objects.create_user(
                 username=username,
@@ -39,26 +50,35 @@ class AddUserView(View):
                 last_name=last_name,
                 email=email
             )
+
             User.objects.create(user=django_user)
-            return HttpResponseRedirect('/users/users')
-        return HttpResponseRedirect('/wrong_value')
+            messages.add_message(request, messages.INFO, _('User: {} created successfully').format(username))
+            return HttpResponseRedirect(reverse('users:user_list'))
+
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('users:user-create'))
 
 
-class LoginUserView(View):
-    """Login user"""
+class UserDeleteView(PermissionRequiredMixin, View):
+    permission_required = 'game_recommendation.delete_genre'
+    raise_exception = True
 
+    def get(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return HttpResponseRedirect(reverse('users:user-list'))
+
+
+class LoginView(View):
     def get(self, request):
-        loggedUser = request.session.get('loggedUser')
-        if loggedUser is None:
+        if request.session.get('loggedUser') is None:
             return render(
                 request,
                 template_name='login.html',
                 context={'form': LoginUserForm().as_p()}
             )
-
-        else:
-            del request.session['loggedUser']
-            return HttpResponseRedirect('/')
+        del request.session['loggedUser']
+        return HttpResponseRedirect('/')
 
     def post(self, request):
         form = LoginUserForm(request.POST)
@@ -72,31 +92,14 @@ class LoginUserView(View):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponseRedirect('/wrong_password')
-        else:
-            return HttpResponseRedirect('/wrong_value')
+                messages.add_message(request, messages.ERROR, _('Wrong password'))
+                return HttpResponseRedirect(reverse('users:user-create'))
+
+        messages.add_message(request, messages.ERROR, _('Form invalid'))
+        return HttpResponseRedirect(reverse('users:user-create'))
 
 
-class LogoutUserView(View):
+class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect('/')
-
-
-class ShowUsersView(View):
-    def get(self, request):
-        return render(
-            request,
-            template_name='users.html',
-            context={'all_users': User.objects.all().order_by('user__username')}
-        )
-
-
-class DeleteUserView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_genre'
-    raise_exception = True
-
-    def get(self, request, user_id):
-        user = User.objects.get(id=user_id)
-        user.delete()
-        return HttpResponseRedirect('/users/users')

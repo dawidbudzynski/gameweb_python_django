@@ -5,14 +5,14 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
-    path('users/', views.ShowUsersView.as_view(),
-         name='users'),
-    path('add_user/', views.AddUserView.as_view(),
-         name='add-user'),
-    path('delete_user/<user_id>', views.DeleteUserView.as_view(),
-         name='delete-user'),
-    path('login', views.LoginUserView.as_view(),
+    path('user_list/', views.UserListView.as_view(),
+         name='user_list'),
+    path('user_create/', views.UserCreateView.as_view(),
+         name='user-create'),
+    path('user_delete/<user_id>', views.UserDeleteView.as_view(),
+         name='user-delete'),
+    path('login', views.LoginView.as_view(),
          name='login'),
-    path('logout', views.LogoutUserView.as_view(),
+    path('logout', views.LogoutView.as_view(),
          name='logout'),
 ]

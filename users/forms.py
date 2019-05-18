@@ -1,7 +1,4 @@
-from django.forms import (Form,
-                          CharField,
-                          PasswordInput,
-                          EmailField)
+from django.forms import (CharField, EmailField, Form, PasswordInput)
 
 
 class AddUserForm(Form):
