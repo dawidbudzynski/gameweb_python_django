@@ -83,9 +83,9 @@ class GameFormTests(TestCase, unittest.TestCase):
         self.assertTrue(form.is_valid())
 
     def test_created_object(self):
-        game_object = Game.objects.get(id=1)
+        game_object = Game.objects.get(title='game_1')
         self.assertDictContainsSubset({
-            'developer_id': 1,
+            'developer_id': 5,
             'genre_id': 1,
             'id': 1,
             'image': '',

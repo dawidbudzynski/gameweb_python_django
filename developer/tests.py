@@ -38,7 +38,7 @@ class DeveloperListTests(TestCase):
         Developer.objects.create(name='developer_2')
 
     def test_text_content(self):
-        dev_object = Developer.objects.get(id=1)
+        dev_object = Developer.objects.get(name='developer_1')
         expected_object_name = f'{dev_object.name}'
         self.assertEquals(expected_object_name, 'developer_1')
 

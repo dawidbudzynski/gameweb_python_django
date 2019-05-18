@@ -38,7 +38,7 @@ class GenreListTests(TestCase):
         Genre.objects.create(name='genre_2')
 
     def test_text_content(self):
-        genre_object = Genre.objects.get(id=1)
+        genre_object = Genre.objects.get(name='genre_1')
         expected_object_name = f'{genre_object.name}'
         self.assertEquals(expected_object_name, 'genre_1')
 

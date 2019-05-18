@@ -38,7 +38,7 @@ class TagListTests(TestCase):
         Tag.objects.create(name='tag_2')
 
     def test_text_content(self):
-        tag_object = Tag.objects.get(id=1)
+        tag_object = Tag.objects.get(name='tag_1')
         expected_object_name = f'{tag_object.name}'
         self.assertEquals(expected_object_name, 'tag_1')
 
