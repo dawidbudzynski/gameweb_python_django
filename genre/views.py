@@ -22,12 +22,10 @@ class GenreListView(ListView):
 
 class GenreCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        ctx = {'form': AddGenreForm().as_p()}
-
         return render(
             request,
             template_name='genre_create.html',
-            context=ctx
+            context={'form': AddGenreForm().as_p()}
         )
 
     def post(self, request):
@@ -62,8 +60,10 @@ class GamesByGenreView(View):
 
     def get(self, request, genre_id):
         selected_genre = Genre.objects.get(id=genre_id)
-        ctx = {'all_games_with_genre': Game.objects.filter(genre=selected_genre),
-               'selected_genre': selected_genre}
+        ctx = {
+            'all_games_with_genre': Game.objects.filter(genre=selected_genre),
+            'selected_genre': selected_genre
+        }
 
         return render(
             request,
