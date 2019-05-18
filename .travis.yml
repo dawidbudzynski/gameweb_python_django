@@ -21,5 +21,7 @@ install:
 before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
 script:
+  - python manage.py makemigrations
+  - python manage.py migrate
   - python manage.py collectstatic
   - python manage.py test
