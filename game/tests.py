@@ -85,7 +85,7 @@ class GameFormTests(TestCase, unittest.TestCase):
 
     def test_created_object(self):
         game_object = Game.objects.get(title='game_1')
-        developer_id = 1 if settings.WORK_ON_SQL_LITE else 5
+        developer_id = 5 if (settings.WORK_ON_POSTGRE_SQL or settings.WORK_ON_TRAVIS_DATABASE) else 1
         self.assertDictContainsSubset({
             'developer_id': developer_id,
             'genre_id': 1,

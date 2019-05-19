@@ -69,15 +69,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
-WORK_ON_SQL_LITE = True
-if WORK_ON_SQL_LITE and 'TRAVIS' not in os.environ:
+WORK_ON_TRAVIS_DATABASE = 'TRAVIS' in os.environ
+WORK_ON_POSTGRE_SQL = False
+if WORK_ON_TRAVIS_DATABASE:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'travis_db',
+            'USER': 'postgres',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '',
         }
     }
-else:
+elif WORK_ON_POSTGRE_SQL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -88,16 +93,11 @@ else:
             'PORT': '',
         }
     }
-
-if 'TRAVIS' in os.environ:
+else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'travis_db',
-            'USER': 'postgres',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 
