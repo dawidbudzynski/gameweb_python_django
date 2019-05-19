@@ -102,6 +102,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item hvr-underline-from-center"
+                           href="{% url 'rest_api:api-main' %}">{% trans 'Rest API' %}</a>
+                        <a class="dropdown-item hvr-underline-from-center"
                            href="{% url 'developer:developer-list' %}">{% trans 'Developers' %}</a>
                         <a class="dropdown-item hvr-underline-from-center"
                            href="{% url 'genre:genre-list' %}">{% trans 'Genres' %}</a>

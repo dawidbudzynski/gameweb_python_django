@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-text">{% trans 'Selest API' %}</h1>
+        </div>
+        <div class="card-body">
+            <div id="api-buttons-group">
+                <a type="button" class="btn btn-primary btn-block"
+                   href="{% url 'rest_api:users-list' %}">{% trans 'Users' %}</a>
+                <a type="button" class="btn btn-primary btn-block"
+                   href="{% url 'rest_api:games-list' %}">{% trans 'Games' %}</a>
+                <a type="button" class="btn btn-primary btn-block"
+                   href="{% url 'rest_api:developers-list' %}">{% trans 'Developers' %}</a>
+                <a type="button" class="btn btn-primary btn-block"
+                   href="{% url 'rest_api:genres-list' %}">{% trans 'Genres' %}</a>
+                <a type="button" class="btn btn-primary btn-block"
+                   href="{% url 'rest_api:tags-list' %}">{% trans 'Tags' %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

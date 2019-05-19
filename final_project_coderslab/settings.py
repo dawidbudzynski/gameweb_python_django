@@ -19,8 +19,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'bootstrap4',
     'debug_toolbar',
+    'rest_framework',
+
     'developer.apps.DeveloperConfig',
     'game_recommendation.apps.GameRecommendationConfig',
     'game.apps.GameConfig',
@@ -28,7 +31,8 @@ INSTALLED_APPS = [
     'main_app.apps.MainAppConfig',
     'news_api.apps.NewsApiConfig',
     'tag.apps.TagConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'rest_api.apps.RestApiConfig'
 ]
 
 MIDDLEWARE = [
@@ -65,16 +69,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'game_db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '',
+WORK_ON_SQL_LITE = True
+if WORK_ON_SQL_LITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'game_db',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 if 'TRAVIS' in os.environ:
     DATABASES = {

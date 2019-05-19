@@ -17,7 +17,8 @@ urlpatterns += i18n_patterns(
     path('news_api/', include("news_api.urls", namespace="news_api")),
     path('recommendation/', include("game_recommendation.urls", namespace="game_recommendation")),
     path('tag/', include("tag.urls", namespace="tag")),
-    path('users/', include("users.urls", namespace="users"))
+    path('users/', include("users.urls", namespace="users")),
+    path('rest_api/', include("rest_api.urls", namespace="rest_api"))
 )
 if settings.DEBUG:
     urlpatterns = [path('__debug__/', include(debug_toolbar.urls)), ] + urlpatterns

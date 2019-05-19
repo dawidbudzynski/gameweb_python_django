@@ -9,7 +9,9 @@ dj-database-url==0.5.0
 Django==2.1.2
 django-bootstrap4==0.0.8
 django-debug-toolbar==1.11
+django-filter==2.1.0
 django-heroku==0.3.1
+djangorestframework==3.9.4
 ez-setup==0.9
 flake8==3.6.0
 gunicorn==19.9.0
@@ -18,6 +20,7 @@ ipdb==0.12
 ipython==7.5.0
 ipython-genutils==0.2.0
 jedi==0.13.3
+Markdown==3.1
 mccabe==0.6.1
 more-itertools==7.0.0
 parso==0.4.0

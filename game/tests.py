@@ -1,5 +1,6 @@
 import unittest
 
+from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
 from django.test import TestCase
 from django.urls import reverse
@@ -84,8 +85,9 @@ class GameFormTests(TestCase, unittest.TestCase):
 
     def test_created_object(self):
         game_object = Game.objects.get(title='game_1')
+        developer_id = 1 if settings.WORK_ON_SQL_LITE else 5
         self.assertDictContainsSubset({
-            'developer_id': 5,
+            'developer_id': developer_id,
             'genre_id': 1,
             'id': 1,
             'image': '',
