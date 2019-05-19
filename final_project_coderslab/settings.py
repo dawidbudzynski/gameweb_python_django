@@ -70,7 +70,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
 WORK_ON_SQL_LITE = True
-if WORK_ON_SQL_LITE:
+if WORK_ON_SQL_LITE and 'TRAVIS' not in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
