@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.level == 20 %}
+                class="alert alert-primary" {% else %}
+                class="alert alert-warning" {% endif %} role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <td>
+                <p>{% trans 'Download time: ' %}{{ download_time }}</p>
+            </td>
+        </tr>
+        </thead>
+    </table>
+{% endblock %}
