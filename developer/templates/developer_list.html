@@ -9,12 +9,16 @@
         </tr>
         </thead>
     </table>
-    <thead>
-    <tr>
-        <td><a href="{% url 'developer:developer-create' %}"
-               class="btn btn-dark btn-lg btn-block">{% trans 'Create developer' %}</a></td>
-    </tr>
-    </thead>
+    {% if user.is_authenticated %}
+        <thead>
+        <tr>
+            <td>
+                <a href="{% url 'developer:developer-create' %}"
+                   class="btn btn-dark btn-lg btn-block">{% trans 'Create developer' %}</a>
+            </td>
+        </tr>
+        </thead>
+    {% endif %}
     <p></p>
     {% if messages %}
         {% for message in messages %}
@@ -32,15 +36,18 @@
                 <td>
                     <div class="btn-group btn-group-justified" role="group" aria-label="Basic example"
                          style="width: 100%">
-                        <button type="button" class="btn btn-secondary" style="width: 80%">
+                        <button type="button" class="btn btn-secondary"
+                                style="width:{% if user.is_staff %}80%{% else %}100%{% endif %}">
                             <a href="{% url 'developer:games-by-developer' developer.id %}"
                                style="color: mintcream">{{ developer.name }}</a>
                         </button>
-                        <button type="button" class="btn btn-danger" style="width: 20%;">
-                            <a href="{% url 'developer:developer-delete' developer.id %}">
-                                {% trans 'Delete' %}
-                            </a>
-                        </button>
+                        {% if user.is_staff %}
+                            <button type="button" class="btn btn-danger" style="width: 20%;">
+                                <a href="{% url 'developer:developer-delete' developer.id %}">
+                                    {% trans 'Delete' %}
+                                </a>
+                            </button>
+                        {% endif %}
                     </div>
                 </td>
             </tr>

@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
+from rest_framework import viewsets
+
 from developer.models import Developer
 from game.models import Game
 from genre.models import Genre
-from rest_framework import viewsets
 from tag.models import Tag
-
 from .serializers import DeveloperSerializer, GameSerializer, GenreSerializer, TagSerializer, UserSerializer
 
 

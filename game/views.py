@@ -61,7 +61,6 @@ class GameCreateView(LoginRequiredMixin, View):
 
 class GameDetails(View):
     def get(self, request, game_id):
-        """Display single game details with form for rating"""
         game = Game.objects.get(id=game_id)
         user = User.objects.get(id=request.user.id)
         gamescore_qs = GameScore.objects.filter(game=game, user=user)
@@ -119,8 +118,7 @@ class GameDetails(View):
 
 
 class GameDeleteView(PermissionRequiredMixin, View):
-    """Delete game"""
-    permission_required = 'game_recommendation.delete_game'
+    permission_required = 'game.delete_game'
     raise_exception = True
 
     def get(self, request, game_id):

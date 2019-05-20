@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User as DjangoUser
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -13,6 +12,12 @@ from .models import User
 
 
 class UserListView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not (request.user.is_staff or request.user.is_superuser):
+            messages.add_message(request, messages.WARNING, _('Sorry, you can\'t do that'))
+            return HttpResponseRedirect(reverse('news_api:mainpage'))
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         return render(
             request,
@@ -22,10 +27,16 @@ class UserListView(View):
 
 
 class UserCreateView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not (request.user.is_staff or request.user.is_superuser):
+            messages.add_message(request, messages.WARNING, _('Sorry, you can\'t do that'))
+            return HttpResponseRedirect(reverse('news_api:mainpage'))
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         return render(
             request,
-            template_name='add_user.html',
+            template_name='user_create.html',
             context={'form': AddUserForm().as_p()}
         )
 
@@ -59,9 +70,13 @@ class UserCreateView(View):
         return HttpResponseRedirect(reverse('users:user-create'))
 
 
-class UserDeleteView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_genre'
-    raise_exception = True
+class UserDeleteView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not (request.user.is_staff or request.user.is_superuser):
+            messages.add_message(request, messages.WARNING, _('Sorry, you can\'t do that'))
+            return HttpResponseRedirect(reverse('news_api:mainpage'))
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, user_id):
         user = User.objects.get(id=user_id)
@@ -74,7 +89,7 @@ class LoginView(View):
         if request.session.get('loggedUser') is None:
             return render(
                 request,
-                template_name='login.html',
+                template_name='user_login.html',
                 context={'form': LoginUserForm().as_p()}
             )
         del request.session['loggedUser']

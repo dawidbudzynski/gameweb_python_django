@@ -57,10 +57,14 @@
                 </td>
             </tr>
         {% endif %}
-        <tr>
-            <td colspan="3"><a href="{% url 'game:game-delete' game.id %}"
-                               class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a></td>
-        </tr>
+        {% if user.is_staff %}
+            <tr>
+                <td colspan="3">
+                    <a href="{% url 'game:game-delete' game.id %}"
+                       class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a>
+                <td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 {% endblock %}

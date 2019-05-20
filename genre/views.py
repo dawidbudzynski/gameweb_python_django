@@ -46,7 +46,7 @@ class GenreCreateView(LoginRequiredMixin, View):
 
 
 class GenreDeleteView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_genre'
+    permission_required = 'genre.delete_genre'
     raise_exception = True
 
     def get(self, request, genre_id):

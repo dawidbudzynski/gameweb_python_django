@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
+{% load bootstrap4 i18n staticfiles %}
 {% block content %}
     <table class="table table-dark">
         <thead>
         <tr>
             <td>
-                <div><h4>Logo made with <a href="https://www.designevo.com/"
-                                           title="Free Online Logo Maker">DesignEvo</a>
+                <div><h4>{% trans 'Loga made with:' %}
+                    <a href="https://www.designevo.com/"
+                       title="Free Online Logo Maker">DesignEvo</a>
                 </h4></div>
             </td>
         </tr>
         <tr>
             <td>
-                <div><h4>Banner from <a href="https://www.ytgraphics.com/"
-                                        title="YTGraphics">www.ytgraphics.com</a>
+                <div><h4>{% trans 'Banner from:' %}
+                    <a href="https://www.ytgraphics.com/"
+                       title="YTGraphics">www.ytgraphics.com</a>
                 </h4></div>
             </td>
         </tr>

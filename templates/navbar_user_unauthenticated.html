@@ -1,0 +1,83 @@
+{% load bootstrap4 i18n staticfiles %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle hvr-underline-from-center" href="#" id="navbarDropdown"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">library_books</i>
+                    {% trans 'News' %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'news_api:show-news' news_source='polygon' %}">Polygon</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'news_api:show-news' news_source='ign' %}">IGN</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'news_api:show-news' news_source='the-verge' %}">The Verge</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'news_api:show-news' news_source='techradar' %}">TechRadar</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle hvr-underline-from-center" href="#"
+                   id="navbarDropdown"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">videogame_asset</i>
+                    {% trans 'Games' %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'game:game-list' %}">{% trans 'Show games' %}
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle hvr-underline-from-center" href="#"
+                   id="navbarDropdown"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">format_align_justify</i>
+                    {% trans 'Other' %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'rest_api:api-main' %}">{% trans 'Rest API' %}</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'developer:developer-list' %}">{% trans 'Developers' %}</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'genre:genre-list' %}">{% trans 'Genres' %}</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'tag:tag-list' %}">{% trans 'Tags' %}</a>
+                    <a class="dropdown-item hvr-underline-from-center"
+                       href="{% url 'main_app:about' %}">{% trans 'About' %}</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link hvr-underline-from-center"
+                   href="{% url 'users:user-create' %}">{% trans 'Register' %}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-underline-from-center"
+                   href="{% url 'users:login' %}">{% trans 'Login' %}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link hvr-underline-from-center"
+                   href=""><b>---</b></a>
+            </li>
+        </ul>
+    </div>
+</nav>

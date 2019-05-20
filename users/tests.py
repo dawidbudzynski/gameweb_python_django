@@ -1,14 +1,18 @@
 from django.contrib.auth.models import User as DjangoUser
-from django.test import SimpleTestCase, TestCase
+from django.test import TestCase
 from django.urls import reverse
 
 from users.models import User
 from .forms import AddUserForm
 
 
-class UserFormTests(SimpleTestCase):
+class UserFormTests(TestCase):
 
     def test_user_form(self):
+        response = self.client.get(reverse('users:user-create'))
+        self.assertEquals(response.status_code, 302)
+
+        self.client.force_login(DjangoUser.objects.get_or_create(username='user_1', is_superuser=True)[0])
         response = self.client.get(reverse('users:user-create'))
         self.assertEquals(response.status_code, 200)
 

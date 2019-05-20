@@ -43,7 +43,7 @@ class TagCreateView(LoginRequiredMixin, View):
 
 
 class TagDeleteView(PermissionRequiredMixin, View):
-    permission_required = 'game_recommendation.delete_tag'
+    permission_required = 'tag.delete_tag'
     raise_exception = True
 
     def get(self, request, tag_id):

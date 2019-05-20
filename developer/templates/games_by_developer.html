@@ -38,7 +38,7 @@
                 <td><h4>{% trans 'Tags' %}</h4></td>
                 <td style="text-align:center">
                     {% for tag in game.tags.all %}
-                        <a href="{% url 'games-by-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
+                        <a href="{% url 'tag:games-by-tag' tag.id %}" class="btn btn-secondary">{{ tag.name }}</a><br>
                     {% endfor %}
                 </td>
             </tr>
@@ -48,7 +48,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <a href="{% url 'delete-game' game.id %}"
+                    <a href="{% url 'game:game-delete' game.id %}"
                        class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a>
                 </td>
             </tr>

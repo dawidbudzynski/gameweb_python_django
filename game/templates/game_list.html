@@ -8,13 +8,17 @@
         </tr>
         </thead>
     </table>
-    <thead>
-    <tr>
-        <td colspan="3"><a href="{% url 'game:game-create' %}"
-                           class="btn btn-dark btn-lg btn-block">{% trans 'Add game' %}</a>
-        </td>
-    </tr>
-    </thead>
+    {% if user.is_authenticated %}
+        <thead>
+        <tr>
+            <td colspan="3">
+                <a href="{% url 'game:game-create' %}"
+                   class="btn btn-dark btn-lg btn-block">{% trans 'Add game' %}
+                </a>
+            </td>
+        </tr>
+        </thead>
+    {% endif %}
     <p></p>
     {% if messages %}
         {% for message in messages %}
@@ -42,11 +46,13 @@
                 </td>
                 {% if game.image %}
                     <td rowspan="4" style="text-align: center">
-                        <img alt="{% trans 'No image' %}" src="{{ game.image.url }}" style=width:400px;height:300px;>
+                        <img alt="{% trans 'No image' %}" src="{{ game.image.url }}"
+                             style=width:400px;height:300px;>
                     </td>
                 {% else %}
                     <td rowspan="4" style="text-align: center">
-                        <img alt="{% trans 'No image' %}" src="{% static 'img/icon.png' %}" style=width:400px;height:300px;>
+                        <img alt="{% trans 'No image' %}" src="{% static 'img/icon.png' %}"
+                             style=width:400px;height:300px;>
                     </td>
                 {% endif %}
             </tr>
@@ -69,13 +75,19 @@
                 <td><h5>{{ game.year }}</h5></td>
             </tr>
             <tr>
-                <td colspan="3"><a href="{% url 'game:game-details' game.id %}"
-                                   class="btn btn-dark btn-lg btn-block">{% trans 'Details' %}</a></td>
+                <td colspan="3">
+                    <a href="{% url 'game:game-details' game.id %}"
+                       class="btn btn-dark btn-lg btn-block">{% trans 'Details' %}</a>
+                </td>
             </tr>
-            <tr>
-                <td colspan="3"><a href="{% url 'game:game-delete' game.id %}"
-                                   class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a></td>
-            </tr>
+            {% if user.is_staff %}
+                <tr>
+                    <td colspan="3">
+                        <a href="{% url 'game:game-delete' game.id %}"
+                           class="btn btn-dark btn-lg btn-block">{% trans 'Delete' %}</a>
+                    </td>
+                </tr>
+            {% endif %}
             </tbody>
         </table>
     {% endfor %}
