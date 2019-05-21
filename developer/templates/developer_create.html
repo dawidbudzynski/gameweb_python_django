@@ -9,13 +9,7 @@
         </thead>
     </table>
     <table class="table table-dark">
-        {% if messages %}
-            <div class="alert alert-warning" role="alert">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
-        {% endif %}
+        {% include 'message_block.html' %}
         <tr>
             <td>
                 <form action="{% url 'developer:developer-create' %}" method="POST">

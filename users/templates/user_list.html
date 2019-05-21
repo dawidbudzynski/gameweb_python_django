@@ -16,15 +16,7 @@
     </tr>
     </thead>
     <p></p>
-    {% if messages %}
-        {% for message in messages %}
-            <div {% if message.level == 20 %}
-                class="alert alert-primary" {% else %}
-                class="alert alert-warning" {% endif %} role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+    {% include 'message_block.html' %}
     {% for user in all_users %}
         <table class="table table-dark">
             <thead>
