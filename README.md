@@ -23,13 +23,34 @@ To run this project:
 1. Create PostgreSQL database
 2. Rename settings.ini.example to settings.ini and fill required fields. 
 3. Install required libraries using pip:
-```
-$ pip install -r requirements.txt
-```
-4.To run your local server use command: 
-```
-$ python manage.py runserver
-```
+    ```
+    $ pip install -r requirements.txt
+    ```
+4. To run your local server use command: 
+    ```
+    $ python manage.py runserver
+    ```
+    
+To run asynchronous tasks:
+1. Install Redis
+2. Start Redis server:
+    ```
+    $ redis-server
+    ```
+3. Open new terminal tab
+4. Go to project root
+5. Start Celery worker:
+    ```
+    $ celery -A final_project_coderslab worker -l info
+    ```
+
+To run periodic tasks:
+1. Open new terminal tab
+2. Go to project root
+3. Start Celery beat:
+    ```
+    $ celery -A final_project_coderslab beat -l info
+    ```
 
 ## Demo
 ## http://dawidb.pythonanywhere.com
