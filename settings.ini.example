@@ -4,11 +4,16 @@ NEWS_API_KEY = <api key from https://newsapi.org>
 SECRET_KEY = <django secret key>
 DEBUG = True
 
+# POSTGRESQL DB CONFIG
 DB_NAME = <database name>
 DB_USER = <database user>
 DB_PASSWORD = <database password>
 DB_HOST = <database host>
 DB_PORT = <database port>
+
+# REDIS CONFIG
+BROKER_URL = <your secret data>
+CELERY_RESULT_BACKEND = <your secret data>
 
 # AWS CONFIG
 AWS_ACCESS_KEY_ID = <your secret data>

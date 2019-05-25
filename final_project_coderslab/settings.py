@@ -144,8 +144,12 @@ django_heroku.settings(locals())
 INTERNAL_IPS = '127.0.0.1'
 
 # CELERY CONFIG
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+if DEBUG:
+    BROKER_URL = 'redis://localhost:6379'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+else:
+    BROKER_URL = config('BROKER_URL', default=False, cast=str)
+    CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND', default=False, cast=str)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
