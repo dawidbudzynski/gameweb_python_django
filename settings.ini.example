@@ -1,9 +1,16 @@
 [settings]
 NEWS_API_KEY = <api key from https://newsapi.org>
+
 SECRET_KEY = <django secret key>
 DEBUG = True
+
 DB_NAME = <database name>
 DB_USER = <database user>
 DB_PASSWORD = <database password>
 DB_HOST = <database host>
 DB_PORT = <database port>
+
+# AWS CONFIG
+AWS_ACCESS_KEY_ID = <your secret data>
+AWS_SECRET_ACCESS_KEY = <your secret data>
+AWS_STORAGE_BUCKET_NAME = <your secret data>

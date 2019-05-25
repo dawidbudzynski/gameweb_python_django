@@ -5,9 +5,7 @@ from decouple import config
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 SECRET_KEY = config('SECRET_KEY', default=False, cast=str)
-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
@@ -23,6 +21,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'debug_toolbar',
     'rest_framework',
+    'storages',
 
     'developer.apps.DeveloperConfig',
     'game_recommendation.apps.GameRecommendationConfig',
@@ -126,19 +125,14 @@ TIME_ZONE = 'Europe/Warsaw'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
 MEDIA_ROOT = (os.path.join(BASE_DIR, 'media'))
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/users/login'
 
@@ -148,10 +142,32 @@ django_heroku.settings(locals())
 # internal_ips for django-debug-toolbar
 INTERNAL_IPS = '127.0.0.1'
 
-# CELERY STUFF
+# CELERY CONFIG
 BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Warsaw'
+
+# AWS CONFIG
+AWS_LOCATION = 'static'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default=False, cast=str)
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default=False, cast=str)
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default=False, cast=str)
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'final_project_coderslab.storage_backends.MediaStorage'
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+AWS_DEFAULT_ACL = None
