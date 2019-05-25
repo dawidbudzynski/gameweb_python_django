@@ -13,10 +13,14 @@ add new games to database and find new titles (using recommendation feature).
 * recommending new games based on user's preferences
 
 ## Technologies
-* Python 3
-* Django 2.0
-* Bootstrap
-* REST API
+* Python 3.7
+* Django 2.1.2
+* Bootstrap 4
+* Django REST Framework
+* Celery
+* Redis
+* AWS S3
+* Travis CI
 
 ## Setup
 To run this project:
@@ -26,7 +30,11 @@ To run this project:
     ```
     $ pip install -r requirements.txt
     ```
-4. To run your local server use command: 
+4. Apply migrations:: 
+    ```
+    $ python manage.py migrate
+    ```
+5. To run your local server use command: 
     ```
     $ python manage.py runserver
     ```
