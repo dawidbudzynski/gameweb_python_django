@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', default=False, cast=str)
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gamewebdjango.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,7 +69,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
 WORK_ON_TRAVIS_DATABASE = 'TRAVIS' in os.environ
-WORK_ON_POSTGRE_SQL = False
+WORK_ON_POSTGRE_SQL = True
 if WORK_ON_TRAVIS_DATABASE:
     DATABASES = {
         'default': {
