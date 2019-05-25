@@ -3,6 +3,8 @@ atomicwrites==1.3.0
 attrs==19.1.0
 backcall==0.1.0
 billiard==3.6.0.0
+boto3==1.9.154
+botocore==1.12.154
 celery==4.3.0
 certifi==2018.4.16
 chardet==3.0.4
@@ -14,8 +16,10 @@ django-bootstrap4==0.0.8
 django-debug-toolbar==1.11
 django-filter==2.1.0
 django-heroku==0.3.1
+django-storages==1.7.1
 django-timezone-field==3.0
 djangorestframework==3.9.4
+docutils==0.14
 ez-setup==0.9
 flake8==3.6.0
 gunicorn==19.9.0
@@ -24,6 +28,7 @@ ipdb==0.12
 ipython==7.5.0
 ipython-genutils==0.2.0
 jedi==0.13.3
+jmespath==0.9.4
 kombu==4.5.0
 Markdown==3.1
 mccabe==0.6.1
@@ -48,6 +53,7 @@ python-decouple==3.1
 pytz==2018.4
 redis==3.2.1
 requests==2.18.4
+s3transfer==0.2.0
 six==1.12.0
 sqlparse==0.3.0
 traitlets==4.3.2
