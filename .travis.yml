@@ -20,6 +20,7 @@ install:
 
 before_script:
   - psql -c "CREATE DATABASE travis_db;" -U postgres
+
 script:
   - python manage.py makemigrations
   - python manage.py migrate

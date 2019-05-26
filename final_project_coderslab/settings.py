@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'final_project_coderslab.wsgi.application'
 
 # DATABASE SETTINGS
 TRAVIS_ENVIRONMENT = 'TRAVIS' in os.environ
-WORK_ON_POSTGRE_SQL = False
+WORK_ON_POSTGRE_SQL = config('WORK_ON_POSTGRE_SQL', default=False, cast=str)
 if TRAVIS_ENVIRONMENT:
     DATABASES = {
         'default': {
