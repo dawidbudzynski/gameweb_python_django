@@ -27,11 +27,6 @@ class UserListView(View):
 
 
 class UserCreateView(View):
-    def dispatch(self, request, *args, **kwargs):
-        if not (request.user.is_staff or request.user.is_superuser):
-            messages.add_message(request, messages.WARNING, _('Sorry, you can\'t do that'))
-            return HttpResponseRedirect(reverse('news_api:mainpage'))
-        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         return render(

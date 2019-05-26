@@ -10,7 +10,7 @@ class UserFormTests(TestCase):
 
     def test_user_form(self):
         response = self.client.get(reverse('users:user-create'))
-        self.assertEquals(response.status_code, 302)
+        self.assertEquals(response.status_code, 200)
 
         self.client.force_login(DjangoUser.objects.get_or_create(username='user_1', is_superuser=True)[0])
         response = self.client.get(reverse('users:user-create'))
